@@ -13,12 +13,22 @@ export default function AdminSetupPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+    const addToAdminTable = async (userId: string, userEmail: string): Promise<string | null> => {
+        const { error } = await supabase
+            .from("admin_users")
+            .insert([{ id: userId, email: userEmail }]);
+        if (!error) return null;
+        if (error.code === "23505" || error.message?.includes("duplicate")) {
+            return "already_admin";
+        }
+        return error.message;
+    };
+
     const handleSetup = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setMessage(null);
 
-        // Security check - this page should be used cautiously
         if (secretKey !== "CsF0und3r_S3tup_2026_Zq7xK") {
             setMessage({ type: "error", text: "Invalid setup secret key." });
             setIsLoading(false);
@@ -26,60 +36,41 @@ export default function AdminSetupPage() {
         }
 
         try {
-            // 1. Sign up the user (may fail with 422 if already registered)
-            const { data: authData, error: authError } = await supabase.auth.signUp({
-                email,
-                password,
-            });
+            const { data: authData, error: signUpErr } = await supabase.auth.signUp({ email, password });
 
-            if (authError) {
-                // User already registered – try adding to admin_users if not already there
-                if (authError.message?.toLowerCase().includes("already registered") || authError.status === 422) {
-                    const { data: { user }, error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
-                    if (signInErr) {
-                        setMessage({ type: "error", text: "This email is already registered. Use the login page and your existing password." });
-                        return;
-                    }
-                    if (user) {
-                        const { error: insertErr } = await supabase
-                            .from("admin_users")
-                            .insert([{ id: user.id, email: user.email }]);
-                        if (!insertErr) {
-                            setMessage({ type: "success", text: "You're now an admin. Go to the login page to sign in." });
-                        } else if (insertErr.code === "23505" || insertErr.message?.includes("duplicate") || insertErr.message?.includes("409")) {
-                            setMessage({ type: "success", text: "This email is already an admin. Go to the login page to sign in." });
-                        } else throw insertErr;
-                    }
-                } else throw authError;
-            } else if (authData.user) {
-                // 2. Add to admin_users table (ignore if already exists)
-                const { error: dbError } = await supabase
-                    .from("admin_users")
-                    .insert([{ id: authData.user.id, email: authData.user.email }]);
+            if (signUpErr) {
+                const isAlreadyRegistered =
+                    signUpErr.status === 422 ||
+                    signUpErr.message?.toLowerCase().includes("already registered");
 
-                if (dbError) {
-                    const isDuplicateEmail =
-                        dbError.code === "23505" ||
-                        String(dbError.code) === "409" ||
-                        dbError.message?.includes("admin_users_email_key") ||
-                        dbError.message?.includes("duplicate key") ||
-                        dbError.message?.includes("409") ||
-                        dbError.message?.toLowerCase().includes("conflict");
-                    if (isDuplicateEmail) {
-                        setMessage({
-                            type: "success",
-                            text: "This email is already an admin. Go to the login page to sign in.",
-                        });
-                    } else {
-                        throw dbError;
-                    }
-                } else {
-                    setMessage({
-                        type: "success",
-                        text: `Founder account for ${email} created successfully! Please verify the email if required by Supabase settings.`
-                    });
+                if (!isAlreadyRegistered) throw signUpErr;
+
+                const { data: { user }, error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+                if (signInErr || !user) {
+                    setMessage({ type: "error", text: "This email is already registered but the password doesn't match. Sign in at the login page with your existing password." });
+                    return;
                 }
+
+                const result = await addToAdminTable(user.id, user.email!);
+                if (result === null) {
+                    setMessage({ type: "success", text: `${email} has been added as an admin. You can now sign in.` });
+                } else if (result === "already_admin") {
+                    setMessage({ type: "success", text: "This email is already an admin. Go to the login page to sign in." });
+                } else throw new Error(result);
+                return;
             }
+
+            if (!authData.user) {
+                setMessage({ type: "error", text: "Signup succeeded but no user was returned. Please try again." });
+                return;
+            }
+
+            const result = await addToAdminTable(authData.user.id, authData.user.email!);
+            if (result === null) {
+                setMessage({ type: "success", text: `Founder account for ${email} created! You can now sign in at the login page.` });
+            } else if (result === "already_admin") {
+                setMessage({ type: "success", text: "This email is already an admin. Go to the login page to sign in." });
+            } else throw new Error(result);
         } catch (err: any) {
             setMessage({ type: "error", text: err.message });
         } finally {
