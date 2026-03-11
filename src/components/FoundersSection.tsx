@@ -21,7 +21,7 @@ const TEAM_MEMBERS = [
         accent: "from-violet-400 to-purple-500",
     },
     {
-        name: "Arnav Ghildyal",
+        name: "Arnav Ghildiyal",
         role: "Vice President",
         bio: "Focused on bridging the gap between young students and modern technology stacks. Arnav drives curriculum development and mentorship programs.",
         image: null,
