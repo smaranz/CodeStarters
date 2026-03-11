@@ -26,15 +26,32 @@ export default function AdminSetupPage() {
         }
 
         try {
-            // 1. Sign up the user
+            // 1. Sign up the user (may fail with 422 if already registered)
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email,
                 password,
             });
 
-            if (authError) throw authError;
-
-            if (authData.user) {
+            if (authError) {
+                // User already registered – try adding to admin_users if not already there
+                if (authError.message?.toLowerCase().includes("already registered") || authError.status === 422) {
+                    const { data: { user }, error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+                    if (signInErr) {
+                        setMessage({ type: "error", text: "This email is already registered. Use the login page and your existing password." });
+                        return;
+                    }
+                    if (user) {
+                        const { error: insertErr } = await supabase
+                            .from("admin_users")
+                            .insert([{ id: user.id, email: user.email }]);
+                        if (!insertErr) {
+                            setMessage({ type: "success", text: "You're now an admin. Go to the login page to sign in." });
+                        } else if (insertErr.code === "23505" || insertErr.message?.includes("duplicate") || insertErr.message?.includes("409")) {
+                            setMessage({ type: "success", text: "This email is already an admin. Go to the login page to sign in." });
+                        } else throw insertErr;
+                    }
+                } else throw authError;
+            } else if (authData.user) {
                 // 2. Add to admin_users table (ignore if already exists)
                 const { error: dbError } = await supabase
                     .from("admin_users")
@@ -43,8 +60,11 @@ export default function AdminSetupPage() {
                 if (dbError) {
                     const isDuplicateEmail =
                         dbError.code === "23505" ||
+                        String(dbError.code) === "409" ||
                         dbError.message?.includes("admin_users_email_key") ||
-                        dbError.message?.includes("duplicate key");
+                        dbError.message?.includes("duplicate key") ||
+                        dbError.message?.includes("409") ||
+                        dbError.message?.toLowerCase().includes("conflict");
                     if (isDuplicateEmail) {
                         setMessage({
                             type: "success",
