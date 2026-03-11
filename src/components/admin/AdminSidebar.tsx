@@ -5,12 +5,12 @@ import { usePathname, useRouter } from "next/navigation";
 import {
     LayoutDashboard,
     Globe,
-    Users,
+    ClipboardList,
+    UserCheck,
     LogOut,
     Menu,
     X,
     ChevronRight,
-    Sparkles
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
@@ -19,7 +19,8 @@ import Image from "next/image";
 const MENU_ITEMS = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
     { name: "Website Requests", href: "/admin/requests", icon: Globe },
-    { name: "Volunteers", href: "/admin/volunteers", icon: Users },
+    { name: "Applications", href: "/admin/applications", icon: ClipboardList },
+    { name: "Team", href: "/admin/team", icon: UserCheck },
 ];
 
 export function AdminSidebar() {
