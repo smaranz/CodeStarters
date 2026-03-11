@@ -7,11 +7,15 @@ import {
     Loader2,
     Search,
     Filter,
-    ChevronRight,
     Mail,
     Phone,
-    MapPin,
-    ExternalLink
+    Globe,
+    CheckCircle2,
+    XCircle,
+    PlayCircle,
+    MessageSquare,
+    ChevronDown,
+    ChevronUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -20,6 +24,7 @@ export default function WebsiteRequestsPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
+    const [expandedId, setExpandedId] = useState<string | null>(null);
 
     useEffect(() => {
         fetchRequests();
@@ -27,12 +32,11 @@ export default function WebsiteRequestsPage() {
 
     const fetchRequests = async () => {
         setIsLoading(true);
-        let query = supabase
+        const { data, error } = await supabase
             .from("website_requests")
             .select("*")
             .order("created_at", { ascending: false });
 
-        const { data, error } = await query;
         if (!error) setRequests(data || []);
         setIsLoading(false);
     };
@@ -50,17 +54,25 @@ export default function WebsiteRequestsPage() {
 
     const filteredRequests = requests.filter(req => {
         const matchesSearch = req.business_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            req.owner_name?.toLowerCase().includes(searchTerm.toLowerCase());
+            req.owner_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            req.email?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = statusFilter === "all" || req.status === statusFilter;
         return matchesSearch && matchesStatus;
     });
+
+    const pendingCount = requests.filter(r => r.status === "pending").length;
 
     return (
         <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900 mb-2 font-display">Website Requests</h1>
-                    <p className="text-slate-500">Manage intake requests from local businesses.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-1">Website Requests</h1>
+                    <p className="text-slate-500">
+                        {pendingCount > 0
+                            ? <span><span className="text-amber-600 font-bold">{pendingCount} pending</span> requests from local businesses.</span>
+                            : "All caught up. No pending requests."
+                        }
+                    </p>
                 </div>
                 <Button onClick={fetchRequests} variant="secondary" className="bg-white border-slate-200">
                     Refresh
@@ -72,7 +84,7 @@ export default function WebsiteRequestsPage() {
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                         type="text"
-                        placeholder="Search by business or owner..."
+                        placeholder="Search by business, owner, or email..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium"
@@ -105,68 +117,133 @@ export default function WebsiteRequestsPage() {
                     <p className="text-slate-400 font-medium">No requests found.</p>
                 </div>
             ) : (
-                <div className="grid gap-6">
-                    {filteredRequests.map((req) => (
-                        <div key={req.id} className="bg-white p-6 md:p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col lg:flex-row gap-8">
-                            <div className="flex-1 space-y-6">
-                                <div className="flex items-start justify-between">
-                                    <div>
-                                        <h3 className="text-2xl font-black text-slate-900 mb-1">{req.business_name}</h3>
-                                        <p className="text-slate-500 font-bold flex items-center gap-2">
-                                            {req.owner_name} • {req.business_type}
-                                        </p>
-                                    </div>
-                                    <StatusBadge status={req.status} />
-                                </div>
-
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                    <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
-                                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-brand-600">
-                                            <Mail className="w-5 h-5" />
+                <div className="grid gap-5">
+                    {filteredRequests.map((req) => {
+                        const isExpanded = expandedId === req.id;
+                        return (
+                            <div key={req.id} className="bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
+                                <div className="p-6 md:p-8">
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                                        <div>
+                                            <h3 className="text-xl font-black text-slate-900">{req.business_name}</h3>
+                                            <p className="text-sm text-slate-500 font-medium">
+                                                {req.owner_name} · {req.business_type}
+                                            </p>
                                         </div>
-                                        <span className="text-sm font-bold text-slate-700 truncate">{req.email}</span>
+                                        <StatusBadge status={req.status} />
                                     </div>
-                                    <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl">
-                                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm text-brand-600">
-                                            <Phone className="w-5 h-5" />
-                                        </div>
-                                        <span className="text-sm font-bold text-slate-700">{req.phone || "N/A"}</span>
-                                    </div>
-                                </div>
 
-                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Description & Needs</p>
-                                    <p className="text-slate-700 text-sm leading-relaxed mb-4 italic">"{req.description}"</p>
-                                    <div className="flex flex-wrap gap-2 uppercase text-[10px] font-black">
-                                        {req.needs?.split(',').map((need: string) => (
-                                            <span key={need} className="px-2 py-1 bg-white rounded flex items-center gap-1.5 border border-slate-200">
-                                                <div className="w-1.5 h-1.5 bg-brand-500 rounded-full" />
-                                                {need.trim()}
+                                    <div className="flex flex-wrap gap-3 mb-5">
+                                        <span className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 text-slate-600 rounded-xl text-sm font-bold">
+                                            <Mail className="w-3.5 h-3.5" /> {req.email}
+                                        </span>
+                                        {req.phone && (
+                                            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 text-slate-600 rounded-xl text-sm font-bold">
+                                                <Phone className="w-3.5 h-3.5" /> {req.phone}
                                             </span>
-                                        ))}
+                                        )}
+                                        {req.business_type && (
+                                            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-50 text-brand-700 rounded-xl text-sm font-bold">
+                                                <Globe className="w-3.5 h-3.5" /> {req.business_type}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {req.description && (
+                                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 mb-5">
+                                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">What they need</p>
+                                            <p className="text-slate-700 text-sm leading-relaxed">{req.description}</p>
+                                        </div>
+                                    )}
+
+                                    {isExpanded && (
+                                        <div className="space-y-4 mb-5">
+                                            {req.needs && (
+                                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Specific Features</p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {req.needs.split(",").map((need: string) => (
+                                                            <span key={need} className="px-3 py-1 bg-white text-slate-700 rounded-lg text-xs font-bold border border-slate-200">
+                                                                {need.trim()}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <p className="text-xs text-slate-400">
+                                                Submitted {new Date(req.created_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                                                {req.cupertino_consent && " · Confirmed Cupertino business"}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-100">
+                                        {req.status === "pending" ? (
+                                            <>
+                                                <button
+                                                    onClick={() => updateStatus(req.id, "in_progress")}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-brand-600 text-white rounded-xl font-bold text-sm hover:bg-brand-700 transition-colors"
+                                                >
+                                                    <PlayCircle className="w-4 h-4" /> Accept & Start
+                                                </button>
+                                                <button
+                                                    onClick={() => updateStatus(req.id, "rejected")}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-white text-red-600 border border-red-200 rounded-xl font-bold text-sm hover:bg-red-50 transition-colors"
+                                                >
+                                                    <XCircle className="w-4 h-4" /> Decline
+                                                </button>
+                                                <button
+                                                    onClick={() => updateStatus(req.id, "contacted")}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-white text-purple-600 border border-purple-200 rounded-xl font-bold text-sm hover:bg-purple-50 transition-colors"
+                                                >
+                                                    <MessageSquare className="w-4 h-4" /> Contacted
+                                                </button>
+                                            </>
+                                        ) : req.status === "in_progress" ? (
+                                            <>
+                                                <button
+                                                    onClick={() => updateStatus(req.id, "completed")}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-700 transition-colors"
+                                                >
+                                                    <CheckCircle2 className="w-4 h-4" /> Mark Complete
+                                                </button>
+                                                <select
+                                                    className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold rounded-xl outline-none focus:ring-2 focus:ring-brand-500 appearance-none cursor-pointer"
+                                                    value={req.status}
+                                                    onChange={(e) => updateStatus(req.id, e.target.value)}
+                                                >
+                                                    <option value="pending">Set Pending</option>
+                                                    <option value="in_progress">In Progress</option>
+                                                    <option value="contacted">Set Contacted</option>
+                                                    <option value="completed">Set Completed</option>
+                                                    <option value="rejected">Set Rejected</option>
+                                                </select>
+                                            </>
+                                        ) : (
+                                            <select
+                                                className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold rounded-xl outline-none focus:ring-2 focus:ring-brand-500 appearance-none cursor-pointer"
+                                                value={req.status}
+                                                onChange={(e) => updateStatus(req.id, e.target.value)}
+                                            >
+                                                <option value="pending">Set Pending</option>
+                                                <option value="in_progress">Set In Progress</option>
+                                                <option value="contacted">Set Contacted</option>
+                                                <option value="completed">Set Completed</option>
+                                                <option value="rejected">Set Rejected</option>
+                                            </select>
+                                        )}
+
+                                        <button
+                                            onClick={() => setExpandedId(isExpanded ? null : req.id)}
+                                            className="ml-auto flex items-center gap-1.5 px-3 py-2 text-slate-400 hover:text-slate-600 text-xs font-bold uppercase tracking-widest transition-colors"
+                                        >
+                                            {isExpanded ? <><ChevronUp className="w-3.5 h-3.5" /> Less</> : <><ChevronDown className="w-3.5 h-3.5" /> More</>}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="lg:w-48 flex lg:flex-col justify-end gap-3 pt-4 border-t lg:border-t-0 lg:border-l lg:pl-8 border-slate-100">
-                                <p className="hidden lg:block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Action</p>
-                                <select
-                                    className="px-4 py-2 bg-brand-50 border border-brand-100 text-brand-700 text-sm font-bold rounded-xl outline-none focus:ring-2 focus:ring-brand-500 flex-1 lg:flex-none appearance-none cursor-pointer text-center"
-                                    value={req.status}
-                                    onChange={(e) => updateStatus(req.id, e.target.value)}
-                                >
-                                    <option value="pending">Set Pending</option>
-                                    <option value="in_progress">Set In Progress</option>
-                                    <option value="contacted">Set Contacted</option>
-                                    <option value="completed">Set Completed</option>
-                                    <option value="rejected">Set Rejected</option>
-                                </select>
-                                <Button variant="secondary" className="flex-1 lg:flex-none rounded-xl gap-2 h-10 text-xs">
-                                    Email <ExternalLink className="w-3 h-3" />
-                                </Button>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
         </div>

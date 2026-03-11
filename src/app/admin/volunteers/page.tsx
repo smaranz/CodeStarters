@@ -6,13 +6,17 @@ import { StatusBadge } from "@/components/admin/StatusBadge";
 import {
     Loader2,
     Search,
-    Filter,
     Mail,
     GraduationCap,
     Clock,
     User,
-    ExternalLink,
-    Sparkles
+    Sparkles,
+    CheckCircle2,
+    XCircle,
+    Phone,
+    MessageSquare,
+    ChevronDown,
+    ChevronUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -20,7 +24,8 @@ export default function VolunteersPage() {
     const [volunteers, setVolunteers] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
-    const [interestFilter, setInterestFilter] = useState("all");
+    const [statusFilter, setStatusFilter] = useState("all");
+    const [expandedId, setExpandedId] = useState<string | null>(null);
 
     useEffect(() => {
         fetchVolunteers();
@@ -51,18 +56,23 @@ export default function VolunteersPage() {
     const filteredVolunteers = volunteers.filter(vol => {
         const matchesSearch = vol.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             vol.email?.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesInterest = interestFilter === "all" || vol.interest === interestFilter;
-        return matchesSearch && matchesInterest;
+        const matchesStatus = statusFilter === "all" || vol.status === statusFilter;
+        return matchesSearch && matchesStatus;
     });
 
-    const roles = Array.from(new Set(volunteers.map(v => v.interest))).filter(Boolean);
+    const pendingCount = volunteers.filter(v => v.status === "pending").length;
 
     return (
         <div className="space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900 mb-2 font-display">Volunteer Applications</h1>
-                    <p className="text-slate-500">Review and vet new student contributors.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-1">Volunteer Applications</h1>
+                    <p className="text-slate-500">
+                        {pendingCount > 0
+                            ? <span><span className="text-amber-600 font-bold">{pendingCount} pending</span> applications need review.</span>
+                            : "All caught up. No pending applications."
+                        }
+                    </p>
                 </div>
                 <Button onClick={fetchVolunteers} variant="secondary" className="bg-white border-slate-200">
                     Refresh
@@ -80,19 +90,17 @@ export default function VolunteersPage() {
                         className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-brand-500 transition-all font-medium"
                     />
                 </div>
-                <div className="relative min-w-[200px]">
-                    <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                    <select
-                        value={interestFilter}
-                        onChange={(e) => setInterestFilter(e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-brand-500 transition-all font-bold text-slate-700 appearance-none"
-                    >
-                        <option value="all">All Interests</option>
-                        {roles.map(role => (
-                            <option key={role} value={role}>{role}</option>
-                        ))}
-                    </select>
-                </div>
+                <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="px-4 py-3 bg-white border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-brand-500 transition-all font-bold text-slate-700 appearance-none min-w-[160px]"
+                >
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="completed">Approved</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="contacted">Contacted</option>
+                </select>
             </div>
 
             {isLoading ? (
@@ -105,72 +113,130 @@ export default function VolunteersPage() {
                     <p className="text-slate-400 font-medium">No applications found.</p>
                 </div>
             ) : (
-                <div className="grid gap-6">
-                    {filteredVolunteers.map((vol) => (
-                        <div key={vol.id} className="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-all">
-                            <div className="flex flex-col lg:flex-row gap-8">
-                                <div className="flex-1 space-y-6">
-                                    <div className="flex items-start justify-between">
+                <div className="grid gap-5">
+                    {filteredVolunteers.map((vol) => {
+                        const isExpanded = expandedId === vol.id;
+                        return (
+                            <div key={vol.id} className="bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
+                                <div className="p-6 md:p-8">
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center shadow-inner">
-                                                <User className="w-8 h-8 text-brand-500" />
+                                            <div className="w-14 h-14 bg-brand-50 rounded-2xl flex items-center justify-center shrink-0">
+                                                <User className="w-7 h-7 text-brand-500" />
                                             </div>
                                             <div>
-                                                <h3 className="text-2xl font-black text-slate-900 mb-1">{vol.name}</h3>
-                                                <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-slate-500">
+                                                <h3 className="text-xl font-black text-slate-900">{vol.name}</h3>
+                                                <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
                                                     <span className="flex items-center gap-1"><Mail className="w-3.5 h-3.5" /> {vol.email}</span>
-                                                    <span>•</span>
-                                                    <span className="flex items-center gap-1 text-brand-600"><Sparkles className="w-3.5 h-3.5" /> {vol.interest}</span>
+                                                    {vol.phone && (
+                                                        <>
+                                                            <span>·</span>
+                                                            <span className="flex items-center gap-1"><Phone className="w-3.5 h-3.5" /> {vol.phone}</span>
+                                                        </>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
                                         <StatusBadge status={vol.status} />
                                     </div>
 
-                                    <div className="grid sm:grid-cols-2 gap-4">
-                                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                            <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
-                                                <GraduationCap className="w-3.5 h-3.5" /> Education
-                                            </div>
-                                            <p className="text-sm font-bold text-slate-700">{vol.school || "Unspecified School"}</p>
-                                            <p className="text-xs text-slate-500 font-medium mt-1">{vol.grade_level || "Year not specified"}</p>
-                                        </div>
-                                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                                            <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">
-                                                <Clock className="w-3.5 h-3.5" /> Availability
-                                            </div>
-                                            <p className="text-sm font-bold text-slate-700 truncate">{vol.availability || "Not provided"}</p>
-                                        </div>
+                                    <div className="flex flex-wrap gap-3 mb-5 text-sm">
+                                        {vol.interest && (
+                                            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-50 text-brand-700 rounded-xl font-bold">
+                                                <Sparkles className="w-3.5 h-3.5" /> {vol.interest}
+                                            </span>
+                                        )}
+                                        {vol.school && (
+                                            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 text-slate-600 rounded-xl font-bold">
+                                                <GraduationCap className="w-3.5 h-3.5" /> {vol.school} {vol.grade_level && `· ${vol.grade_level}`}
+                                            </span>
+                                        )}
+                                        {vol.availability && (
+                                            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 text-slate-600 rounded-xl font-bold">
+                                                <Clock className="w-3.5 h-3.5" /> {vol.availability}
+                                            </span>
+                                        )}
                                     </div>
 
                                     {vol.reason_for_joining && (
-                                        <div className="p-5 bg-brand-50/30 rounded-2xl border border-brand-100">
-                                            <p className="text-xs font-bold text-brand-600 uppercase tracking-widest mb-2 italic">Why join CodeStarters?</p>
-                                            <p className="text-slate-700 text-sm leading-relaxed italic">"{vol.reason_for_joining}"</p>
+                                        <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 mb-5">
+                                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Why they want to join</p>
+                                            <p className="text-slate-700 text-sm leading-relaxed">{vol.reason_for_joining}</p>
                                         </div>
                                     )}
-                                </div>
 
-                                <div className="lg:w-48 flex lg:flex-col justify-end gap-3 pt-6 border-t lg:border-t-0 lg:border-l lg:pl-8 border-slate-100">
-                                    <p className="hidden lg:block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Management</p>
-                                    <select
-                                        className="px-4 py-2 bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-bold rounded-xl outline-none focus:ring-2 focus:ring-emerald-500 flex-1 lg:flex-none appearance-none cursor-pointer text-center"
-                                        value={vol.status}
-                                        onChange={(e) => updateStatus(vol.id, e.target.value)}
-                                    >
-                                        <option value="pending">Set Pending</option>
-                                        <option value="in_progress">Set In Progress</option>
-                                        <option value="contacted">Set Contacted</option>
-                                        <option value="completed">Set Approved</option>
-                                        <option value="rejected">Set Rejected</option>
-                                    </select>
-                                    <Button variant="secondary" className="flex-1 lg:flex-none rounded-xl gap-2 h-10 text-xs shadow-sm bg-white">
-                                        View Profile <ExternalLink className="w-3 h-3" />
-                                    </Button>
+                                    {isExpanded && (
+                                        <div className="space-y-4 mb-5">
+                                            {vol.previous_experience && (
+                                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Previous Experience</p>
+                                                    <p className="text-slate-700 text-sm leading-relaxed">{vol.previous_experience}</p>
+                                                </div>
+                                            )}
+                                            {vol.social_links && (
+                                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Social / Links</p>
+                                                    <p className="text-slate-700 text-sm leading-relaxed break-all">{vol.social_links}</p>
+                                                </div>
+                                            )}
+                                            {vol.bio && (
+                                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Bio</p>
+                                                    <p className="text-slate-700 text-sm leading-relaxed">{vol.bio}</p>
+                                                </div>
+                                            )}
+                                            <p className="text-xs text-slate-400">
+                                                Applied {new Date(vol.created_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-100">
+                                        {vol.status === "pending" ? (
+                                            <>
+                                                <button
+                                                    onClick={() => updateStatus(vol.id, "completed")}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-700 transition-colors"
+                                                >
+                                                    <CheckCircle2 className="w-4 h-4" /> Approve
+                                                </button>
+                                                <button
+                                                    onClick={() => updateStatus(vol.id, "rejected")}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-white text-red-600 border border-red-200 rounded-xl font-bold text-sm hover:bg-red-50 transition-colors"
+                                                >
+                                                    <XCircle className="w-4 h-4" /> Reject
+                                                </button>
+                                                <button
+                                                    onClick={() => updateStatus(vol.id, "contacted")}
+                                                    className="flex items-center gap-2 px-5 py-2.5 bg-white text-purple-600 border border-purple-200 rounded-xl font-bold text-sm hover:bg-purple-50 transition-colors"
+                                                >
+                                                    <MessageSquare className="w-4 h-4" /> Contacted
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <select
+                                                className="px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 text-sm font-bold rounded-xl outline-none focus:ring-2 focus:ring-brand-500 appearance-none cursor-pointer"
+                                                value={vol.status}
+                                                onChange={(e) => updateStatus(vol.id, e.target.value)}
+                                            >
+                                                <option value="pending">Set Pending</option>
+                                                <option value="contacted">Set Contacted</option>
+                                                <option value="completed">Set Approved</option>
+                                                <option value="rejected">Set Rejected</option>
+                                            </select>
+                                        )}
+
+                                        <button
+                                            onClick={() => setExpandedId(isExpanded ? null : vol.id)}
+                                            className="ml-auto flex items-center gap-1.5 px-3 py-2 text-slate-400 hover:text-slate-600 text-xs font-bold uppercase tracking-widest transition-colors"
+                                        >
+                                            {isExpanded ? <><ChevronUp className="w-3.5 h-3.5" /> Less</> : <><ChevronDown className="w-3.5 h-3.5" /> More</>}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
         </div>

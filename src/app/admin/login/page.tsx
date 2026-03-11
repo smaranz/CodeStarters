@@ -5,14 +5,12 @@ import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/Button";
 import { Loader2, Lock, Mail } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,8 +37,7 @@ export default function AdminLoginPage() {
                 throw new Error("You are not authorized to access the admin dashboard.");
             }
 
-            router.push("/admin");
-            router.refresh();
+            window.location.href = "/admin";
         } catch (err: any) {
             setError(err.message);
         } finally {
