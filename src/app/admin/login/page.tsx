@@ -27,12 +27,12 @@ export default function AdminLoginPage() {
 
             if (loginError) throw loginError;
 
-            // Check if user is in admin_users table
+            // Check if user is in admin_users table (maybeSingle avoids 406 when no row)
             const { data: adminData, error: adminError } = await supabase
                 .from("admin_users")
                 .select("id")
                 .eq("id", data.user.id)
-                .single();
+                .maybeSingle();
 
             if (adminError || !adminData) {
                 await supabase.auth.signOut();
