@@ -35,17 +35,30 @@ export default function AdminSetupPage() {
             if (authError) throw authError;
 
             if (authData.user) {
-                // 2. Add to admin_users table
+                // 2. Add to admin_users table (ignore if already exists)
                 const { error: dbError } = await supabase
                     .from("admin_users")
                     .insert([{ id: authData.user.id, email: authData.user.email }]);
 
-                if (dbError) throw dbError;
-
-                setMessage({
-                    type: "success",
-                    text: `Founder account for ${email} created successfully! Please verify the email if required by Supabase settings.`
-                });
+                if (dbError) {
+                    const isDuplicateEmail =
+                        dbError.code === "23505" ||
+                        dbError.message?.includes("admin_users_email_key") ||
+                        dbError.message?.includes("duplicate key");
+                    if (isDuplicateEmail) {
+                        setMessage({
+                            type: "success",
+                            text: "This email is already an admin. Go to the login page to sign in.",
+                        });
+                    } else {
+                        throw dbError;
+                    }
+                } else {
+                    setMessage({
+                        type: "success",
+                        text: `Founder account for ${email} created successfully! Please verify the email if required by Supabase settings.`
+                    });
+                }
             }
         } catch (err: any) {
             setMessage({ type: "error", text: err.message });
