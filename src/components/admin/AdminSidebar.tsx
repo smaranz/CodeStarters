@@ -60,7 +60,7 @@ export function AdminSidebar() {
                 <div className="h-full flex flex-col p-6">
                     <div className="flex items-center gap-3 px-2 mb-10">
                         <div className="w-10 h-10 relative bg-brand-50 rounded-xl p-1.5">
-                            <Image src="/logo_footer.png" alt="Logo" fill className="object-contain p-1" />
+                            <Image src="/codestarterslogomain.png" alt="CodeStarters" fill className="object-contain p-1" />
                         </div>
                         <div>
                             <h2 className="text-lg font-bold text-slate-900 leading-none">CodeStarters</h2>

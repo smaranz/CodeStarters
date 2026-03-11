@@ -53,7 +53,7 @@ export default function AdminLoginPage() {
             <div className="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl p-8 md:p-12">
                 <div className="text-center mb-10">
                     <div className="w-20 h-20 relative mx-auto mb-6">
-                        <Image src="/logo_footer.png" alt="Logo" fill className="object-contain" />
+                        <Image src="/codestarterslogomain.png" alt="CodeStarters" fill className="object-contain" />
                     </div>
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">Admin Portal</h1>
                     <p className="text-slate-500">Sign in to manage CodeStarters</p>
