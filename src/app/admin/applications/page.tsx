@@ -44,6 +44,8 @@ export default function ApplicationsPage() {
     };
 
     const updateStatus = async (id: string, newStatus: string) => {
+        const vol = volunteers.find(v => v.id === id);
+
         const { error } = await supabase
             .from("volunteers")
             .update({ status: newStatus })
@@ -51,6 +53,20 @@ export default function ApplicationsPage() {
 
         if (!error) {
             if (newStatus === "completed") {
+                // Fire-and-forget email notification; don't block UI
+                if (vol?.email && vol?.name) {
+                    fetch("/api/admin/volunteers/approved", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            email: vol.email,
+                            name: vol.name,
+                            interest: vol.interest,
+                        }),
+                    }).catch((err) => {
+                        console.error("Failed to send approval email", err);
+                    });
+                }
                 setVolunteers(volunteers.filter(v => v.id !== id));
             } else {
                 setVolunteers(volunteers.map(v => v.id === id ? { ...v, status: newStatus } : v));
