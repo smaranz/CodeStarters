@@ -53,19 +53,19 @@ export default function ApplicationsPage() {
 
         if (!error) {
             if (newStatus === "completed") {
-                // Fire-and-forget email notification; don't block UI
+                // Fire-and-forget: trigger Supabase Edge Function email
                 if (vol?.email && vol?.name) {
-                    fetch("/api/admin/volunteers/approved", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            email: vol.email,
-                            name: vol.name,
-                            interest: vol.interest,
-                        }),
-                    }).catch((err) => {
-                        console.error("Failed to send approval email", err);
-                    });
+                    supabase.functions
+                        .invoke("send-approval-email", {
+                            body: {
+                                email: vol.email,
+                                name: vol.name,
+                                interest: vol.interest,
+                            },
+                        })
+                        .catch((err) => {
+                            console.error("Failed to send approval email via Supabase function", err);
+                        });
                 }
                 setVolunteers(volunteers.filter(v => v.id !== id));
             } else {
