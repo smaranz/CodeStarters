@@ -17,6 +17,7 @@ const ROLES = [
     "CS & AI Instructor",
     "Outreach & Partnerships",
     "Marketing & Social Media",
+    "Social Media Manager",
     "Vibe Coding"
 ];
 
