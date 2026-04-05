@@ -14,6 +14,13 @@ const TEAM_MEMBERS = [
         accent: "from-emerald-400 to-teal-500",
     },
     {
+        name: "Aidan Kwan",
+        role: "Co-Founder",
+        bio: "Committed to expanding access to CS and AI education and helping local businesses thrive online. Aidan helps shape programs, partnerships, and the long-term vision of CodeStarters.",
+        image: null,
+        accent: "from-sky-400 to-blue-600",
+    },
+    {
         name: "Amogh Bhatta",
         role: "Vice President",
         bio: "Dedicated to community outreach and creating fast, beautiful local business sites. Amogh brings design thinking and a passion for accessible technology to every project.",

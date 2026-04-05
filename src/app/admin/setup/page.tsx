@@ -92,7 +92,7 @@ export default function AdminSetupPage() {
                 </div>
 
                 <div className="bg-amber-50 border border-amber-100 rounded-2xl p-5 mb-8 italic text-sm text-amber-800">
-                    "This page is for initially creating the founder accounts for Smaran, Amogh, and Arnav. Use the project initialization secret."
+                    "This page is for initially creating founder accounts for Smaran, Aidan, Amogh, and Arnav. Use the project initialization secret."
                 </div>
 
                 <form onSubmit={handleSetup} className="space-y-6">
