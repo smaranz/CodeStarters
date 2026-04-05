@@ -4,6 +4,7 @@ import { ProgramsSection } from "@/components/ProgramsSection";
 import { VolunteerSection } from "@/components/VolunteerSection";
 import { RequestWebsiteSection } from "@/components/RequestWebsiteSection";
 import { FoundersSection } from "@/components/FoundersSection";
+import { SponsorsSection } from "@/components/SponsorsSection";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <VolunteerSection />
       <RequestWebsiteSection />
       <FoundersSection />
+      <SponsorsSection />
     </>
   );
 }

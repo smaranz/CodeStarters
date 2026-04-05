@@ -33,6 +33,7 @@ export function Footer() {
                                 <li><Link href="#mission" className="hover:text-brand-600 transition-colors">Mission</Link></li>
                                 <li><Link href="#programs" className="hover:text-brand-600 transition-colors">Programs</Link></li>
                                 <li><Link href="#team" className="hover:text-brand-600 transition-colors">Team</Link></li>
+                                <li><Link href="#sponsors" className="hover:text-brand-600 transition-colors">Sponsors</Link></li>
                             </ul>
                         </div>
                         <div>
