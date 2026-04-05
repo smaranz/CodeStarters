@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { ExternalLink, Heart } from "lucide-react";
 
 const SPONSORS = [
     {
@@ -46,16 +46,20 @@ export function SponsorsSection() {
                                 href={sponsor.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center justify-center h-24 px-10 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-violet-200 hover:shadow-md transition-all"
+                                aria-label={`${sponsor.name} — visit website (opens in new tab)`}
+                                className="group flex flex-col items-center justify-center gap-3 min-h-[9.5rem] min-w-[16rem] sm:min-w-[18rem] px-10 py-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-violet-300 hover:shadow-md transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
                             >
-                                <span className="sr-only">{sponsor.name}</span>
                                 <Image
                                     src={sponsor.logoSrc}
-                                    alt={sponsor.logoAlt}
-                                    width={220}
-                                    height={48}
-                                    className="h-10 md:h-11 w-auto max-w-[200px] object-contain object-center opacity-90 group-hover:opacity-100 transition-opacity"
+                                    alt=""
+                                    width={256}
+                                    height={257}
+                                    className="h-16 sm:h-20 md:h-24 lg:h-[5.5rem] w-auto max-w-[min(100%,320px)] object-contain object-center opacity-95 group-hover:opacity-100 transition-opacity"
                                 />
+                                <span className="inline-flex items-center gap-1.5 text-sm font-barlow font-semibold text-slate-400 group-hover:text-violet-600 transition-colors">
+                                    Visit creao.ai
+                                    <ExternalLink className="w-4 h-4 shrink-0" aria-hidden />
+                                </span>
                             </Link>
                         </li>
                     ))}
