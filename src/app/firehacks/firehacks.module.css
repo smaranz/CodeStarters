@@ -528,14 +528,17 @@
 /* ========== SPONSORS ========== */
 .sponsorsGrid {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
   gap: 16px;
   justify-content: center;
   margin: 48px 0;
 }
 .sponsorPill {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -546,21 +549,19 @@
   font-weight: 700;
   color: var(--text-white);
   transition: all var(--ease);
+  flex-shrink: 0;
 }
 .sponsorPill:hover {
   background: var(--bg-card-hover);
   border-color: var(--accent);
   transform: translateY(-2px);
 }
-/* Dark logos (e.g. black SVG) — light pill for contrast */
-.sponsorPillLight {
-  background: #f4f4f5;
-  border-color: rgba(0, 0, 0, 0.1);
-  color: #0a0a0a;
-}
-.sponsorPillLight:hover {
-  background: #e4e4e7;
-  border-color: var(--accent);
+.sponsorPill img {
+  height: 28px;
+  width: auto;
+  max-height: 28px;
+  max-width: min(160px, 42vw);
+  object-fit: contain;
 }
 .sponsorCta {
   background: var(--bg-card);

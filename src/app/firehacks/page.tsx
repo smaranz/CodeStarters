@@ -295,10 +295,11 @@ export default function FireHacksPage() {
               href="https://codecrafters.io"
               target="_blank"
               rel="noopener noreferrer"
-              className={`${s.sponsorPill} ${s.sponsorPillLight}`}
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height={28} />
+              <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height={28} width={120} />
             </a>
           </div>
           <div className={`${s.sponsorCta} ${s.reveal} ${s.d2}`}>
