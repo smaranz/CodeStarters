@@ -291,6 +291,15 @@ export default function FireHacksPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/sponsors/creao.png" alt="Creao AI" height={28} />
             </a>
+            <a
+              href="https://codecrafters.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${s.sponsorPill} ${s.sponsorPillLight}`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height={28} />
+            </a>
           </div>
           <div className={`${s.sponsorCta} ${s.reveal} ${s.d2}`}>
             <h3>

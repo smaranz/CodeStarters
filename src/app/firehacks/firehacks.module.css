@@ -552,6 +552,16 @@
   border-color: var(--accent);
   transform: translateY(-2px);
 }
+/* Dark logos (e.g. black SVG) — light pill for contrast */
+.sponsorPillLight {
+  background: #f4f4f5;
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #0a0a0a;
+}
+.sponsorPillLight:hover {
+  background: #e4e4e7;
+  border-color: var(--accent);
+}
 .sponsorCta {
   background: var(--bg-card);
   border: 1px solid var(--border);

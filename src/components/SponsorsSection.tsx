@@ -12,6 +12,12 @@ const SPONSORS = [
         logoSrc: "/sponsors/creao.png",
         logoAlt: "Creao AI",
     },
+    {
+        name: "CodeCrafters",
+        href: "https://codecrafters.io",
+        logoSrc: "/sponsors/codecrafters.svg",
+        logoAlt: "CodeCrafters",
+    },
 ];
 
 export function SponsorsSection() {
@@ -40,7 +46,9 @@ export function SponsorsSection() {
                 </motion.div>
 
                 <ul className="flex flex-wrap gap-6">
-                    {SPONSORS.map((sponsor) => (
+                    {SPONSORS.map((sponsor) => {
+                        const host = new URL(sponsor.href).hostname.replace(/^www\./, "");
+                        return (
                         <li key={sponsor.name}>
                             <Link
                                 href={sponsor.href}
@@ -49,6 +57,14 @@ export function SponsorsSection() {
                                 aria-label={`${sponsor.name} — visit website (opens in new tab)`}
                                 className="group flex flex-col items-center justify-center gap-3 min-h-[9.5rem] min-w-[16rem] sm:min-w-[18rem] px-10 py-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-violet-300 hover:shadow-md transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
                             >
+                                {sponsor.logoSrc.endsWith(".svg") ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
+                                        src={sponsor.logoSrc}
+                                        alt=""
+                                        className="h-16 sm:h-20 md:h-24 lg:h-[5.5rem] w-auto max-w-[min(100%,320px)] object-contain object-center opacity-95 group-hover:opacity-100 transition-opacity"
+                                    />
+                                ) : (
                                 <Image
                                     src={sponsor.logoSrc}
                                     alt=""
@@ -56,13 +72,15 @@ export function SponsorsSection() {
                                     height={257}
                                     className="h-16 sm:h-20 md:h-24 lg:h-[5.5rem] w-auto max-w-[min(100%,320px)] object-contain object-center opacity-95 group-hover:opacity-100 transition-opacity"
                                 />
+                                )}
                                 <span className="inline-flex items-center gap-1.5 text-sm font-barlow font-semibold text-slate-400 group-hover:text-violet-600 transition-colors">
-                                    Visit creao.ai
+                                    Visit {host}
                                     <ExternalLink className="w-4 h-4 shrink-0" aria-hidden />
                                 </span>
                             </Link>
                         </li>
-                    ))}
+                        );
+                    })}
                 </ul>
             </div>
         </section>
