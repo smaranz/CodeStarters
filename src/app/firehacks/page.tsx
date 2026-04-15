@@ -289,7 +289,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/creao.png" alt="Creao AI" />
+              <img className={s.sponsorLogoCreao} src="/sponsors/creao.png" alt="Creao AI" />
             </a>
             <a
               href="https://codecrafters.io"
