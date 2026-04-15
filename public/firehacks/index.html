@@ -511,31 +511,44 @@
       line-height: 1.15;
       margin-bottom: 40px;
     }
+    .container.sponsor-container {
+      max-width: 1320px;
+    }
     .sponsors-grid {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-items: center;
       align-items: center;
-      gap: 20px;
-      justify-content: center;
-      margin: 32px 0 48px;
+      gap: 12px 14px;
+      width: 100%;
+      max-width: 1100px;
+      margin: 28px auto 44px;
+      padding: 0 4px;
+    }
+    @media (min-width: 768px) {
+      .sponsors-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px 18px;
+        max-width: 1180px;
+      }
     }
     .sponsor-pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      box-sizing: border-box;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      border-radius: 50px;
-      padding: 18px 40px;
-      min-height: 72px;
+      border-radius: 999px;
+      padding: 10px 16px;
+      width: fit-content;
+      max-width: 100%;
+      min-height: 0;
       font-family: var(--font-heading);
       font-size: 0.9rem;
       font-weight: 700;
       color: var(--text-white);
       transition: all var(--transition);
-      flex-shrink: 0;
     }
     .sponsor-pill:hover {
       background: var(--bg-card-hover);
@@ -552,11 +565,16 @@
       border-color: #EF4444;
     }
     .sponsor-pill img {
-      height: clamp(36px, 8vw, 48px);
+      display: block;
+      height: auto;
       width: auto;
-      max-height: 48px;
-      max-width: min(260px, 85vw);
+      max-height: 52px;
+      max-width: min(280px, 100%);
       object-fit: contain;
+    }
+    .sponsor-logo-creao {
+      max-height: 60px;
+      max-width: min(320px, 100%);
     }
     .sponsor-cta {
       background: var(--bg-card);
@@ -564,7 +582,7 @@
       border-radius: var(--radius);
       padding: 48px;
       text-align: center;
-      max-width: 700px;
+      max-width: min(760px, 100%);
       margin: 0 auto;
     }
     .sponsor-cta h3 {
@@ -877,21 +895,21 @@
 
   <!-- ===== SPONSORS ===== -->
   <section class="section sponsor-section" id="sponsors">
-    <div class="container" style="text-align: center;">
+    <div class="container sponsor-container" style="text-align: center;">
       <p class="section-label sponsor-eyebrow reveal">Our Sponsors</p>
       <h2 class="section-title sponsor-headline reveal">Backed by Builders</h2>
       <div class="sponsors-grid reveal reveal-delay-1">
         <a href="https://creao.ai" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
-          <img src="/sponsors/creao.png" alt="Creao AI" height="48" width="200">
+          <img class="sponsor-logo-creao" src="/sponsors/creao.png" alt="Creao AI">
         </a>
         <a href="https://codecrafters.io" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
-          <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height="48" width="200">
+          <img src="/sponsors/codecrafters.svg" alt="CodeCrafters">
         </a>
         <a href="https://gen.xyz" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
-          <img src="/sponsors/genxyz.png" alt="Gen.xyz" height="48" width="200">
+          <img src="/sponsors/genxyz.png" alt="Gen.xyz">
         </a>
         <a href="https://relay.app" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
-          <img src="/sponsors/relay.webp" alt="Relay" height="48" width="200">
+          <img src="/sponsors/relay.webp" alt="Relay">
         </a>
       </div>
 

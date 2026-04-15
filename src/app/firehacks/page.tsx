@@ -277,7 +277,7 @@ export default function FireHacksPage() {
 
       {/* SPONSORS */}
       <section className={`${s.section} ${s.sponsorSection}`} id="sponsors">
-        <div className={s.container} style={{ textAlign: 'center' }}>
+        <div className={`${s.container} ${s.sponsorContainer}`} style={{ textAlign: 'center' }}>
           <p className={`${s.sectionLabel} ${s.sponsorEyebrow} ${s.reveal}`}>Our Sponsors</p>
           <h2 className={`${s.sectionTitle} ${s.sponsorHeadline} ${s.reveal}`}>Backed by Builders</h2>
           <div className={`${s.sponsorsGrid} ${s.reveal} ${s.d1}`}>
@@ -289,7 +289,11 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/creao.png" alt="Creao AI" height={48} width={200} />
+              <img
+                className={s.sponsorLogoCreao}
+                src="/sponsors/creao.png"
+                alt="Creao AI"
+              />
             </a>
             <a
               href="https://codecrafters.io"
@@ -299,7 +303,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height={48} width={200} />
+              <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" />
             </a>
             <a
               href="https://gen.xyz"
@@ -309,7 +313,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/genxyz.png" alt="Gen.xyz" height={48} width={200} />
+              <img src="/sponsors/genxyz.png" alt="Gen.xyz" />
             </a>
             <a
               href="https://relay.app"
@@ -319,7 +323,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/relay.webp" alt="Relay" height={48} width={200} />
+              <img src="/sponsors/relay.webp" alt="Relay" />
             </a>
           </div>
           <div className={`${s.sponsorCta} ${s.reveal} ${s.d2}`}>
