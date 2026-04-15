@@ -613,6 +613,9 @@
 .sponsorPill img.sponsorLogoCreao {
   max-height: 150px;
 }
+.sponsorPill img.sponsorLogoMedo {
+  max-height: 120px;
+}
 /* Full-bleed sponsor CTA strip */
 .sponsorCtaBleed {
   width: 100vw;

@@ -321,6 +321,16 @@ export default function FireHacksPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/sponsors/relay.webp" alt="Relay" />
             </a>
+            <a
+              href="https://medo.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className={s.sponsorLogoMedo} src="/sponsors/medo.png" alt="Medo" />
+            </a>
           </div>
         </div>
         <div className={`${s.sponsorCtaBleed} ${s.reveal} ${s.d2}`}>

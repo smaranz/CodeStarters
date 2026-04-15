@@ -30,6 +30,15 @@ const SPONSORS = [
         logoSrc: "/sponsors/relay.webp",
         logoAlt: "Relay",
     },
+    {
+        name: "Medo",
+        href: "https://medo.com",
+        logoSrc: "/sponsors/medo.png",
+        logoAlt: "Medo",
+        logoClassName: "h-24 sm:h-28 md:h-32 lg:h-36",
+        logoWidth: 7743,
+        logoHeight: 1589,
+    },
 ];
 
 export function SponsorsSection() {
@@ -60,6 +69,7 @@ export function SponsorsSection() {
                 <ul className="flex flex-wrap gap-6">
                     {SPONSORS.map((sponsor) => {
                         const host = new URL(sponsor.href).hostname.replace(/^www\./, "");
+                        const imgClass = `${sponsor.logoClassName ?? "h-16 sm:h-20 md:h-24 lg:h-[5.5rem]"} w-auto max-w-[min(100%,320px)] object-contain object-center opacity-95 group-hover:opacity-100 transition-opacity`;
                         return (
                         <li key={sponsor.name}>
                             <Link
@@ -74,15 +84,15 @@ export function SponsorsSection() {
                                     <img
                                         src={sponsor.logoSrc}
                                         alt=""
-                                        className="h-16 sm:h-20 md:h-24 lg:h-[5.5rem] w-auto max-w-[min(100%,320px)] object-contain object-center opacity-95 group-hover:opacity-100 transition-opacity"
+                                        className={imgClass}
                                     />
                                 ) : (
                                 <Image
                                     src={sponsor.logoSrc}
                                     alt=""
-                                    width={256}
-                                    height={257}
-                                    className="h-16 sm:h-20 md:h-24 lg:h-[5.5rem] w-auto max-w-[min(100%,320px)] object-contain object-center opacity-95 group-hover:opacity-100 transition-opacity"
+                                    width={sponsor.logoWidth ?? 256}
+                                    height={sponsor.logoHeight ?? 256}
+                                    className={imgClass}
                                 />
                                 )}
                                 <span className="inline-flex items-center gap-1.5 text-sm font-barlow font-semibold text-slate-400 group-hover:text-violet-600 transition-colors">
