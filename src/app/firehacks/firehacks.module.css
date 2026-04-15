@@ -563,7 +563,7 @@
   justify-content: center;
   box-sizing: border-box;
   width: 100%;
-  min-height: 120px;
+  min-height: 168px;
   padding: 20px 18px;
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -576,13 +576,13 @@
 }
 @media (min-width: 640px) {
   .sponsorPill {
-    min-height: 132px;
+    min-height: 172px;
     padding: 22px 20px;
   }
 }
 @media (min-width: 1024px) {
   .sponsorPill {
-    min-height: 144px;
+    min-height: 176px;
     padding: 24px 22px;
   }
 }
@@ -611,17 +611,7 @@
   }
 }
 .sponsorPill img.sponsorLogoCreao {
-  max-height: 58px;
-}
-@media (min-width: 640px) {
-  .sponsorPill img.sponsorLogoCreao {
-    max-height: 70px;
-  }
-}
-@media (min-width: 1024px) {
-  .sponsorPill img.sponsorLogoCreao {
-    max-height: 84px;
-  }
+  max-height: 120px;
 }
 /* Full-bleed sponsor CTA strip */
 .sponsorCtaBleed {
