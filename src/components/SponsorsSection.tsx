@@ -18,6 +18,18 @@ const SPONSORS = [
         logoSrc: "/sponsors/codecrafters.svg",
         logoAlt: "CodeCrafters",
     },
+    {
+        name: "Gen.xyz",
+        href: "https://gen.xyz",
+        logoSrc: "/sponsors/genxyz.png",
+        logoAlt: "Gen.xyz",
+    },
+    {
+        name: "Relay",
+        href: "https://relay.app",
+        logoSrc: "/sponsors/relay.webp",
+        logoAlt: "Relay",
+    },
 ];
 
 export function SponsorsSection() {

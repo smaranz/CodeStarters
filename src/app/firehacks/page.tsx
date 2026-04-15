@@ -34,7 +34,7 @@ export default function FireHacksPage() {
           if (entry.isIntersecting) entry.target.classList.add(s.visible)
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px 15% 0px' }
     )
     page.querySelectorAll(`.${s.reveal}`).forEach((el) => observer.observe(el))
     return () => observer.disconnect()
@@ -123,11 +123,11 @@ export default function FireHacksPage() {
           <div className={`${s.reveal} ${s.d2}`}>
             <span className={s.heroDateBadge}>
               <span className={s.pulseDot} />
-              June 6–7, 2026
+              June 6, 2026
             </span>
           </div>
           <p className={`${s.heroSub} ${s.reveal} ${s.d2}`}>
-            24 hours of building, learning, and shipping. Join 200+ high school hackers for the Bay
+            A full day of building, learning, and shipping. Join 200+ high school hackers for the Bay
             Area&apos;s most electric hackathon.
           </p>
           <div className={`${s.heroCtas} ${s.reveal} ${s.d3}`}>
@@ -150,7 +150,7 @@ export default function FireHacksPage() {
               <div className={s.statLabel}>Hackers</div>
             </div>
             <div className={`${s.statCard} ${s.reveal} ${s.d1}`}>
-              <div className={s.statNumber}>24 hrs</div>
+              <div className={s.statNumber}>1 day</div>
               <div className={s.statLabel}>Of Building</div>
             </div>
             <div className={`${s.statCard} ${s.reveal} ${s.d2}`}>
@@ -176,14 +176,14 @@ export default function FireHacksPage() {
               </h2>
               <div className={s.aboutProse}>
                 <p>
-                  Fire Hacks is a 24-hour hackathon designed for high school builders who want to
+                  Fire Hacks is a one-day hackathon designed for high school builders who want to
                   ship real projects, learn from mentors, and connect with the Bay Area&apos;s next
                   generation of engineers.
                 </p>
                 <p>
                   Whether you&apos;re building your first app or training your tenth model, Fire
                   Hacks gives you the space, resources, and community to create something you&apos;re
-                  proud of — in just one weekend.
+                  proud of — in one packed day.
                 </p>
                 <p>
                   Hosted by{' '}
@@ -204,9 +204,9 @@ export default function FireHacksPage() {
               <h3>// Why we&apos;re different</h3>
               <ul>
                 <li>Software-only: web, mobile, AI/ML — no hardware constraints</li>
-                <li>24 hours of uninterrupted building time</li>
+                <li>A full day of focused building time</li>
                 <li>Workshops on AI/ML, full-stack dev, and product design</li>
-                <li>Around-the-clock mentors from industry and university</li>
+                <li>Mentors from industry and university on site all day</li>
                 <li>Full meals, snacks, and caffeine provided</li>
                 <li>100% free — no registration fee, ever</li>
               </ul>
@@ -276,10 +276,10 @@ export default function FireHacksPage() {
       </section>
 
       {/* SPONSORS */}
-      <section className={s.section} id="sponsors">
+      <section className={`${s.section} ${s.sponsorSection}`} id="sponsors">
         <div className={s.container} style={{ textAlign: 'center' }}>
-          <p className={`${s.sectionLabel} ${s.reveal}`}>Our Sponsors</p>
-          <h2 className={`${s.sectionTitle} ${s.reveal}`}>Backed by Builders</h2>
+          <p className={`${s.sectionLabel} ${s.sponsorEyebrow} ${s.reveal}`}>Our Sponsors</p>
+          <h2 className={`${s.sectionTitle} ${s.sponsorHeadline} ${s.reveal}`}>Backed by Builders</h2>
           <div className={`${s.sponsorsGrid} ${s.reveal} ${s.d1}`}>
             <a
               href="https://creao.ai"
@@ -289,7 +289,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/creao.png" alt="Creao AI" height={28} />
+              <img src="/sponsors/creao.png" alt="Creao AI" height={48} width={200} />
             </a>
             <a
               href="https://codecrafters.io"
@@ -299,7 +299,27 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height={28} width={120} />
+              <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height={48} width={200} />
+            </a>
+            <a
+              href="https://gen.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/sponsors/genxyz.png" alt="Gen.xyz" height={48} width={200} />
+            </a>
+            <a
+              href="https://relay.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/sponsors/relay.webp" alt="Relay" height={48} width={200} />
             </a>
           </div>
           <div className={`${s.sponsorCta} ${s.reveal} ${s.d2}`}>
@@ -337,7 +357,7 @@ export default function FireHacksPage() {
                 <span className={s.faqIcon}>+</span>
               </summary>
               <div className={s.faqAnswer}>
-                Fire Hacks is a 24-hour in-person hackathon for high school students in Cupertino,
+                Fire Hacks is a one-day in-person hackathon for high school students in Cupertino,
                 CA. It&apos;s organized by CodeStarters and focused entirely on software — web,
                 mobile, and AI/ML. You&apos;ll build a project from scratch, attend workshops, eat
                 great food, and compete for $30K+ in prizes.

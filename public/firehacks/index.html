@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fire Hacks — Bay Area's Premier High School Hackathon</title>
-  <meta name="description" content="Fire Hacks is a 24-hour hackathon for 200–300 high school builders in Cupertino, CA. June 6–7, 2026. $30K+ in prizes. 100% free. Hosted by CodeStarters.">
-  <meta property="og:title" content="Fire Hacks — June 6–7, 2026">
-  <meta property="og:description" content="24-hour high school hackathon in Cupertino, CA. $30K+ in prizes. 100% free.">
+  <meta name="description" content="Fire Hacks is a one-day hackathon for 200–300 high school builders in Cupertino, CA. June 6, 2026. $30K+ in prizes. 100% free. Hosted by CodeStarters.">
+  <meta property="og:title" content="Fire Hacks — June 6, 2026">
+  <meta property="og:description" content="One-day high school hackathon in Cupertino, CA. $30K+ in prizes. 100% free.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -497,26 +497,45 @@
     }
 
     /* ========== SPONSORS ========== */
+    .sponsor-section {
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+    .sponsor-eyebrow {
+      font-size: 0.8125rem;
+      letter-spacing: 0.28em;
+      margin-bottom: 16px;
+    }
+    .sponsor-headline {
+      font-size: clamp(2rem, 5.5vw, 3.25rem);
+      line-height: 1.15;
+      margin-bottom: 40px;
+    }
     .sponsors-grid {
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
-      gap: 16px;
+      align-items: center;
+      gap: 20px;
       justify-content: center;
-      margin: 48px 0;
+      margin: 32px 0 48px;
     }
     .sponsor-pill {
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 50px;
-      padding: 12px 28px;
+      padding: 18px 40px;
+      min-height: 72px;
       font-family: var(--font-heading);
       font-size: 0.9rem;
       font-weight: 700;
       color: var(--text-white);
       transition: all var(--transition);
+      flex-shrink: 0;
     }
     .sponsor-pill:hover {
       background: var(--bg-card-hover);
@@ -533,10 +552,10 @@
       border-color: #EF4444;
     }
     .sponsor-pill img {
-      height: 28px;
+      height: clamp(36px, 8vw, 48px);
       width: auto;
-      max-height: 28px;
-      max-width: min(160px, 42vw);
+      max-height: 48px;
+      max-width: min(260px, 85vw);
       object-fit: contain;
     }
     .sponsor-cta {
@@ -745,11 +764,11 @@
       <div class="reveal reveal-delay-2">
         <span class="hero-date">
           <span class="pulse"></span>
-          June 6–7, 2026
+          June 6, 2026
         </span>
       </div>
       <p class="hero-sub reveal reveal-delay-2">
-        24 hours of building, learning, and shipping. Join 200+ high school hackers for the Bay Area's most electric hackathon.
+        A full day of building, learning, and shipping. Join 200+ high school hackers for the Bay Area's most electric hackathon.
       </p>
       <div class="hero-ctas reveal reveal-delay-3">
         <a href="#apply" class="btn btn-primary">Apply to Hack</a>
@@ -767,7 +786,7 @@
           <div class="stat-label">Hackers</div>
         </div>
         <div class="stat-card reveal reveal-delay-1">
-          <div class="stat-number">24 hrs</div>
+          <div class="stat-number">1 day</div>
           <div class="stat-label">Of Building</div>
         </div>
         <div class="stat-card reveal reveal-delay-2">
@@ -791,10 +810,10 @@
           <h2 class="section-title">What is <span class="accent">Fire Hacks</span>?</h2>
           <div class="about-prose">
             <p>
-              Fire Hacks is a 24-hour hackathon designed for high school builders who want to ship real projects, learn from mentors, and connect with the Bay Area's next generation of engineers.
+              Fire Hacks is a one-day hackathon designed for high school builders who want to ship real projects, learn from mentors, and connect with the Bay Area's next generation of engineers.
             </p>
             <p>
-              Whether you're building your first app or training your tenth model, Fire Hacks gives you the space, resources, and community to create something you're proud of — in just one weekend.
+              Whether you're building your first app or training your tenth model, Fire Hacks gives you the space, resources, and community to create something you're proud of — in one packed day.
             </p>
             <p>
               Hosted by <a href="https://codestarters.xyz" target="_blank" rel="noopener" style="color: var(--accent-lime); border-bottom: 1px solid var(--accent-lime-dim);">CodeStarters</a>, a student-led 501(c)(3) fiscally sponsored nonprofit teaching CS and AI to younger students. All sponsorships are tax-deductible.
@@ -805,9 +824,9 @@
           <h3>// Why we're different</h3>
           <ul>
             <li>Software-only: web, mobile, AI/ML — no hardware constraints</li>
-            <li>24 hours of uninterrupted building time</li>
+            <li>A full day of focused building time</li>
             <li>Workshops on AI/ML, full-stack dev, and product design</li>
-            <li>Around-the-clock mentors from industry and university</li>
+            <li>Mentors from industry and university on site all day</li>
             <li>Full meals, snacks, and caffeine provided</li>
             <li>100% free — no registration fee, ever</li>
           </ul>
@@ -857,16 +876,22 @@
   </section>
 
   <!-- ===== SPONSORS ===== -->
-  <section class="section" id="sponsors">
+  <section class="section sponsor-section" id="sponsors">
     <div class="container" style="text-align: center;">
-      <p class="section-label reveal">Our Sponsors</p>
-      <h2 class="section-title reveal">Backed by Builders</h2>
+      <p class="section-label sponsor-eyebrow reveal">Our Sponsors</p>
+      <h2 class="section-title sponsor-headline reveal">Backed by Builders</h2>
       <div class="sponsors-grid reveal reveal-delay-1">
         <a href="https://creao.ai" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
-          <img src="/sponsors/creao.png" alt="Creao AI" height="28" width="120">
+          <img src="/sponsors/creao.png" alt="Creao AI" height="48" width="200">
         </a>
         <a href="https://codecrafters.io" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
-          <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height="28" width="120">
+          <img src="/sponsors/codecrafters.svg" alt="CodeCrafters" height="48" width="200">
+        </a>
+        <a href="https://gen.xyz" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
+          <img src="/sponsors/genxyz.png" alt="Gen.xyz" height="48" width="200">
+        </a>
+        <a href="https://relay.app" target="_blank" rel="noopener" class="sponsor-pill sponsor-pill-accent">
+          <img src="/sponsors/relay.webp" alt="Relay" height="48" width="200">
         </a>
       </div>
 
@@ -896,7 +921,7 @@
             <span class="faq-icon">+</span>
           </summary>
           <div class="faq-answer">
-            Fire Hacks is a 24-hour in-person hackathon for high school students in Cupertino, CA. It's organized by CodeStarters and focused entirely on software — web, mobile, and AI/ML. You'll build a project from scratch, attend workshops, eat great food, and compete for $30K+ in prizes.
+            Fire Hacks is a one-day in-person hackathon for high school students in Cupertino, CA. It's organized by CodeStarters and focused entirely on software — web, mobile, and AI/ML. You'll build a project from scratch, attend workshops, eat great food, and compete for $30K+ in prizes.
           </div>
         </details>
 
@@ -979,7 +1004,7 @@
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px 15% 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 

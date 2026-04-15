@@ -526,14 +526,28 @@
 }
 
 /* ========== SPONSORS ========== */
+.sponsorSection {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.sponsorEyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.28em;
+  margin-bottom: 16px;
+}
+.sponsorHeadline {
+  font-size: clamp(2rem, 5.5vw, 3.25rem);
+  line-height: 1.15;
+  margin-bottom: 40px;
+}
 .sponsorsGrid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
   justify-content: center;
-  margin: 48px 0;
+  margin: 32px 0 48px;
 }
 .sponsorPill {
   display: inline-flex;
@@ -543,7 +557,8 @@
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 50px;
-  padding: 12px 28px;
+  padding: 18px 40px;
+  min-height: 72px;
   font-family: var(--font-heading);
   font-size: 0.9rem;
   font-weight: 700;
@@ -557,10 +572,10 @@
   transform: translateY(-2px);
 }
 .sponsorPill img {
-  height: 28px;
+  height: clamp(36px, 8vw, 48px);
   width: auto;
-  max-height: 28px;
-  max-width: min(160px, 42vw);
+  max-height: 48px;
+  max-width: min(260px, 85vw);
   object-fit: contain;
 }
 .sponsorCta {
