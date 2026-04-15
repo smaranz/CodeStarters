@@ -289,11 +289,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className={s.sponsorLogoCreao}
-                src="/sponsors/creao.png"
-                alt="Creao AI"
-              />
+              <img src="/sponsors/creao.png" alt="Creao AI" />
             </a>
             <a
               href="https://codecrafters.io"
@@ -326,25 +322,29 @@ export default function FireHacksPage() {
               <img src="/sponsors/relay.webp" alt="Relay" />
             </a>
           </div>
-          <div className={`${s.sponsorCta} ${s.reveal} ${s.d2}`}>
-            <h3>
-              Become a <span className={s.accentText}>Sponsor</span>
-            </h3>
-            <p>
-              Help us put on the Bay Area&apos;s best high school hackathon. Your sponsorship is
-              tax-deductible through our 501(c)(3) fiscal sponsor and directly funds prizes, meals,
-              and resources for 200+ student builders.
-            </p>
-            <a
-              href="mailto:codestarters26@gmail.com?subject=Fire%20Hacks%20Sponsorship"
-              className={`${s.btn} ${s.btnPrimary}`}
-            >
-              Get in Touch
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
+        </div>
+        <div className={`${s.sponsorCtaBleed} ${s.reveal} ${s.d2}`}>
+          <div className={`${s.container} ${s.sponsorContainer}`}>
+            <div className={s.sponsorCta}>
+              <h3>
+                Become a <span className={s.accentText}>Sponsor</span>
+              </h3>
+              <p>
+                Help us put on the Bay Area&apos;s best high school hackathon. Your sponsorship is
+                tax-deductible through our 501(c)(3) fiscal sponsor and directly funds prizes, meals,
+                and resources for 200+ student builders.
+              </p>
+              <a
+                href="mailto:codestarters26@gmail.com?subject=Fire%20Hacks%20Sponsorship"
+                className={`${s.btn} ${s.btnPrimary}`}
+              >
+                Get in Touch
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>
