@@ -36,8 +36,11 @@ const SPONSORS = [
     {
         name: "Featherless AI",
         href: "https://featherless.ai",
-        logoSrc: "/sponsors/featherless.webp",
+        logoSrc: "/sponsors/featherless.png",
         logoAlt: "Featherless AI",
+        logoClassName: "h-24 sm:h-28 md:h-32 lg:h-36",
+        logoWidth: 1280,
+        logoHeight: 1280,
     },
 ];
 

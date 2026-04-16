@@ -329,7 +329,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/featherless.webp" alt="Featherless AI" />
+              <img className={s.sponsorLogoFeatherless} src="/sponsors/featherless.png" alt="Featherless AI" />
             </a>
           </div>
         </div>
