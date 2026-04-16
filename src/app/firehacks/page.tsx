@@ -282,16 +282,6 @@ export default function FireHacksPage() {
           <h2 className={`${s.sectionTitle} ${s.sponsorHeadline} ${s.reveal}`}>Backed by Builders</h2>
           <div className={`${s.sponsorsGrid} ${s.reveal} ${s.d1}`}>
             <a
-              href="https://creao.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={s.sponsorPill}
-              style={{ background: 'var(--accent)' }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className={s.sponsorLogoCreao} src="/sponsors/creao.png" alt="Creao AI" />
-            </a>
-            <a
               href="https://codecrafters.io"
               target="_blank"
               rel="noopener noreferrer"
@@ -330,6 +320,16 @@ export default function FireHacksPage() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className={s.sponsorLogoMedo} src="/sponsors/medo.png" alt="Medo" />
+            </a>
+            <a
+              href="https://featherless.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/sponsors/featherless.webp" alt="Featherless AI" />
             </a>
           </div>
         </div>

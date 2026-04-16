@@ -7,12 +7,6 @@ import { ExternalLink, Heart } from "lucide-react";
 
 const SPONSORS = [
     {
-        name: "Creao AI",
-        href: "https://creao.ai",
-        logoSrc: "/sponsors/creao.png",
-        logoAlt: "Creao AI",
-    },
-    {
         name: "CodeCrafters",
         href: "https://codecrafters.io",
         logoSrc: "/sponsors/codecrafters.svg",
@@ -38,6 +32,12 @@ const SPONSORS = [
         logoClassName: "h-24 sm:h-28 md:h-32 lg:h-36",
         logoWidth: 7743,
         logoHeight: 1589,
+    },
+    {
+        name: "Featherless AI",
+        href: "https://featherless.ai",
+        logoSrc: "/sponsors/featherless.webp",
+        logoAlt: "Featherless AI",
     },
 ];
 
