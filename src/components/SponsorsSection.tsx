@@ -42,6 +42,12 @@ const SPONSORS = [
         logoWidth: 1280,
         logoHeight: 1280,
     },
+    {
+        name: "n8n",
+        href: "https://n8n.io",
+        logoSrc: "/sponsors/n8n.png",
+        logoAlt: "n8n",
+    },
 ];
 
 export function SponsorsSection() {

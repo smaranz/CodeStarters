@@ -331,6 +331,16 @@ export default function FireHacksPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className={s.sponsorLogoFeatherless} src="/sponsors/featherless.png" alt="Featherless AI" />
             </a>
+            <a
+              href="https://n8n.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/sponsors/n8n.png" alt="n8n" />
+            </a>
           </div>
         </div>
         <div className={`${s.sponsorCtaBleed} ${s.reveal} ${s.d2}`}>
