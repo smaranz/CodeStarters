@@ -376,6 +376,11 @@
   flex-wrap: wrap;
 }
 
+/* Registration anchor — offset fixed nav when linking to #apply */
+.applyAnchor {
+  scroll-margin-top: 96px;
+}
+
 /* ========== STATS ========== */
 .stats {
   padding: 0 0 20px;
@@ -618,6 +623,19 @@
 }
 .sponsorPill img.sponsorLogoFeatherless {
   max-height: 120px;
+}
+.sponsorPill img.sponsorLogoN8n {
+  max-height: 68px;
+}
+@media (min-width: 640px) {
+  .sponsorPill img.sponsorLogoN8n {
+    max-height: 84px;
+  }
+}
+@media (min-width: 1024px) {
+  .sponsorPill img.sponsorLogoN8n {
+    max-height: 100px;
+  }
 }
 /* Full-bleed sponsor CTA strip */
 .sponsorCtaBleed {

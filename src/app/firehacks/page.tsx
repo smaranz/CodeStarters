@@ -1,8 +1,31 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
+import Script from 'next/script'
 import { DM_Sans, Space_Mono } from 'next/font/google'
 import s from './firehacks.module.css'
+
+const LUMA_EVENT_HREF = 'https://luma.com/event/evt-teYwe8vJ6Eqne8d'
+const LUMA_EVENT_ID = 'evt-teYwe8vJ6Eqne8d'
+
+function RegisterLink({
+  className,
+  children = 'Register for Event',
+}: {
+  className?: string
+  children?: ReactNode
+}) {
+  return (
+    <a
+      href={LUMA_EVENT_HREF}
+      className={`luma-checkout--button ${className ?? ''}`}
+      data-luma-action="checkout"
+      data-luma-event-id={LUMA_EVENT_ID}
+    >
+      {children}
+    </a>
+  )
+}
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -95,9 +118,7 @@ export default function FireHacksPage() {
             <a href="#faq">FAQ</a>
           </div>
           <div className={s.navCta}>
-            <a href="#apply" className={`${s.btn} ${s.btnPrimary} ${s.btnSm}`}>
-              Apply to Hack
-            </a>
+            <RegisterLink className={`${s.btn} ${s.btnPrimary} ${s.btnSm}`} />
           </div>
           <button ref={toggleRef} className={s.navToggle} aria-label="Toggle menu">
             <span />
@@ -113,7 +134,7 @@ export default function FireHacksPage() {
           <p className={`${s.heroEyebrow} ${s.reveal}`}>
             Bay Area&apos;s Premier High School Hackathon
             <span className={s.eyebrowDot} />
-            Cupertino, CA
+            Bay Area
           </p>
           <h1 className={`${s.heroTitle} ${s.reveal} ${s.d1}`}>
             <span className={s.firePart}>FIRE</span>
@@ -130,10 +151,8 @@ export default function FireHacksPage() {
             A full day of building, learning, and shipping. Join 200+ high school hackers for the Bay
             Area&apos;s most electric hackathon.
           </p>
-          <div className={`${s.heroCtas} ${s.reveal} ${s.d3}`}>
-            <a href="#apply" className={`${s.btn} ${s.btnPrimary}`}>
-              Apply to Hack
-            </a>
+          <div id="apply" className={`${s.heroCtas} ${s.applyAnchor} ${s.reveal} ${s.d3}`}>
+            <RegisterLink className={`${s.btn} ${s.btnPrimary}`} />
             <a href="#sponsors" className={`${s.btn} ${s.btnOutline}`}>
               Become a Sponsor
             </a>
@@ -339,7 +358,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/sponsors/n8n.png" alt="n8n" />
+              <img className={s.sponsorLogoN8n} src="/sponsors/n8n.png" alt="n8n" />
             </a>
           </div>
         </div>
@@ -381,8 +400,7 @@ export default function FireHacksPage() {
                 <span className={s.faqIcon}>+</span>
               </summary>
               <div className={s.faqAnswer}>
-                Fire Hacks is a one-day in-person hackathon for high school students in Cupertino,
-                CA. It&apos;s organized by CodeStarters and focused entirely on software — web,
+                Fire Hacks is a one-day in-person hackathon for high school students in the Bay Area. It&apos;s organized by CodeStarters and focused entirely on software — web,
                 mobile, and AI/ML. You&apos;ll build a project from scratch, attend workshops, eat
                 great food, and compete for $30K+ in prizes.
               </div>
@@ -477,6 +495,8 @@ export default function FireHacksPage() {
           </div>
         </div>
       </footer>
+
+      <Script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js" strategy="afterInteractive" />
     </div>
   )
 }

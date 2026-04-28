@@ -47,6 +47,9 @@ const SPONSORS = [
         href: "https://n8n.io",
         logoSrc: "/sponsors/n8n.png",
         logoAlt: "n8n",
+        logoClassName: "h-20 sm:h-24 md:h-28 lg:h-32",
+        logoWidth: 800,
+        logoHeight: 320,
     },
 ];
 
