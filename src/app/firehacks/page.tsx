@@ -365,6 +365,16 @@ export default function FireHacksPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className={s.sponsorLogoN8n} src="/sponsors/n8n.png" alt="n8n" />
             </a>
+            <a
+              href="https://publick.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className={s.sponsorLogoPublick} src="/sponsors/publick.png" alt="Publick" />
+            </a>
           </div>
         </div>
         <div className={`${s.sponsorCtaBleed} ${s.reveal} ${s.d2}`}>

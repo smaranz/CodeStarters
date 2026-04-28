@@ -51,6 +51,15 @@ const SPONSORS = [
         logoWidth: 800,
         logoHeight: 320,
     },
+    {
+        name: "Publick",
+        href: "https://publick.xyz",
+        logoSrc: "/sponsors/publick.png",
+        logoAlt: "Publick",
+        logoClassName: "h-24 sm:h-28 md:h-32 lg:h-36",
+        logoWidth: 1254,
+        logoHeight: 1254,
+    },
 ];
 
 export function SponsorsSection() {
