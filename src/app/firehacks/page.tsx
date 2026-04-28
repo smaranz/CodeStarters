@@ -99,32 +99,37 @@ export default function FireHacksPage() {
 
   return (
     <div ref={pageRef} className={`${s.page} ${dmSans.variable} ${spaceMono.variable}`}>
-      {/* NAV */}
+      {/* NAV — liquid glass oval capsule */}
       <nav ref={navRef} className={s.nav}>
-        <div className={s.container}>
-          <a href="#" className={s.navLogo}>
-            <span className={s.navLogoIcon}>
-              <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 2L28 16L16 30L4 16L16 2Z" fill="#EF4444" opacity="0.9" />
-                <path d="M16 8L22 16L16 24L10 16L16 8Z" fill="#0A0A0A" />
-              </svg>
-            </span>
-            Fire Hacks
-          </a>
-          <div ref={linksRef} className={s.navLinks}>
-            <a href="#about">About</a>
-            <a href="#tracks">Tracks</a>
-            <a href="#sponsors">Sponsors</a>
-            <a href="#faq">FAQ</a>
+        <div className={s.navAlign}>
+          <div className={s.navGlass}>
+            <a href="#" className={s.navLogo}>
+              <span className={s.navLogoIcon}>
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 2L28 16L16 30L4 16L16 2Z" fill="#EF4444" opacity="0.9" />
+                  <path d="M16 8L22 16L16 24L10 16L16 8Z" fill="#0A0A0A" />
+                </svg>
+              </span>
+              Fire Hacks
+            </a>
+            <div ref={linksRef} className={s.navLinks}>
+              <a href="#about">About</a>
+              <a href="#tracks">Tracks</a>
+              <a href="#sponsors">Sponsors</a>
+              <a href="#faq">FAQ</a>
+              <div className={s.navDrawerCta}>
+                <RegisterLink className={`${s.btn} ${s.btnPrimary} ${s.btnSm} ${s.navDrawerRegister}`} />
+              </div>
+            </div>
+            <div className={s.navCta}>
+              <RegisterLink className={`${s.btn} ${s.btnPrimary} ${s.btnSm}`} />
+            </div>
+            <button ref={toggleRef} type="button" className={s.navToggle} aria-label="Toggle menu">
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
-          <div className={s.navCta}>
-            <RegisterLink className={`${s.btn} ${s.btnPrimary} ${s.btnSm}`} />
-          </div>
-          <button ref={toggleRef} className={s.navToggle} aria-label="Toggle menu">
-            <span />
-            <span />
-            <span />
-          </button>
         </div>
       </nav>
 
