@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect, useRef, type ReactNode } from 'react'
-import Link from 'next/link'
 import Script from 'next/script'
-import { SPONSORSHIP_PROSPECTUS_PAGE_PATH } from '@/lib/sponsor-prospectus'
+import {
+  SPONSORSHIP_PROSPECTUS_DOWNLOAD_FILENAME,
+  SPONSORSHIP_PROSPECTUS_PDF_PATH,
+} from '@/lib/sponsor-prospectus'
 import { DM_Sans, Space_Mono } from 'next/font/google'
 import s from './firehacks.module.css'
 
@@ -118,6 +120,7 @@ export default function FireHacksPage() {
               <a href="#about">About</a>
               <a href="#tracks">Tracks</a>
               <a href="#sponsors">Sponsors</a>
+              <a href="#prospectus">Prospectus</a>
               <a href="#faq">FAQ</a>
               <div className={s.navDrawerCta}>
                 <RegisterLink className={`${s.btn} ${s.btnPrimary} ${s.btnSm} ${s.navDrawerRegister}`} />
@@ -163,9 +166,9 @@ export default function FireHacksPage() {
             <a href="#sponsors" className={`${s.btn} ${s.btnOutline}`}>
               Become a Sponsor
             </a>
-            <Link href={SPONSORSHIP_PROSPECTUS_PAGE_PATH} className={`${s.btn} ${s.btnOutline}`}>
+            <a href="#prospectus" className={`${s.btn} ${s.btnOutline}`}>
               View prospectus
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -412,11 +415,43 @@ export default function FireHacksPage() {
                     <polyline points="12 5 19 12 12 19" />
                   </svg>
                 </a>
-                <Link href={SPONSORSHIP_PROSPECTUS_PAGE_PATH} className={`${s.btn} ${s.btnOutline}`}>
+                <a href="#prospectus" className={`${s.btn} ${s.btnOutline}`}>
                   View prospectus
-                </Link>
+                </a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SPONSORSHIP PROSPECTUS — embedded PDF */}
+      <section
+        className={s.section}
+        id="prospectus"
+        style={{ scrollMarginTop: '108px' }}
+      >
+        <div className={s.container} style={{ textAlign: 'center' }}>
+          <p className={`${s.sectionLabel} ${s.reveal}`}>For organizations</p>
+          <h2 className={`${s.sectionTitle} ${s.reveal}`}>Sponsorship prospectus</h2>
+          <p className={`${s.prospectusIntro} ${s.reveal} ${s.d1}`}>
+            Full tiers, benefits, and impact — right on this page. Download a copy to share with
+            your team.
+          </p>
+          <div className={`${s.prospectusToolbar} ${s.reveal} ${s.d2}`}>
+            <a
+              href={SPONSORSHIP_PROSPECTUS_PDF_PATH}
+              download={SPONSORSHIP_PROSPECTUS_DOWNLOAD_FILENAME}
+              className={`${s.btn} ${s.btnPrimary}`}
+            >
+              Download PDF
+            </a>
+          </div>
+          <div className={`${s.prospectusEmbedWrap} ${s.reveal} ${s.d3}`}>
+            <iframe
+              title="Fire Hacks sponsorship prospectus"
+              src={`${SPONSORSHIP_PROSPECTUS_PDF_PATH}#toolbar=1`}
+              className={s.prospectusEmbed}
+            />
           </div>
         </div>
       </section>
@@ -484,10 +519,10 @@ export default function FireHacksPage() {
                   codestarters26@gmail.com
                 </a>
                 , or view our{' '}
-                <Link href={SPONSORSHIP_PROSPECTUS_PAGE_PATH} style={{ color: 'var(--accent)' }}>
+                <a href="#prospectus" style={{ color: 'var(--accent)' }}>
                   sponsorship prospectus
-                </Link>{' '}
-                online. All sponsorships are
+                </a>{' '}
+                on this page. All sponsorships are
                 tax-deductible through our 501(c)(3) fiscal sponsor.
               </div>
             </details>

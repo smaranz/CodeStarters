@@ -33,6 +33,7 @@ export function Footer() {
                             <ul className="flex flex-col gap-3 text-sm text-slate-500">
                                 <li><Link href="#mission" className="hover:text-brand-600 transition-colors">Mission</Link></li>
                                 <li><Link href="#programs" className="hover:text-brand-600 transition-colors">Programs</Link></li>
+                                <li><Link href="#events" className="hover:text-brand-600 transition-colors">Events</Link></li>
                                 <li><Link href="#team" className="hover:text-brand-600 transition-colors">Team</Link></li>
                                 <li><Link href="#sponsors" className="hover:text-brand-600 transition-colors">Sponsors</Link></li>
                                 <li><Link href={SPONSORSHIP_PROSPECTUS_PAGE_PATH} className="hover:text-brand-600 transition-colors">Sponsorship prospectus</Link></li>

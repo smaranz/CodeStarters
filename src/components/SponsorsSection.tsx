@@ -18,19 +18,22 @@ const SPONSORS = [
         href: "https://gen.xyz",
         logoSrc: "/sponsors/genxyz.png",
         logoAlt: "Gen.xyz",
+        logoWidth: 256,
+        logoHeight: 256,
     },
     {
         name: "Relay",
         href: "https://relay.app",
         logoSrc: "/sponsors/relay.webp",
         logoAlt: "Relay",
+        logoWidth: 256,
+        logoHeight: 256,
     },
     {
         name: "Medo",
         href: "https://medo.com",
         logoSrc: "/sponsors/medo.png",
         logoAlt: "Medo",
-        logoClassName: "h-24 sm:h-28 md:h-32 lg:h-36",
         logoWidth: 7743,
         logoHeight: 1589,
     },
@@ -39,7 +42,6 @@ const SPONSORS = [
         href: "https://featherless.ai",
         logoSrc: "/sponsors/featherless.png",
         logoAlt: "Featherless AI",
-        logoClassName: "h-24 sm:h-28 md:h-32 lg:h-36",
         logoWidth: 1280,
         logoHeight: 1280,
     },
@@ -48,7 +50,6 @@ const SPONSORS = [
         href: "https://n8n.io",
         logoSrc: "/sponsors/n8n.png",
         logoAlt: "n8n",
-        logoClassName: "h-20 sm:h-24 md:h-28 lg:h-32",
         logoWidth: 800,
         logoHeight: 320,
     },
@@ -57,11 +58,13 @@ const SPONSORS = [
         href: "https://publick.xyz",
         logoSrc: "/sponsors/publick.png",
         logoAlt: "Publick",
-        logoClassName: "h-24 sm:h-28 md:h-32 lg:h-36",
         logoWidth: 1254,
         logoHeight: 1254,
     },
 ];
+
+const logoImgClass =
+    "max-h-[4.5rem] sm:max-h-24 md:max-h-[5.25rem] w-auto max-w-[min(100%,11.5rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100";
 
 export function SponsorsSection() {
     return (
@@ -97,41 +100,42 @@ export function SponsorsSection() {
                     </div>
                 </motion.div>
 
-                <ul className="flex flex-wrap gap-6">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6 list-none p-0 m-0">
                     {SPONSORS.map((sponsor) => {
                         const host = new URL(sponsor.href).hostname.replace(/^www\./, "");
-                        const imgClass = `${sponsor.logoClassName ?? "h-16 sm:h-20 md:h-24 lg:h-[5.5rem]"} w-auto max-w-[min(100%,320px)] object-contain object-center opacity-95 group-hover:opacity-100 transition-opacity`;
                         return (
-                        <li key={sponsor.name}>
-                            <Link
-                                href={sponsor.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={`${sponsor.name} — visit website (opens in new tab)`}
-                                className="group flex flex-col items-center justify-center gap-3 min-h-[9.5rem] min-w-[16rem] sm:min-w-[18rem] px-10 py-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-violet-300 hover:shadow-md transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
-                            >
-                                {sponsor.logoSrc.endsWith(".svg") ? (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img
-                                        src={sponsor.logoSrc}
-                                        alt=""
-                                        className={imgClass}
-                                    />
-                                ) : (
-                                <Image
-                                    src={sponsor.logoSrc}
-                                    alt=""
-                                    width={sponsor.logoWidth ?? 256}
-                                    height={sponsor.logoHeight ?? 256}
-                                    className={imgClass}
-                                />
-                                )}
-                                <span className="inline-flex items-center gap-1.5 text-sm font-barlow font-semibold text-slate-400 group-hover:text-violet-600 transition-colors">
-                                    Visit {host}
-                                    <ExternalLink className="w-4 h-4 shrink-0" aria-hidden />
-                                </span>
-                            </Link>
-                        </li>
+                            <li key={sponsor.name} className="min-w-0 h-full">
+                                <Link
+                                    href={sponsor.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`${sponsor.name} — visit website (opens in new tab)`}
+                                    className="group flex h-full min-h-[13.5rem] flex-col items-stretch justify-between gap-5 rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-sm transition-all hover:border-violet-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
+                                >
+                                    <div className="flex min-h-[5.75rem] flex-1 items-center justify-center">
+                                        {sponsor.logoSrc.endsWith(".svg") ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img
+                                                src={sponsor.logoSrc}
+                                                alt=""
+                                                className={logoImgClass}
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={sponsor.logoSrc}
+                                                alt=""
+                                                width={sponsor.logoWidth ?? 256}
+                                                height={sponsor.logoHeight ?? 256}
+                                                className={logoImgClass}
+                                            />
+                                        )}
+                                    </div>
+                                    <span className="inline-flex items-center justify-center gap-1.5 text-center text-sm font-barlow font-semibold text-slate-400 group-hover:text-violet-600 transition-colors">
+                                        Visit {host}
+                                        <ExternalLink className="w-4 h-4 shrink-0" aria-hidden />
+                                    </span>
+                                </Link>
+                            </li>
                         );
                     })}
                 </ul>
