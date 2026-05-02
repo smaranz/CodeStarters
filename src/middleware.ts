@@ -56,10 +56,12 @@ export async function middleware(request: NextRequest) {
 
     const { data: { user } } = await supabase.auth.getUser()
 
+    const pathname = request.nextUrl.pathname
+
     // Protect admin routes
-    if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (pathname.startsWith('/admin')) {
         // Allow access to login page
-        if (request.nextUrl.pathname === '/admin/login' || request.nextUrl.pathname === '/admin/setup') {
+        if (pathname === '/admin/login' || pathname === '/admin/setup') {
             if (user) {
                 return NextResponse.redirect(new URL('/admin', request.url))
             }
@@ -72,9 +74,23 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    // Protect Fire Hacks participant portal
+    if (pathname.startsWith('/firehacks/portal')) {
+        if (pathname === '/firehacks/portal/login') {
+            if (user) {
+                return NextResponse.redirect(new URL('/firehacks/portal', request.url))
+            }
+            return response
+        }
+
+        if (!user) {
+            return NextResponse.redirect(new URL('/firehacks/portal/login', request.url))
+        }
+    }
+
     return response
 }
 
 export const config = {
-    matcher: ['/admin/:path*'],
+    matcher: ['/admin/:path*', '/firehacks/portal/:path*'],
 }

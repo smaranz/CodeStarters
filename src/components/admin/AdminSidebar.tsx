@@ -11,6 +11,7 @@ import {
     Menu,
     X,
     ChevronRight,
+    QrCode,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
@@ -18,6 +19,7 @@ import Image from "next/image";
 
 const MENU_ITEMS = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
+    { name: "Scanner", href: "/admin/scanner", icon: QrCode },
     { name: "Website Requests", href: "/admin/requests", icon: Globe },
     { name: "Applications", href: "/admin/applications", icon: ClipboardList },
     { name: "Team", href: "/admin/team", icon: UserCheck },

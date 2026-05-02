@@ -42,3 +42,4 @@ next-env.d.ts
 
 # Ignore local videos
 *.mov
+firehacks-reels/node_modules

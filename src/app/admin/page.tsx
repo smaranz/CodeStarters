@@ -11,7 +11,8 @@ import {
     Sparkles,
     UserCheck,
     ClipboardList,
-    X
+    X,
+    QrCode
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
@@ -156,6 +157,15 @@ export default function AdminOverview() {
                         Quick Actions
                     </h3>
                     <div className="grid sm:grid-cols-2 gap-4">
+                        <Link href="/admin/scanner" className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-brand-50 transition-colors border border-transparent hover:border-brand-100 group">
+                            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm text-slate-400 group-hover:text-brand-600">
+                                <QrCode className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <p className="font-bold text-slate-900">QR Scanner</p>
+                                <p className="text-xs text-slate-500">Scan event passes</p>
+                            </div>
+                        </Link>
                         <Link href="/admin/requests" className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100 group">
                             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm text-slate-400 group-hover:text-blue-600">
                                 <FileText className="w-6 h-6" />
