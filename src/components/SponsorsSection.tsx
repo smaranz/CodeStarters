@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Heart } from "lucide-react";
+import { ExternalLink, FileText, Heart } from "lucide-react";
+import { SPONSORSHIP_PROSPECTUS_PAGE_PATH } from "@/lib/sponsor-prospectus";
 
 const SPONSORS = [
     {
@@ -82,9 +83,18 @@ export function SponsorsSection() {
                             Supported by partners who believe in our mission
                         </h2>
                     </div>
-                    <p className="text-slate-600 max-w-md text-base leading-relaxed font-barlow">
-                        We&apos;re grateful to organizations that help us bring CS, AI, and real-world projects to students and local businesses.
-                    </p>
+                    <div className="flex flex-col gap-5 max-w-md">
+                        <p className="text-slate-600 text-base leading-relaxed font-barlow">
+                            We&apos;re grateful to organizations that help us bring CS, AI, and real-world projects to students and local businesses.
+                        </p>
+                        <Link
+                            href={SPONSORSHIP_PROSPECTUS_PAGE_PATH}
+                            className="inline-flex items-center justify-center gap-2 self-start rounded-full bg-brand-700 text-white px-5 py-2.5 font-barlow font-semibold text-sm hover:bg-brand-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
+                        >
+                            <FileText className="w-4 h-4 shrink-0" aria-hidden />
+                            Sponsorship prospectus
+                        </Link>
+                    </div>
                 </motion.div>
 
                 <ul className="flex flex-wrap gap-6">

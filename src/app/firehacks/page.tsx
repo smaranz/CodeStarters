@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useRef, type ReactNode } from 'react'
+import Link from 'next/link'
 import Script from 'next/script'
+import { SPONSORSHIP_PROSPECTUS_PAGE_PATH } from '@/lib/sponsor-prospectus'
 import { DM_Sans, Space_Mono } from 'next/font/google'
 import s from './firehacks.module.css'
 
@@ -225,7 +227,7 @@ export default function FireHacksPage() {
               </div>
             </div>
             <div className={`${s.aboutCard} ${s.reveal} ${s.d1}`}>
-              <h3>// Why we&apos;re different</h3>
+              <h3>{'// '}Why we&apos;re different</h3>
               <ul>
                 <li>Software-only: web, mobile, AI/ML — no hardware constraints</li>
                 <li>A full day of focused building time</li>
@@ -464,8 +466,12 @@ export default function FireHacksPage() {
                   style={{ color: 'var(--accent)' }}
                 >
                   codestarters26@gmail.com
-                </a>{' '}
-                and we&apos;ll send you our sponsorship prospectus. All sponsorships are
+                </a>
+                , or view our{' '}
+                <Link href={SPONSORSHIP_PROSPECTUS_PAGE_PATH} style={{ color: 'var(--accent)' }}>
+                  sponsorship prospectus
+                </Link>{' '}
+                online. All sponsorships are
                 tax-deductible through our 501(c)(3) fiscal sponsor.
               </div>
             </details>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Instagram } from "lucide-react";
+import { SPONSORSHIP_PROSPECTUS_PAGE_PATH } from "@/lib/sponsor-prospectus";
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
@@ -34,6 +35,7 @@ export function Footer() {
                                 <li><Link href="#programs" className="hover:text-brand-600 transition-colors">Programs</Link></li>
                                 <li><Link href="#team" className="hover:text-brand-600 transition-colors">Team</Link></li>
                                 <li><Link href="#sponsors" className="hover:text-brand-600 transition-colors">Sponsors</Link></li>
+                                <li><Link href={SPONSORSHIP_PROSPECTUS_PAGE_PATH} className="hover:text-brand-600 transition-colors">Sponsorship prospectus</Link></li>
                             </ul>
                         </div>
                         <div>
