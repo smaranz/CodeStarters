@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PKPass } from "passkit-generator";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
 import path from "path";
 
@@ -11,7 +11,11 @@ export async function GET(
     try {
         const { token } = await context.params;
 
-        // 1. Fetch participant from Supabase
+        // 1. Fetch participant from Supabase (bypassing RLS with service role)
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
         const { data: participant, error: dbError } = await supabase
             .from("firehacks_participants")
             .select("*")
@@ -19,6 +23,7 @@ export async function GET(
             .single();
 
         if (dbError || !participant) {
+            console.error("DB Error fetching participant:", dbError);
             return NextResponse.json({ error: "Participant not found" }, { status: 404 });
         }
 
