@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Download } from "lucide-react";
-import { SPONSORSHIP_PROSPECTUS_PDF_PATH } from "@/lib/sponsor-prospectus";
+import {
+    SPONSORSHIP_PROSPECTUS_DOWNLOAD_FILENAME,
+    SPONSORSHIP_PROSPECTUS_PDF_PATH,
+} from "@/lib/sponsor-prospectus";
 
 export const metadata: Metadata = {
-    title: "Sponsorship prospectus | CodeStarters",
+    title: "Fire Hacks sponsorship prospectus | CodeStarters",
     description:
-        "View and download the CodeStarters sponsorship prospectus for partners and organizations supporting our mission.",
+        "View and download the Fire Hacks sponsorship prospectus — partnership tiers, impact, and ways to support the hackathon.",
     openGraph: {
-        title: "Sponsorship prospectus | CodeStarters",
+        title: "Fire Hacks sponsorship prospectus | CodeStarters",
         description:
-            "Partnership opportunities, impact, and ways to support CS education and community websites in Cupertino.",
+            "Partnership opportunities and sponsor benefits for Fire Hacks, the Bay Area high school hackathon by CodeStarters.",
     },
 };
 
@@ -32,15 +35,15 @@ export default function SponsorshipProspectusPage() {
                             For sponsors
                         </p>
                         <h1 className="font-instrument italic text-4xl lg:text-5xl text-slate-900 text-balance">
-                            Sponsorship prospectus
+                            Fire Hacks sponsorship prospectus
                         </h1>
                         <p className="mt-4 text-slate-600 font-barlow text-base leading-relaxed max-w-xl">
-                            Review partnership details below or download the PDF to share with your team.
+                            Sponsorship tiers and details for Fire Hacks — preview below or download to share with your team.
                         </p>
                     </div>
                     <a
                         href={SPONSORSHIP_PROSPECTUS_PDF_PATH}
-                        download
+                        download={SPONSORSHIP_PROSPECTUS_DOWNLOAD_FILENAME}
                         className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 text-white px-6 py-3 font-barlow font-semibold text-sm hover:bg-brand-800 transition-colors shrink-0"
                     >
                         <Download className="w-4 h-4 shrink-0" aria-hidden />
@@ -50,7 +53,7 @@ export default function SponsorshipProspectusPage() {
 
                 <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden aspect-[4/3] min-h-[min(85vh,56rem)] w-full">
                     <iframe
-                        title="CodeStarters sponsorship prospectus (PDF)"
+                        title="Fire Hacks sponsorship prospectus (PDF)"
                         src={`${SPONSORSHIP_PROSPECTUS_PDF_PATH}#toolbar=1`}
                         className="w-full h-full min-h-[min(85vh,56rem)] border-0"
                     />
