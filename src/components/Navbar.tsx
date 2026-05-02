@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { SPONSORSHIP_PROSPECTUS_PAGE_PATH } from "@/lib/sponsor-prospectus";
 
 const NAV_LINKS = [
     { name: "Mission", href: "#mission" },
@@ -13,7 +12,6 @@ const NAV_LINKS = [
     { name: "Events", href: "#events" },
     { name: "Team", href: "#team" },
     { name: "Sponsors", href: "#sponsors" },
-    { name: "Prospectus", href: SPONSORSHIP_PROSPECTUS_PAGE_PATH },
 ];
 
 export function Navbar() {
