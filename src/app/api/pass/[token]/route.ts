@@ -91,16 +91,18 @@ export async function GET(
             // Using existing logos as fallback for required pass assets
             const logoPath = path.join(publicDir, "logo_new_cropped.png");
             if (fs.existsSync(logoPath)) {
-                pass.addBuffer("icon.png", fs.readFileSync(logoPath));
-                pass.addBuffer("icon@2x.png", fs.readFileSync(logoPath));
-                pass.addBuffer("logo.png", fs.readFileSync(logoPath));
+                const logoBuffer = fs.readFileSync(logoPath);
+                pass.addBuffer("icon.png", logoBuffer);
+                pass.addBuffer("icon@2x.png", logoBuffer);
+                pass.addBuffer("logo.png", logoBuffer);
+                pass.addBuffer("logo@2x.png", logoBuffer);
             }
         } catch (e) {
             console.warn("Failed to load pass assets:", e);
         }
 
         // 6. Generate the .pkpass buffer
-        const buffer = pass.getAsBuffer();
+        const buffer = await pass.getAsBuffer();
 
         // 7. Return with proper Apple Wallet headers
         return new NextResponse(buffer as any, {
@@ -112,7 +114,11 @@ export async function GET(
         });
 
     } catch (error: any) {
-        console.error("Pass generation error:", error);
-        return NextResponse.json({ error: "Failed to generate pass" }, { status: 500 });
+        console.error("Pass generation error detailed:", error);
+        return NextResponse.json({ 
+            error: "Failed to generate pass", 
+            message: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        }, { status: 500 });
     }
 }
