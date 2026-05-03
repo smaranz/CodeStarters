@@ -68,7 +68,7 @@ const SPONSORS = [
         logoWidth: 1280,
         logoHeight: 720,
         logoClassName:
-            "max-h-[3rem] sm:max-h-14 md:max-h-[3.75rem] w-auto max-w-[min(100%,17.5rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100",
+            "max-h-[5.5rem] sm:max-h-36 md:max-h-40 lg:max-h-44 w-auto max-w-[min(100%,32rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100",
     },
 ];
 
