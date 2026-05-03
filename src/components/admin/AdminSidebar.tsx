@@ -13,6 +13,7 @@ import {
     ChevronRight,
     QrCode,
     Ticket,
+    Users,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
@@ -22,6 +23,7 @@ const MENU_ITEMS = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
     { name: "Scanner", href: "/admin/scanner", icon: QrCode },
     { name: "Fire Hacks Portal", href: "/admin/firehacks-portal", icon: Ticket },
+    { name: "Fire Hacks Members", href: "/admin/firehacks-members", icon: Users },
     { name: "Website Requests", href: "/admin/requests", icon: Globe },
     { name: "Applications", href: "/admin/applications", icon: ClipboardList },
     { name: "Team", href: "/admin/team", icon: UserCheck },

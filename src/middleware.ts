@@ -88,9 +88,23 @@ export async function middleware(request: NextRequest) {
         }
     }
 
+    // Protect Fire Hacks member scanner
+    if (pathname.startsWith('/firehacks/member')) {
+        if (pathname === '/firehacks/member/login') {
+            if (user) {
+                return NextResponse.redirect(new URL('/firehacks/member', request.url))
+            }
+            return response
+        }
+
+        if (!user) {
+            return NextResponse.redirect(new URL('/firehacks/member/login', request.url))
+        }
+    }
+
     return response
 }
 
 export const config = {
-    matcher: ['/admin/:path*', '/firehacks/portal/:path*'],
+    matcher: ['/admin/:path*', '/firehacks/portal/:path*', '/firehacks/member/:path*'],
 }

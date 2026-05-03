@@ -43,3 +43,6 @@ next-env.d.ts
 # Ignore local videos
 *.mov
 firehacks-reels/node_modules
+
+# Supabase CLI local metadata (do not commit)
+supabase/.temp/
