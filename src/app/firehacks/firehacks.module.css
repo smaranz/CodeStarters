@@ -732,16 +732,16 @@
   }
 }
 .sponsorPill img.sponsorLogoZo {
-  max-height: 96px;
+  max-height: 108px;
 }
 @media (min-width: 640px) {
   .sponsorPill img.sponsorLogoZo {
-    max-height: 120px;
+    max-height: 132px;
   }
 }
 @media (min-width: 1024px) {
   .sponsorPill img.sponsorLogoZo {
-    max-height: 140px;
+    max-height: 154px;
   }
 }
 /* Full-bleed sponsor CTA strip */
