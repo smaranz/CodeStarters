@@ -60,6 +60,16 @@ const SPONSORS = [
         logoWidth: 1254,
         logoHeight: 1254,
     },
+    {
+        name: "Zo Computer",
+        href: "https://zo.computer/",
+        logoSrc: "/sponsors/zo-computer.png",
+        logoAlt: "Zo Computer",
+        logoWidth: 1280,
+        logoHeight: 720,
+        logoClassName:
+            "max-h-[3rem] sm:max-h-14 md:max-h-[3.75rem] w-auto max-w-[min(100%,17.5rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100",
+    },
 ];
 
 const logoImgClass =
@@ -108,7 +118,7 @@ export function SponsorsSection() {
                                             <img
                                                 src={sponsor.logoSrc}
                                                 alt=""
-                                                className={logoImgClass}
+                                                className={sponsor.logoClassName ?? logoImgClass}
                                             />
                                         ) : (
                                             <Image
@@ -116,7 +126,7 @@ export function SponsorsSection() {
                                                 alt=""
                                                 width={sponsor.logoWidth ?? 256}
                                                 height={sponsor.logoHeight ?? 256}
-                                                className={logoImgClass}
+                                                className={sponsor.logoClassName ?? logoImgClass}
                                             />
                                         )}
                                     </div>
