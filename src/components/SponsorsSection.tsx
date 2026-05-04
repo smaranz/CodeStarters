@@ -63,7 +63,7 @@ const SPONSORS = [
     {
         name: "Zo Computer",
         href: "https://zo.computer/",
-        logoSrc: "/sponsors/zo-computer.png",
+        logoSrc: "/sponsors/zo-computer.svg",
         logoAlt: "Zo Computer",
         logoWidth: 1280,
         logoHeight: 720,

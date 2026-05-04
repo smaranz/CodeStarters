@@ -405,7 +405,7 @@ export default function FireHacksPage() {
               style={{ background: 'var(--accent)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className={s.sponsorLogoZo} src="/sponsors/zo-computer.png" alt="Zo Computer" />
+              <img className={s.sponsorLogoZo} src="/sponsors/zo-computer.svg" alt="Zo Computer" />
             </a>
           </div>
         </div>
