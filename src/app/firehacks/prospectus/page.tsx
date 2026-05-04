@@ -8,6 +8,8 @@ import {
 } from "@/lib/sponsor-prospectus";
 import s from "../firehacks.module.css";
 
+const FIREHACKS_DISCORD_HREF = "https://discord.gg/utUNdDz3";
+
 const dmSans = DM_Sans({
     subsets: ["latin"],
     weight: ["400", "500", "600", "700"],
@@ -40,6 +42,14 @@ export default function FireHacksProspectusPage() {
                         <Link href="/firehacks" className={`${s.btn} ${s.btnOutline} ${s.btnSm}`}>
                             ← Event site
                         </Link>
+                        <a
+                            href={FIREHACKS_DISCORD_HREF}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`${s.btn} ${s.btnOutline} ${s.btnSm}`}
+                        >
+                            Discord
+                        </a>
                     </div>
                 </div>
             </nav>

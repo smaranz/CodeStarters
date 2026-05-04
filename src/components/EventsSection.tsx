@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, Calendar, Flame, MapPin } from "lucide-react";
 
 const FIRE_HACKS_HREF = "/firehacks";
+const FIRE_HACKS_DISCORD_HREF = "https://discord.gg/utUNdDz3";
 
 export function EventsSection() {
     return (
@@ -40,15 +41,28 @@ export function EventsSection() {
                                 <span>Bay Area</span>
                             </li>
                         </ul>
-                        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                            <Link
-                                href={FIRE_HACKS_HREF}
-                                className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white font-barlow font-semibold text-sm px-7 py-3.5 shadow-md hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                        <div className="flex flex-wrap items-center gap-3">
+                            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                <Link
+                                    href={FIRE_HACKS_HREF}
+                                    className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white font-barlow font-semibold text-sm px-7 py-3.5 shadow-md hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                                >
+                                    Visit Fire Hacks site
+                                    <ArrowUpRight className="w-4 h-4 shrink-0" aria-hidden />
+                                </Link>
+                            </motion.div>
+                            <motion.a
+                                href={FIRE_HACKS_DISCORD_HREF}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-slate-900 font-barlow font-semibold text-sm px-7 py-3.5 shadow-sm hover:bg-slate-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
                             >
-                                Visit Fire Hacks site
+                                Join Discord
                                 <ArrowUpRight className="w-4 h-4 shrink-0" aria-hidden />
-                            </Link>
-                        </motion.div>
+                            </motion.a>
+                        </div>
                     </motion.div>
 
                     <motion.div

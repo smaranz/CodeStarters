@@ -9,6 +9,7 @@ import s from './firehacks.module.css'
 
 const LUMA_EVENT_HREF = 'https://luma.com/event/evt-teYwe8vJ6Eqne8d'
 const LUMA_EVENT_ID = 'evt-teYwe8vJ6Eqne8d'
+const FIREHACKS_DISCORD_HREF = 'https://discord.gg/utUNdDz3'
 
 function RegisterLink({
   className,
@@ -120,6 +121,13 @@ export default function FireHacksPage() {
               <a href="#sponsors">Sponsors</a>
               <Link href={SPONSORSHIP_PROSPECTUS_PAGE_PATH}>Prospectus</Link>
               <a href="#faq">FAQ</a>
+              <a
+                href={FIREHACKS_DISCORD_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Discord
+              </a>
               <div className={s.navDrawerCta}>
                 <RegisterLink className={`${s.btn} ${s.btnPrimary} ${s.btnSm} ${s.navDrawerRegister}`} />
               </div>
@@ -161,6 +169,14 @@ export default function FireHacksPage() {
           </p>
           <div id="apply" className={`${s.heroCtas} ${s.applyAnchor} ${s.reveal} ${s.d3}`}>
             <RegisterLink className={`${s.btn} ${s.btnPrimary}`} />
+            <a
+              href={FIREHACKS_DISCORD_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${s.btn} ${s.btnOutline}`}
+            >
+              Join Discord
+            </a>
             <a href="#sponsors" className={`${s.btn} ${s.btnOutline}`}>
               Become a Sponsor
             </a>
@@ -536,6 +552,9 @@ export default function FireHacksPage() {
             <div className={s.footerLinks}>
               <a href="https://codestarters.xyz" target="_blank" rel="noopener noreferrer">
                 codestarters.xyz
+              </a>
+              <a href={FIREHACKS_DISCORD_HREF} target="_blank" rel="noopener noreferrer">
+                Discord
               </a>
               <a href="mailto:codestarters26@gmail.com">codestarters26@gmail.com</a>
               <span className={s.footerText}>&copy; 2026</span>
