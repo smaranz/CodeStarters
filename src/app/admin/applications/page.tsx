@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
-import { StatusBadge } from "@/components/admin/StatusBadge";
 import {
     Loader2,
     Search,
@@ -19,42 +17,67 @@ import {
     ChevronUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { StatusBadge } from "@/components/admin/StatusBadge";
+
+type VolunteerApplication = {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string | null;
+    status: string;
+    interest?: string | null;
+    school?: string | null;
+    grade_level?: string | null;
+    availability?: string | null;
+    reason_for_joining?: string | null;
+    previous_experience?: string | null;
+    social_links?: string | null;
+    bio?: string | null;
+    created_at: string;
+};
 
 export default function ApplicationsPage() {
-    const [volunteers, setVolunteers] = useState<any[]>([]);
+    const [volunteers, setVolunteers] = useState<VolunteerApplication[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("pending");
     const [expandedId, setExpandedId] = useState<string | null>(null);
-
-    useEffect(() => {
-        fetchVolunteers();
-    }, []);
+    const [fetchError, setFetchError] = useState<string | null>(null);
 
     const fetchVolunteers = async () => {
         setIsLoading(true);
-        const { data, error } = await supabase
-            .from("volunteers")
-            .select("*")
-            .neq("status", "completed")
-            .order("created_at", { ascending: false });
-
-        if (!error) setVolunteers(data || []);
+        setFetchError(null);
+        const res = await fetch("/api/admin/volunteers?scope=applications");
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+            setVolunteers([]);
+            setFetchError(typeof data?.error === "string" ? data.error : "Could not load applications.");
+        } else {
+            setVolunteers(Array.isArray(data) ? (data as VolunteerApplication[]) : []);
+        }
         setIsLoading(false);
     };
 
-    const updateStatus = async (id: string, newStatus: string) => {
-        const { error } = await supabase
-            .from("volunteers")
-            .update({ status: newStatus })
-            .eq("id", id);
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- mount data fetch triggers loading state
+        void fetchVolunteers();
+    }, []);
 
-        if (!error) {
-            if (newStatus === "completed") {
-                setVolunteers(volunteers.filter(v => v.id !== id));
-            } else {
-                setVolunteers(volunteers.map(v => v.id === id ? { ...v, status: newStatus } : v));
-            }
+    const updateStatus = async (id: string, newStatus: string) => {
+        const res = await fetch("/api/admin/volunteers", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, status: newStatus }),
+        });
+        if (!res.ok) return;
+        if (newStatus === "completed") {
+            setVolunteers(volunteers.filter((v) => v.id !== id));
+        } else {
+            setVolunteers(
+                volunteers.map((v) =>
+                    v.id === id ? { ...v, status: newStatus } : v,
+                ),
+            );
         }
     };
 
@@ -83,6 +106,12 @@ export default function ApplicationsPage() {
                     Refresh
                 </Button>
             </div>
+
+            {fetchError && (
+                <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800">
+                    {fetchError}
+                </div>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">

@@ -12,6 +12,7 @@ const NAV_LINKS = [
     { name: "Events", href: "#events" },
     { name: "Team", href: "#team" },
     { name: "Sponsors", href: "#sponsors" },
+    { name: "Donate", href: "#donate" },
 ];
 
 export function Navbar() {

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import {
     Loader2,
     Search,
@@ -17,37 +16,55 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
+type VolunteerApplication = {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string | null;
+    interest?: string | null;
+    school?: string | null;
+    grade_level?: string | null;
+    availability?: string | null;
+    reason_for_joining?: string | null;
+    previous_experience?: string | null;
+    social_links?: string | null;
+    created_at: string;
+};
+
 export default function TeamPage() {
-    const [members, setMembers] = useState<any[]>([]);
+    const [members, setMembers] = useState<VolunteerApplication[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [expandedId, setExpandedId] = useState<string | null>(null);
-
-    useEffect(() => {
-        fetchMembers();
-    }, []);
+    const [fetchError, setFetchError] = useState<string | null>(null);
 
     const fetchMembers = async () => {
         setIsLoading(true);
-        const { data, error } = await supabase
-            .from("volunteers")
-            .select("*")
-            .eq("status", "completed")
-            .order("created_at", { ascending: false });
-
-        if (!error) setMembers(data || []);
+        setFetchError(null);
+        const res = await fetch("/api/admin/volunteers?scope=team");
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+            setMembers([]);
+            setFetchError(typeof data?.error === "string" ? data.error : "Could not load team.");
+        } else {
+            setMembers(Array.isArray(data) ? (data as VolunteerApplication[]) : []);
+        }
         setIsLoading(false);
     };
 
-    const removeFromTeam = async (id: string) => {
-        const { error } = await supabase
-            .from("volunteers")
-            .update({ status: "rejected" })
-            .eq("id", id);
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- mount data fetch triggers loading state
+        void fetchMembers();
+    }, []);
 
-        if (!error) {
-            setMembers(members.filter(m => m.id !== id));
-        }
+    const removeFromTeam = async (id: string) => {
+        const res = await fetch("/api/admin/volunteers", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, status: "rejected" }),
+        });
+        if (!res.ok) return;
+        setMembers(members.filter((m) => m.id !== id));
     };
 
     const filteredMembers = members.filter(m =>
@@ -69,6 +86,12 @@ export default function TeamPage() {
                     Refresh
                 </Button>
             </div>
+
+            {fetchError && (
+                <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800">
+                    {fetchError}
+                </div>
+            )}
 
             {members.length > 3 && (
                 <div className="relative">

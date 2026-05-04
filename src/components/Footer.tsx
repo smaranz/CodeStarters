@@ -35,6 +35,7 @@ export function Footer() {
                                 <li><Link href="#events" className="hover:text-brand-600 transition-colors">Events</Link></li>
                                 <li><Link href="#team" className="hover:text-brand-600 transition-colors">Team</Link></li>
                                 <li><Link href="#sponsors" className="hover:text-brand-600 transition-colors">Sponsors</Link></li>
+                                <li><Link href="#donate" className="hover:text-brand-600 transition-colors">Donate</Link></li>
                             </ul>
                         </div>
                         <div>
@@ -42,6 +43,16 @@ export function Footer() {
                             <ul className="flex flex-col gap-3 text-sm text-slate-500">
                                 <li><Link href="#volunteer" className="hover:text-brand-600 transition-colors">Volunteer</Link></li>
                                 <li><Link href="#request-website" className="hover:text-brand-600 transition-colors">Request a Website</Link></li>
+                                <li>
+                                    <a
+                                        href="https://hcb.hackclub.com/donations/start/codestarters"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-brand-600 transition-colors"
+                                    >
+                                        Donate
+                                    </a>
+                                </li>
                                 <li><a href="mailto:hello@codecore.org" className="hover:text-brand-600 transition-colors">Contact</a></li>
                             </ul>
                         </div>

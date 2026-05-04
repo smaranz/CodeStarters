@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import {
     Loader2,
@@ -19,37 +18,55 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
+type WebsiteRequestRow = {
+    id: string;
+    business_name: string;
+    owner_name: string;
+    business_type?: string | null;
+    email: string;
+    phone?: string | null;
+    description?: string | null;
+    needs?: string | null;
+    cupertino_consent?: boolean | null;
+    status: string;
+    created_at: string;
+};
+
 export default function WebsiteRequestsPage() {
-    const [requests, setRequests] = useState<any[]>([]);
+    const [requests, setRequests] = useState<WebsiteRequestRow[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
     const [expandedId, setExpandedId] = useState<string | null>(null);
-
-    useEffect(() => {
-        fetchRequests();
-    }, []);
+    const [fetchError, setFetchError] = useState<string | null>(null);
 
     const fetchRequests = async () => {
         setIsLoading(true);
-        const { data, error } = await supabase
-            .from("website_requests")
-            .select("*")
-            .order("created_at", { ascending: false });
-
-        if (!error) setRequests(data || []);
+        setFetchError(null);
+        const res = await fetch("/api/admin/website-requests");
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+            setRequests([]);
+            setFetchError(typeof data?.error === "string" ? data.error : "Could not load requests.");
+        } else {
+            setRequests(Array.isArray(data) ? (data as WebsiteRequestRow[]) : []);
+        }
         setIsLoading(false);
     };
 
-    const updateStatus = async (id: string, newStatus: string) => {
-        const { error } = await supabase
-            .from("website_requests")
-            .update({ status: newStatus })
-            .eq("id", id);
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- mount data fetch triggers loading state
+        void fetchRequests();
+    }, []);
 
-        if (!error) {
-            setRequests(requests.map(r => r.id === id ? { ...r, status: newStatus } : r));
-        }
+    const updateStatus = async (id: string, newStatus: string) => {
+        const res = await fetch("/api/admin/website-requests", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, status: newStatus }),
+        });
+        if (!res.ok) return;
+        setRequests(requests.map((r) => (r.id === id ? { ...r, status: newStatus } : r)));
     };
 
     const filteredRequests = requests.filter(req => {
@@ -78,6 +95,12 @@ export default function WebsiteRequestsPage() {
                     Refresh
                 </Button>
             </div>
+
+            {fetchError && (
+                <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-800">
+                    {fetchError}
+                </div>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">

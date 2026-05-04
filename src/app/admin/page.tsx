@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import {
-    Users,
     Globe,
     Clock,
     FileText,
@@ -30,31 +28,24 @@ export default function AdminOverview() {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const [
-                    { count: reqCount, error: reqErr },
-                    { count: pendReqCount, error: pReqErr },
-                    { count: pendAppCount, error: pAppErr },
-                    { count: teamCount, error: teamErr },
-                ] = await Promise.all([
-                    supabase.from("website_requests").select("*", { count: "exact", head: true }),
-                    supabase.from("website_requests").select("*", { count: "exact", head: true }).eq("status", "pending"),
-                    supabase.from("volunteers").select("*", { count: "exact", head: true }).eq("status", "pending"),
-                    supabase.from("volunteers").select("*", { count: "exact", head: true }).eq("status", "completed"),
-                ]);
-
-                if (reqErr || pReqErr || pAppErr || teamErr) {
-                    throw new Error("Failed to fetch statistics. Please check your connection or permissions.");
+                const res = await fetch("/api/admin/dashboard-stats");
+                const body = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    throw new Error(
+                        typeof body.error === "string"
+                            ? body.error
+                            : "Failed to fetch statistics. Check permissions and server config.",
+                    );
                 }
-
                 setStats({
-                    requests: reqCount || 0,
-                    pendingRequests: pendReqCount || 0,
-                    pendingApps: pendAppCount || 0,
-                    teamMembers: teamCount || 0,
+                    requests: body.requests ?? 0,
+                    pendingRequests: body.pendingRequests ?? 0,
+                    pendingApps: body.pendingApps ?? 0,
+                    teamMembers: body.teamMembers ?? 0,
                 });
-            } catch (err: any) {
+            } catch (err: unknown) {
                 console.error("Dashboard error:", err);
-                setError(err.message);
+                setError(err instanceof Error ? err.message : "Unknown error");
             } finally {
                 setIsLoading(false);
             }

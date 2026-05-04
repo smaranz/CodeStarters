@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseServerClient } from "@/lib/supabase/server";
+import { verifyAdminUser } from "@/lib/admin-auth";
 import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
@@ -15,17 +15,9 @@ function createTransport() {
     return nodemailer.createTransport({ host: "smtp.gmail.com", port: 587, secure: false, auth: { user, pass } });
 }
 
-async function verifyAdmin() {
-    const sessionClient = await getSupabaseServerClient();
-    const { data: { user } } = await sessionClient.auth.getUser();
-    if (!user) return null;
-    const { data: adminRow } = await sessionClient.from("admin_users").select("id").eq("id", user.id).maybeSingle();
-    return adminRow ? user : null;
-}
-
 // GET — list all members
 export async function GET() {
-    const admin_user = await verifyAdmin();
+    const admin_user = await verifyAdminUser();
     if (!admin_user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const admin = getSupabaseAdminClient();
@@ -40,7 +32,7 @@ export async function GET() {
 
 // POST — create a member account and email credentials
 export async function POST(request: NextRequest) {
-    const admin_user = await verifyAdmin();
+    const admin_user = await verifyAdminUser();
     if (!admin_user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const transport = createTransport();
@@ -117,7 +109,7 @@ export async function POST(request: NextRequest) {
 
 // DELETE — remove a member account
 export async function DELETE(request: NextRequest) {
-    const admin_user = await verifyAdmin();
+    const admin_user = await verifyAdminUser();
     if (!admin_user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { memberId } = await request.json().catch(() => ({}));
