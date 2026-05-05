@@ -50,6 +50,11 @@ const TEAM_MEMBERS = [
         image: null,
         accent: "from-amber-400 to-orange-500",
     },
+    {
+        name: "Shaurya Gakhar",
+        image: "/shaurya-gakhar.webp",
+        accent: "from-cyan-400 to-blue-500",
+    },
 ];
 
 /** Names already shown above; exclude from expanded volunteer list */
