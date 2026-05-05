@@ -78,6 +78,10 @@ const VOLUNTEER_HEADSHOTS: Record<string, VolunteerHeadshot> = {
     "shreesh": { src: "/shreesh.webp", imageClassName: "object-cover object-[50%_5%]" },
     "reyansh nankani": { src: "/reyansh.webp" },
     "reyansh": { src: "/reyansh.webp" },
+    "pranav chintalapati": { src: "/pranav-chintalapati.webp" },
+    // Supabase may list abbreviated name (e.g. "Pranav C." → "pranav c" after strip final ".")
+    "pranav c": { src: "/pranav-chintalapati.webp" },
+    "pranav": { src: "/pranav-chintalapati.webp" },
     // Matches `Michael` or `Michael …` via volunteerHeadshot() prefix fallback.
     "michael": { src: "/michael.webp" },
 };
@@ -93,6 +97,7 @@ function volunteerHeadshot(name: string): VolunteerHeadshot | undefined {
         VOLUNTEER_HEADSHOTS[raw] ??
         VOLUNTEER_HEADSHOTS[withoutPeriod] ??
         (raw.startsWith("michael ") ? VOLUNTEER_HEADSHOTS["michael"] : undefined) ??
+        (raw.startsWith("pranav ") ? VOLUNTEER_HEADSHOTS["pranav chintalapati"] : undefined) ??
         (raw.startsWith("yussef") || raw.startsWith("youssef")
             ? VOLUNTEER_HEADSHOTS["yussef el guerrab"]
             : undefined)
