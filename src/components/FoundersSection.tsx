@@ -43,18 +43,6 @@ const TEAM_MEMBERS: {
         title: "VP",
     },
     {
-        name: "Amogh Bhatta",
-        image: null,
-        accent: "from-violet-400 to-purple-500",
-        title: "VP",
-    },
-    {
-        name: "Arnav Ghildiyal",
-        image: null,
-        accent: "from-pink-400 to-rose-500",
-        title: "VP",
-    },
-    {
         name: "Sai Sanjit Reddy Vallapureddy",
         image: "/sai-sanjit.webp",
         accent: "from-amber-400 to-orange-500",
@@ -96,6 +84,24 @@ const CORE_TEAM_NAMES = new Set(
     TEAM_MEMBERS.map((m) => m.name.trim().toLowerCase()),
 );
 
+/** Completed volunteers who should not appear on the public team section */
+const HIDDEN_VOLUNTEER_NAMES = new Set([
+    "amogh bhatta",
+    "arnav ghildiyal",
+    "michael",
+]);
+
+function hideFromPublicTeam(name: string): boolean {
+    const n = name.trim().toLowerCase();
+    if (HIDDEN_VOLUNTEER_NAMES.has(n)) return true;
+    if (n.startsWith("arham ")) return true;
+    if (n === "arham") return true;
+    if (n.startsWith("arhamn ")) return true;
+    if (n === "arhamn") return true;
+    if (n.startsWith("michael ")) return true;
+    return false;
+}
+
 export function FoundersSection() {
     const [showTeam, setShowTeam] = useState(false);
     const [team, setTeam] = useState<TeamVolunteer[] | null>(null);
@@ -116,7 +122,9 @@ export function FoundersSection() {
                     setTeam([]);
                 } else {
                     const rest = data.filter(
-                        (v) => !CORE_TEAM_NAMES.has(v.name.trim().toLowerCase()),
+                        (v) =>
+                            !CORE_TEAM_NAMES.has(v.name.trim().toLowerCase()) &&
+                            !hideFromPublicTeam(v.name),
                     );
                     setTeam(rest);
                 }
@@ -146,7 +154,7 @@ export function FoundersSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto xl:max-w-none xl:grid-cols-5">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-4xl mx-auto xl:max-w-none">
                     {TEAM_MEMBERS.map((member, i) => (
                         <motion.div
                             key={member.name}
