@@ -50,12 +50,16 @@ const TEAM_MEMBERS = [
         image: null,
         accent: "from-amber-400 to-orange-500",
     },
-    {
-        name: "Shaurya Gakhar",
-        image: "/shaurya-gakhar.webp",
-        accent: "from-cyan-400 to-blue-500",
-    },
 ];
+
+/** Optional headshots for volunteers in the expanded list (API has no image field) */
+const VOLUNTEER_HEADSHOTS: Record<string, string> = {
+    "shaurya gakhar": "/shaurya-gakhar.webp",
+};
+
+function volunteerHeadshot(name: string): string | undefined {
+    return VOLUNTEER_HEADSHOTS[name.trim().toLowerCase()];
+}
 
 /** Names already shown above; exclude from expanded volunteer list */
 const CORE_TEAM_NAMES = new Set(
@@ -188,7 +192,9 @@ export function FoundersSection() {
                                 )}
                                 {!isLoading && team && team.length > 0 && (
                                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
-                                        {team.map((v, i) => (
+                                        {team.map((v, i) => {
+                                            const headshot = volunteerHeadshot(v.name);
+                                            return (
                                             <motion.div
                                                 key={v.id}
                                                 initial={{ opacity: 0, y: 16 }}
@@ -196,12 +202,27 @@ export function FoundersSection() {
                                                 transition={{ duration: 0.4, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
                                                 className="flex flex-col items-center text-center"
                                             >
-                                                <div className={`aspect-square w-full relative rounded-2xl overflow-hidden bg-gradient-to-br ${ACCENTS[i % ACCENTS.length]}`}>
-                                                    <div className="absolute inset-0 flex items-center justify-center">
-                                                        <span className="text-white/85 text-5xl lg:text-6xl font-barlow font-bold leading-none">
-                                                            {v.name.charAt(0).toUpperCase()}
-                                                        </span>
-                                                    </div>
+                                                <div
+                                                    className={`aspect-square w-full relative rounded-2xl overflow-hidden ${
+                                                        headshot
+                                                            ? "bg-slate-100"
+                                                            : `bg-gradient-to-br ${ACCENTS[i % ACCENTS.length]}`
+                                                    }`}
+                                                >
+                                                    {headshot ? (
+                                                        <Image
+                                                            src={headshot}
+                                                            alt={v.name}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    ) : (
+                                                        <div className="absolute inset-0 flex items-center justify-center">
+                                                            <span className="text-white/85 text-5xl lg:text-6xl font-barlow font-bold leading-none">
+                                                                {v.name.charAt(0).toUpperCase()}
+                                                            </span>
+                                                        </div>
+                                                    )}
                                                 </div>
                                                 <h4 className="font-barlow text-base font-bold text-slate-900 mt-4 leading-snug text-balance">
                                                     {v.name}
@@ -212,7 +233,8 @@ export function FoundersSection() {
                                                     </p>
                                                 )}
                                             </motion.div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </div>
