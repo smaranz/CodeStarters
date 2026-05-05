@@ -69,13 +69,16 @@ const VOLUNTEER_HEADSHOTS: Record<string, VolunteerHeadshot> = {
     "shreesh": { src: "/shreesh.webp", imageClassName: "object-cover object-[50%_5%]" },
     "reyansh nankani": { src: "/reyansh.webp" },
     "reyansh": { src: "/reyansh.webp" },
+    // Matches `Michael` or `Michael …` via volunteerHeadshot() prefix fallback.
+    "michael": { src: "/michael.webp" },
 };
 
 function volunteerHeadshot(name: string): VolunteerHeadshot | undefined {
     const raw = name.trim().toLowerCase();
     return (
         VOLUNTEER_HEADSHOTS[raw] ??
-        (raw.endsWith(".") ? VOLUNTEER_HEADSHOTS[raw.slice(0, -1)] : undefined)
+        (raw.endsWith(".") ? VOLUNTEER_HEADSHOTS[raw.slice(0, -1)] : undefined) ??
+        (raw.startsWith("michael ") ? VOLUNTEER_HEADSHOTS["michael"] : undefined)
     );
 }
 
@@ -88,7 +91,6 @@ const CORE_TEAM_NAMES = new Set(
 const HIDDEN_VOLUNTEER_NAMES = new Set([
     "amogh bhatta",
     "arnav ghildiyal",
-    "michael",
 ]);
 
 function hideFromPublicTeam(name: string): boolean {
@@ -98,7 +100,6 @@ function hideFromPublicTeam(name: string): boolean {
     if (n === "arham") return true;
     if (n.startsWith("arhamn ")) return true;
     if (n === "arhamn") return true;
-    if (n.startsWith("michael ")) return true;
     return false;
 }
 
