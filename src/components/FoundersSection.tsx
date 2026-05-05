@@ -83,7 +83,7 @@ const VOLUNTEER_HEADSHOTS: Record<string, VolunteerHeadshot> = {
     "pranav c": { src: "/pranav-chintalapati.webp" },
     "pranav": { src: "/pranav-chintalapati.webp" },
     // Matches `Michael` or `Michael …` via volunteerHeadshot() prefix fallback.
-    "michael": { src: "/michael.webp" },
+    "michael": { src: "/michael-cutsail.webp" },
 };
 
 function normalizeVolunteerNameKey(name: string): string {
