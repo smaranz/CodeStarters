@@ -52,6 +52,11 @@ const TEAM_MEMBERS = [
     },
 ];
 
+/** Names already shown above; exclude from expanded volunteer list */
+const CORE_TEAM_NAMES = new Set(
+    TEAM_MEMBERS.map((m) => m.name.trim().toLowerCase()),
+);
+
 export function FoundersSection() {
     const [showTeam, setShowTeam] = useState(false);
     const [team, setTeam] = useState<TeamVolunteer[] | null>(null);
@@ -71,7 +76,10 @@ export function FoundersSection() {
                     setError("Could not load the rest of the team.");
                     setTeam([]);
                 } else {
-                    setTeam(data);
+                    const rest = data.filter(
+                        (v) => !CORE_TEAM_NAMES.has(v.name.trim().toLowerCase()),
+                    );
+                    setTeam(rest);
                 }
             } catch {
                 setError("Could not load the rest of the team.");
