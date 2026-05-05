@@ -1,18 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAdminUser } from "@/lib/admin-auth";
 import { getSupabaseAdminClient } from "@/lib/supabase/admin";
-import nodemailer from "nodemailer";
+import { emailNotConfiguredMessage, isEmailConfigured, sendPlainEmail } from "@/lib/server-email";
 import crypto from "crypto";
 
 function generatePassword() {
     return crypto.randomBytes(12).toString("base64url");
-}
-
-function createTransport() {
-    const user = process.env.GMAIL_USER;
-    const pass = process.env.GMAIL_APP_PASSWORD;
-    if (!user || !pass) return null;
-    return nodemailer.createTransport({ host: "smtp.gmail.com", port: 587, secure: false, auth: { user, pass } });
 }
 
 // GET — list all members
@@ -35,12 +28,8 @@ export async function POST(request: NextRequest) {
     const admin_user = await verifyAdminUser();
     if (!admin_user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const transport = createTransport();
-    if (!transport) {
-        return NextResponse.json(
-            { error: "Email not configured. Set GMAIL_USER and GMAIL_APP_PASSWORD." },
-            { status: 500 }
-        );
+    if (!isEmailConfigured()) {
+        return NextResponse.json({ error: emailNotConfiguredMessage() }, { status: 500 });
     }
 
     const body = await request.json().catch(() => ({}));
@@ -81,8 +70,7 @@ export async function POST(request: NextRequest) {
     // Send credentials
     const scannerUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://codestarters.xyz"}/firehacks/member/login`;
     try {
-        await transport.sendMail({
-            from: `"Fire Hacks 2026" <${process.env.GMAIL_USER}>`,
+        await sendPlainEmail({
             to: email,
             subject: "Your Fire Hacks Staff Scanner Access",
             text: [
@@ -99,8 +87,12 @@ export async function POST(request: NextRequest) {
                 "— Fire Hacks 2026 Organizers",
             ].join("\n"),
         });
-    } catch (mailError) {
+    } catch (mailError: unknown) {
         console.error("Mail send error:", mailError);
+        const msg = mailError instanceof Error ? mailError.message : "";
+        if (msg === "MISSING_EMAIL_CONFIG") {
+            return NextResponse.json({ error: emailNotConfiguredMessage() }, { status: 500 });
+        }
         return NextResponse.json({ error: "Account created but email failed to send." }, { status: 500 });
     }
 

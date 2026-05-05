@@ -43,6 +43,12 @@ const TEAM_MEMBERS: {
         title: "VP",
     },
     {
+        name: "Arnav Ghildiyal",
+        image: "/arnav.webp",
+        accent: "from-pink-400 to-rose-500",
+        title: "VP",
+    },
+    {
         name: "Sai Sanjit Reddy Vallapureddy",
         image: "/sai-sanjit.webp",
         accent: "from-amber-400 to-orange-500",
@@ -58,12 +64,15 @@ const VOLUNTEER_HEADSHOTS: Record<string, VolunteerHeadshot> = {
     // Supabase: "Yussef El Guerrab"; alias covers common Youssef spelling
     "yussef el guerrab": { src: "/yussef.webp", imageClassName: "object-cover object-[center_25%]" },
     "youssef el guerrab": { src: "/yussef.webp", imageClassName: "object-cover object-[center_25%]" },
+    "yussef": { src: "/yussef.webp", imageClassName: "object-cover object-[center_25%]" },
+    "youssef": { src: "/yussef.webp", imageClassName: "object-cover object-[center_25%]" },
     // Sai (was mislabeled "Sanju"); alias in case a volunteer row still says Sanju.
     "sai sanjit reddy vallapureddy": { src: "/sai-sanjit.webp" },
     "sanju": { src: "/sai-sanjit.webp" },
     // Supabase volunteer names (must match `volunteers.name` lowercased)
     "robin zhou": { src: "/robin.webp", imageClassName: "object-cover object-[center_22%]" },
     "robin": { src: "/robin.webp", imageClassName: "object-cover object-[center_22%]" },
+    "arnav ghildiyal": { src: "/arnav.webp", imageClassName: "object-cover object-[center_28%]" },
     // Source: Downloads/image (5).webp — match `volunteers.name` lowercased.
     "shreesh basu": { src: "/shreesh.webp", imageClassName: "object-cover object-[50%_5%]" },
     "shreesh": { src: "/shreesh.webp", imageClassName: "object-cover object-[50%_5%]" },
@@ -73,28 +82,35 @@ const VOLUNTEER_HEADSHOTS: Record<string, VolunteerHeadshot> = {
     "michael": { src: "/michael.webp" },
 };
 
+function normalizeVolunteerNameKey(name: string): string {
+    return name.trim().toLowerCase().replace(/\s+/g, " ");
+}
+
 function volunteerHeadshot(name: string): VolunteerHeadshot | undefined {
-    const raw = name.trim().toLowerCase();
+    const raw = normalizeVolunteerNameKey(name);
+    const withoutPeriod = raw.endsWith(".") ? raw.slice(0, -1) : raw;
     return (
         VOLUNTEER_HEADSHOTS[raw] ??
-        (raw.endsWith(".") ? VOLUNTEER_HEADSHOTS[raw.slice(0, -1)] : undefined) ??
-        (raw.startsWith("michael ") ? VOLUNTEER_HEADSHOTS["michael"] : undefined)
+        VOLUNTEER_HEADSHOTS[withoutPeriod] ??
+        (raw.startsWith("michael ") ? VOLUNTEER_HEADSHOTS["michael"] : undefined) ??
+        (raw.startsWith("yussef") || raw.startsWith("youssef")
+            ? VOLUNTEER_HEADSHOTS["yussef el guerrab"]
+            : undefined)
     );
 }
 
 /** Names already shown above; exclude from expanded volunteer list */
 const CORE_TEAM_NAMES = new Set(
-    TEAM_MEMBERS.map((m) => m.name.trim().toLowerCase()),
+    TEAM_MEMBERS.map((m) => normalizeVolunteerNameKey(m.name)),
 );
 
 /** Completed volunteers who should not appear on the public team section */
 const HIDDEN_VOLUNTEER_NAMES = new Set([
     "amogh bhatta",
-    "arnav ghildiyal",
 ]);
 
 function hideFromPublicTeam(name: string): boolean {
-    const n = name.trim().toLowerCase();
+    const n = normalizeVolunteerNameKey(name);
     if (HIDDEN_VOLUNTEER_NAMES.has(n)) return true;
     if (n.startsWith("arham ")) return true;
     if (n === "arham") return true;
@@ -122,9 +138,9 @@ export function FoundersSection() {
                     setError("Could not load the rest of the team.");
                     setTeam([]);
                 } else {
-                    const rest = data.filter(
+                            const rest = data.filter(
                         (v) =>
-                            !CORE_TEAM_NAMES.has(v.name.trim().toLowerCase()) &&
+                            !CORE_TEAM_NAMES.has(normalizeVolunteerNameKey(v.name)) &&
                             !hideFromPublicTeam(v.name),
                     );
                     setTeam(rest);
@@ -155,7 +171,7 @@ export function FoundersSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-4xl mx-auto xl:max-w-none">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto xl:max-w-none">
                     {TEAM_MEMBERS.map((member, i) => (
                         <motion.div
                             key={member.name}

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdminClient } from "@/lib/supabase/admin";
-import nodemailer from "nodemailer";
+import { emailNotConfiguredMessage, isEmailConfigured, sendPlainEmail } from "@/lib/server-email";
 import crypto from "crypto";
 
 function deriveFullName(email: string): string {
@@ -14,18 +14,6 @@ function deriveFullName(email: string): string {
 
 function generatePassword(): string {
     return crypto.randomBytes(12).toString("base64url");
-}
-
-function createTransport() {
-    const user = process.env.GMAIL_USER;
-    const pass = process.env.GMAIL_APP_PASSWORD;
-    if (!user || !pass) return null;
-    return nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: { user, pass },
-    });
 }
 
 export async function POST(request: NextRequest) {
@@ -52,13 +40,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "email is required" }, { status: 400 });
     }
 
-    // 3. Check SMTP config early
-    const transport = createTransport();
-    if (!transport) {
-        return NextResponse.json(
-            { error: "Email not configured. Set GMAIL_USER and GMAIL_APP_PASSWORD." },
-            { status: 500 }
-        );
+    if (!isEmailConfigured()) {
+        return NextResponse.json({ error: emailNotConfiguredMessage() }, { status: 500 });
     }
 
     const admin = getSupabaseAdminClient();
@@ -144,8 +127,7 @@ export async function POST(request: NextRequest) {
     // 7. Send credentials email
     const portalUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://codestarters.xyz"}/firehacks/portal/login`;
     try {
-        await transport.sendMail({
-            from: `"Fire Hacks 2026" <${process.env.GMAIL_USER}>`,
+        await sendPlainEmail({
             to: email,
             subject: "Your Fire Hacks Portal Login",
             text: [
@@ -164,8 +146,12 @@ export async function POST(request: NextRequest) {
                 "— Fire Hacks 2026 Staff",
             ].join("\n"),
         });
-    } catch (mailError) {
+    } catch (mailError: unknown) {
         console.error("Mail send error:", mailError);
+        const msg = mailError instanceof Error ? mailError.message : "";
+        if (msg === "MISSING_EMAIL_CONFIG") {
+            return NextResponse.json({ error: emailNotConfiguredMessage() }, { status: 500 });
+        }
         return NextResponse.json({ error: "Credentials created but email failed to send." }, { status: 500 });
     }
 
