@@ -24,41 +24,71 @@ const ACCENTS = [
     "from-lime-400 to-emerald-500",
 ];
 
-const TEAM_MEMBERS = [
+const TEAM_MEMBERS: {
+    name: string;
+    image: string | null;
+    accent: string;
+    title: string;
+}[] = [
     {
         name: "Smaran Aramballi Sandarsh",
         image: "/smaran_real.png",
         accent: "from-emerald-400 to-teal-500",
+        title: "President",
     },
     {
         name: "Aidan Kwan",
-        image: null,
+        image: "/aidan-kwan.webp",
         accent: "from-sky-400 to-blue-600",
+        title: "VP",
     },
     {
         name: "Amogh Bhatta",
         image: null,
         accent: "from-violet-400 to-purple-500",
+        title: "VP",
     },
     {
         name: "Arnav Ghildiyal",
         image: null,
         accent: "from-pink-400 to-rose-500",
+        title: "VP",
     },
     {
         name: "Sai Sanjit Reddy Vallapureddy",
-        image: null,
+        image: "/sai-sanjit.webp",
         accent: "from-amber-400 to-orange-500",
+        title: "Head of Marketing",
     },
 ];
 
 /** Optional headshots for volunteers in the expanded list (API has no image field) */
-const VOLUNTEER_HEADSHOTS: Record<string, string> = {
-    "shaurya gakhar": "/shaurya-gakhar.webp",
+type VolunteerHeadshot = { src: string; imageClassName?: string };
+
+const VOLUNTEER_HEADSHOTS: Record<string, VolunteerHeadshot> = {
+    "shaurya gakhar": { src: "/shaurya-gakhar.webp" },
+    // Supabase: "Yussef El Guerrab"; alias covers common Youssef spelling
+    "yussef el guerrab": { src: "/yussef.webp", imageClassName: "object-cover object-[center_25%]" },
+    "youssef el guerrab": { src: "/yussef.webp", imageClassName: "object-cover object-[center_25%]" },
+    // Sai (was mislabeled "Sanju"); alias in case a volunteer row still says Sanju.
+    "sai sanjit reddy vallapureddy": { src: "/sai-sanjit.webp" },
+    "sanju": { src: "/sai-sanjit.webp" },
+    // Supabase volunteer names (must match `volunteers.name` lowercased)
+    "robin zhou": { src: "/robin.webp", imageClassName: "object-cover object-[center_22%]" },
+    "robin": { src: "/robin.webp", imageClassName: "object-cover object-[center_22%]" },
+    // Source: Downloads/image (5).webp — match `volunteers.name` lowercased.
+    "shreesh basu": { src: "/shreesh.webp", imageClassName: "object-cover object-[50%_5%]" },
+    "shreesh": { src: "/shreesh.webp", imageClassName: "object-cover object-[50%_5%]" },
+    "reyansh nankani": { src: "/reyansh.webp" },
+    "reyansh": { src: "/reyansh.webp" },
 };
 
-function volunteerHeadshot(name: string): string | undefined {
-    return VOLUNTEER_HEADSHOTS[name.trim().toLowerCase()];
+function volunteerHeadshot(name: string): VolunteerHeadshot | undefined {
+    const raw = name.trim().toLowerCase();
+    return (
+        VOLUNTEER_HEADSHOTS[raw] ??
+        (raw.endsWith(".") ? VOLUNTEER_HEADSHOTS[raw.slice(0, -1)] : undefined)
+    );
 }
 
 /** Names already shown above; exclude from expanded volunteer list */
@@ -116,7 +146,7 @@ export function FoundersSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto xl:max-w-none xl:grid-cols-5">
                     {TEAM_MEMBERS.map((member, i) => (
                         <motion.div
                             key={member.name}
@@ -145,6 +175,9 @@ export function FoundersSection() {
                             <h4 className="font-barlow text-base lg:text-lg font-bold text-slate-900 mt-4 leading-snug text-balance">
                                 {member.name}
                             </h4>
+                            <p className="font-barlow text-xs sm:text-sm font-medium text-violet-600 mt-1.5 leading-snug text-balance">
+                                {member.title}
+                            </p>
                         </motion.div>
                     ))}
                 </div>
@@ -211,10 +244,10 @@ export function FoundersSection() {
                                                 >
                                                     {headshot ? (
                                                         <Image
-                                                            src={headshot}
+                                                            src={headshot.src}
                                                             alt={v.name}
                                                             fill
-                                                            className="object-cover"
+                                                            className={headshot.imageClassName ?? "object-cover"}
                                                         />
                                                     ) : (
                                                         <div className="absolute inset-0 flex items-center justify-center">
