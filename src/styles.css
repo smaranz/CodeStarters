@@ -1,0 +1,147 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ember: var(--ember);
+  --color-flame: var(--flame);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-cs-background: var(--cs-background);
+  --color-cs-foreground: var(--cs-foreground);
+  --color-cs-muted: var(--cs-muted);
+  --color-cs-border: var(--cs-border);
+}
+
+:root {
+  --radius: 0.75rem;
+  /* FireHacks theme - dark red/orange */
+  --background: oklch(0.12 0.02 270);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.17 0.025 270);
+  --card-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.68 0.22 40);
+  --primary-foreground: oklch(0.12 0.02 270);
+  --secondary: oklch(0.86 0.18 95);
+  --secondary-foreground: oklch(0.12 0.02 270);
+  --muted: oklch(0.22 0.02 270);
+  --muted-foreground: oklch(0.75 0.01 270);
+  --accent: oklch(0.55 0.22 30);
+  --accent-foreground: oklch(0.98 0 0);
+  --ember: oklch(0.86 0.18 85);
+  --flame: oklch(0.68 0.22 40);
+  --border: oklch(0.28 0.03 270);
+  --ring: oklch(0.68 0.22 40);
+
+  /* CodeStarters theme - clean, light */
+  --cs-background: #ffffff;
+  --cs-foreground: #111827;
+  --cs-muted: #6b7280;
+  --cs-border: #e5e7eb;
+
+  --gradient-fire: linear-gradient(135deg, oklch(0.55 0.22 30), oklch(0.68 0.22 40), oklch(0.86 0.18 85));
+  --gradient-mesh: radial-gradient(at 20% 30%, oklch(0.55 0.22 30 / 0.3), transparent 50%),
+                   radial-gradient(at 80% 70%, oklch(0.68 0.22 40 / 0.25), transparent 50%),
+                   radial-gradient(at 50% 50%, oklch(0.86 0.18 85 / 0.1), transparent 60%);
+  --shadow-glow: 0 0 40px oklch(0.68 0.22 40 / 0.45);
+  --shadow-glow-soft: 0 0 24px oklch(0.68 0.22 40 / 0.25);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  ::selection { background: var(--primary); color: var(--primary-foreground); }
+}
+
+@layer utilities {
+  .text-fire {
+    background: var(--gradient-fire);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-fire { background: var(--gradient-fire); }
+  .bg-mesh { background: var(--gradient-mesh); }
+  .glow { box-shadow: var(--shadow-glow); }
+  .glow-soft { box-shadow: var(--shadow-glow-soft); }
+  .glass {
+    background: oklch(0.12 0.02 270 / 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid oklch(1 0 0 / 0.08);
+  }
+  .ring-glow:hover {
+    box-shadow: 0 0 0 1px var(--primary), 0 0 30px oklch(0.68 0.22 40 / 0.4);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { filter: drop-shadow(0 0 20px oklch(0.68 0.22 40 / 0.6)); }
+  50% { filter: drop-shadow(0 0 40px oklch(0.86 0.18 85 / 0.8)); }
+}
+.animate-shimmer { animation: shimmer 3s ease-in-out infinite; }
+
+@keyframes float-up {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+
+@keyframes mesh-drift {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(2%,-2%) scale(1.1); }
+}
+.animate-mesh { animation: mesh-drift 18s ease-in-out infinite; }
+
+@keyframes burn-away {
+  0% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(1.4); filter: blur(20px); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 40s linear infinite; }
+.animate-marquee-rev { animation: marquee 40s linear infinite reverse; }
+
+@keyframes lava-flow {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.8; transform: translateY(-8px); }
+}
+
+@keyframes smoke-rise {
+  0% { opacity: 0; transform: translateY(0) scale(1); }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-120px) scale(2); }
+}
