@@ -1,166 +1,155 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowDown, Ticket } from "lucide-react";
+import { ArrowRight, ArrowDown, Ticket, Flame } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="top" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Sky gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0505] via-[#1a0a0a] to-[#0f0808]" />
-
-      {/* Stars */}
+    <section id="top" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Volcano background image */}
       <div className="absolute inset-0">
-        {Array.from({ length: 40 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-0.5 h-0.5 bg-white rounded-full"
-            style={{
-              left: `${(i * 37) % 100}%`,
-              top: `${(i * 23) % 60}%`,
-              opacity: 0.3 + ((i * 7) % 7) * 0.1,
-            }}
-          />
-        ))}
+        <img
+          src="/volcano-bg.jpg"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/80 via-[#0A0A0A]/70 to-[#0A0A0A]" />
+        {/* Red accent glow from bottom */}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-red-900/20 to-transparent" />
       </div>
 
-      {/* Volcano SVG background */}
-      <div className="absolute bottom-0 inset-x-0 h-[70vh]">
-        <svg
-          viewBox="0 0 1440 600"
-          preserveAspectRatio="none"
-          className="absolute bottom-0 w-full h-full"
-        >
-          {/* Volcano body - left mountain */}
-          <defs>
-            <linearGradient id="volcanoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#1a0a0a" />
-              <stop offset="100%" stopColor="#0f0505" />
-            </linearGradient>
-            <linearGradient id="lavaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ff4500" />
-              <stop offset="50%" stopColor="#ff6a00" />
-              <stop offset="100%" stopColor="#ff4500" />
-            </linearGradient>
-            <radialGradient id="glowGrad" cx="50%" cy="30%" r="50%">
-              <stop offset="0%" stopColor="#ff4500" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#ff4500" stopOpacity="0" />
-            </radialGradient>
-            <linearGradient id="skyLine" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ff4500" stopOpacity="0.15" />
-              <stop offset="100%" stopColor="#1a0a0a" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-
-          {/* Glow behind volcano */}
-          <ellipse cx="720" cy="180" rx="300" ry="200" fill="url(#glowGrad)" className="animate-pulse" />
-
-          {/* Volcano silhouette */}
-          <path
-            d="M200,600 L420,280 L480,240 L540,260 L620,200 L680,180 L720,160 L760,180 L820,200 L900,260 L960,240 L1020,280 L1240,600 Z"
-            fill="url(#volcanoGrad)"
-            stroke="none"
-          />
-
-          {/* Volcano crater */}
-          <ellipse cx="720" cy="165" rx="40" ry="15" fill="#2a0f0f" />
-
-          {/* Lava flow */}
-          <path
-            d="M700,175 L680,220 L660,280 L640,350 L620,420 L600,500 L580,600"
-            stroke="url(#lavaGrad)"
-            strokeWidth="8"
-            fill="none"
-            strokeLinecap="round"
-            className="opacity-80"
-          />
-          <path
-            d="M740,175 L760,230 L780,300 L800,380 L820,450 L840,520 L860,600"
-            stroke="url(#lavaGrad)"
-            strokeWidth="6"
-            fill="none"
-            strokeLinecap="round"
-            className="opacity-60"
-          />
-
-          {/* Lava glow at crater */}
-          <ellipse cx="720" cy="168" rx="20" ry="8" fill="#ff6a00" className="opacity-80 animate-pulse" />
-
-          {/* Sky line glow */}
-          <path
-            d="M0,280 L420,280 L480,240 L540,260 L620,200 L680,180 L720,160 L760,180 L820,200 L900,260 L960,240 L1020,280 L1440,280 L1440,350 L0,350 Z"
-            fill="url(#skyLine)"
-          />
-        </svg>
-      </div>
-
-      {/* Floating embers */}
+      {/* Floating ember particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {Array.from({ length: 15 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-orange-500"
+            className="absolute w-1 h-1 rounded-full bg-red-500"
             style={{
-              left: `${60 + ((i * 17) % 20)}%`,
-              bottom: "30%",
-              opacity: 0.6,
+              left: `${55 + ((i * 19) % 25)}%`,
+              bottom: "25%",
             }}
             animate={{
-              y: [0, -200 - (i * 30)],
-              x: [(i % 2 === 0 ? 0 : 30), (i % 2 === 0 ? 20 : -20)],
-              opacity: [0.6, 0],
+              y: [0, -300 - (i * 40)],
+              x: [0, (i % 3 === 0 ? 40 : -30)],
+              opacity: [0, 0.7, 0],
+              scale: [0.5, 1, 0.3],
             }}
             transition={{
-              duration: 3 + (i * 0.5),
+              duration: 4 + (i * 0.3),
               repeat: Infinity,
-              delay: i * 0.8,
+              delay: i * 0.6,
               ease: "easeOut",
             }}
           />
         ))}
       </div>
 
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#0a0505] pointer-events-none" />
-
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-900/50 bg-black/40 backdrop-blur text-xs text-gray-400 mb-8">
-          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-          June 6, 2026 · Bay Area · $30K+ in Prizes
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="inline-flex items-center gap-2 mb-6"
+        >
+          <span className="text-red-500 text-sm font-medium tracking-wide uppercase">
+            Bay Area's Premier High School Hackathon
+          </span>
+          <span className="text-red-500/50">•</span>
+          <span className="text-gray-500 text-sm">Bay Area</span>
         </motion.div>
 
+        {/* Title */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
-          className="text-7xl sm:text-8xl md:text-[10rem] font-bold text-red-500 leading-none tracking-tighter"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-7xl sm:text-8xl md:text-[10rem] font-black leading-[0.85] tracking-tighter"
         >
-          FireHacks
+          <span className="text-red-500 block">FIRE</span>
+          <span className="text-white/90 block">HACKS</span>
         </motion.h1>
 
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-          className="mt-3 text-lg text-gray-500 tracking-wider">
-          by <span className="text-gray-300 font-medium">CodeStarters</span>
+        {/* Date badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm"
+        >
+          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+          <span className="text-sm text-gray-300 font-medium">June 6, 2026</span>
+        </motion.div>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-5 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+        >
+          A full day of building, learning, and shipping. Join 200+ high school hackers for the Bay Area's most electric hackathon.
         </motion.p>
 
-        <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-          className="mt-8 text-2xl sm:text-3xl md:text-4xl font-medium text-gray-200 max-w-3xl mx-auto">
-          One Day. Build Something That Matters.
-        </motion.h2>
-
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          className="mt-4 text-gray-500 text-base sm:text-lg">
-          200+ Bay Area high schoolers. Workshops, mentors, $30K+ in prizes — 100% free.
-        </motion.p>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
-          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href="https://luma.com/event/evt-teYwe8vJ6Eqne8d" target="_blank" rel="noreferrer" className="group px-8 py-4 rounded-full bg-red-600 text-white font-medium flex items-center gap-2 hover:bg-red-700 transition-transform">
-            <Ticket className="w-4 h-4" /> Register on Luma <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <a
+            href="https://luma.com/event/evt-teYwe8vJ6Eqne8d"
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-red-600 text-white font-semibold hover:bg-red-700 transition-all hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]"
+          >
+            <Ticket className="w-4 h-4" />
+            Register for Event
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
-          <a href="#about" className="group px-8 py-4 rounded-full border border-gray-700 text-gray-300 font-medium flex items-center gap-2 hover:border-gray-500 hover:text-white transition">
-            Learn More <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition" />
+          <a
+            href="https://discord.gg/utUNdDz3"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-gray-300 font-medium hover:border-white/40 hover:text-white transition-all"
+          >
+            Join Discord
+          </a>
+        </motion.div>
+
+        {/* Secondary CTAs */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+          className="mt-6 flex flex-wrap justify-center gap-4"
+        >
+          <a href="#sponsors" className="text-sm text-gray-500 hover:text-red-500 transition-colors">
+            Become a Sponsor
+          </a>
+          <a href="/firehacks-sponsorship-prospectus.pdf" target="_blank" rel="noreferrer" className="text-sm text-gray-500 hover:text-red-500 transition-colors">
+            View prospectus
           </a>
         </motion.div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center gap-2 text-gray-600"
+        >
+          <span className="text-xs uppercase tracking-widest">Scroll</span>
+          <ArrowDown className="w-4 h-4" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

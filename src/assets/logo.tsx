@@ -1,28 +1,41 @@
-export function FlameLogo({ size = 36 }: { size?: number }) {
+export function FireHacksLogo({ size = 32 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="flameGrad" x1="20" y1="4" x2="20" y2="46" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#FFD700" />
-          <stop offset="0.55" stopColor="#FF5A1F" />
-          <stop offset="1" stopColor="#C0392B" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M20 2 C 22 12, 32 14, 30 26 C 36 24, 38 32, 36 38 C 34 44, 28 47, 20 47 C 11 47, 4 43, 4 34 C 4 27, 10 24, 12 19 C 14 22, 17 22, 17 17 C 17 12, 14 9, 16 4 C 17 8, 20 8, 20 2 Z"
-        fill="url(#flameGrad)"
-      />
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 2L28 16L16 30L4 16L16 2Z" fill="#EF4444" opacity="0.9" />
+      <path d="M16 8L22 16L16 24L10 16L16 8Z" fill="#0A0A0A" />
     </svg>
   );
 }
 
-export function FullLogo() {
+export function CodeStartersLogo({ size = 32 }: { size?: number }) {
+  return (
+    <img
+      src="/cs-logo.png"
+      alt="CodeStarters"
+      width={size}
+      height={size}
+      className="rounded-sm"
+    />
+  );
+}
+
+export function FullFireHacksLogo() {
   return (
     <div className="flex items-center gap-2.5">
-      <FlameLogo size={34} />
+      <FireHacksLogo size={28} />
       <div className="leading-none">
-        <div className="font-display text-xl font-bold tracking-tight">FireHacks</div>
-        <div className="text-[10px] text-muted-foreground tracking-wider uppercase mt-0.5">by CodeStarters</div>
+        <div className="font-display text-lg font-bold tracking-tight text-foreground">Fire Hacks</div>
+      </div>
+    </div>
+  );
+}
+
+export function FullCodeStartersLogo() {
+  return (
+    <div className="flex items-center gap-2.5">
+      <CodeStartersLogo size={28} />
+      <div className="leading-none">
+        <div className="font-display text-lg font-semibold tracking-tight text-cs-foreground">CodeStarters</div>
       </div>
     </div>
   );

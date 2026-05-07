@@ -3,28 +3,18 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Tracks } from "@/components/Tracks";
-import { Workshops } from "@/components/Workshops";
-import { Schedule } from "@/components/Schedule";
-import { Prizes } from "@/components/Prizes";
+import { Sponsors } from "@/components/Sponsors";
 import { Team } from "@/components/Team";
 import { FAQ } from "@/components/FAQ";
-import { Sponsors } from "@/components/Sponsors";
-import { Register } from "@/components/Register";
-import { BecomeSponsor } from "@/components/BecomeSponsor";
-
 import { Footer } from "@/components/Footer";
-import { LoadingScreen } from "@/components/LoadingScreen";
-import { FireCursor } from "@/components/FireCursor";
-import { FloatingCTA } from "@/components/FloatingCTA";
-import { SmoothScroll } from "@/components/SmoothScroll";
 
 export const Route = createFileRoute("/firehacks")({
   head: () => ({
     meta: [
-      { title: "FireHacks 2026 — Bay Area High School Hackathon by CodeStarters" },
-      { name: "description", content: "FireHacks is a one-day hackathon for Bay Area high schoolers. June 6, 2026. $30K+ in prizes. 100% free." },
-      { property: "og:title", content: "FireHacks 2026 — by CodeStarters" },
-      { property: "og:description", content: "$30K+ in prizes. June 6, 2026 — Bay Area. Free to attend." },
+      { title: "Fire Hacks — Bay Area's Premier High School Hackathon" },
+      { name: "description", content: "Fire Hacks is a one-day hackathon for 200–300 high school builders in the Bay Area. June 6, 2026. $30K+ in prizes. 100% free. Hosted by CodeStarters." },
+      { property: "og:title", content: "Fire Hacks — June 6, 2026" },
+      { property: "og:description", content: "One-day high school hackathon in the Bay Area. $30K+ in prizes. 100% free." },
     ],
   }),
   component: FireHacksPage,
@@ -32,26 +22,17 @@ export const Route = createFileRoute("/firehacks")({
 
 function FireHacksPage() {
   return (
-    <div className="bg-background text-foreground">
-      <SmoothScroll />
-      <LoadingScreen />
-      <FireCursor />
+    <div className="bg-[#0A0A0A] text-white">
       <Navbar />
       <main>
         <Hero />
         <About />
         <Tracks />
-        <Workshops />
-        <Schedule />
-        <Prizes />
-        <Register />
         <Team />
         <Sponsors />
-        <BecomeSponsor />
         <FAQ />
       </main>
       <Footer />
-      <FloatingCTA />
     </div>
   );
 }
