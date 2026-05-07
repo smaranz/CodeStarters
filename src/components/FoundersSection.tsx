@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ChevronDown, Loader2, Users } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type TeamVolunteer = {
     id: string;
@@ -29,6 +30,8 @@ const TEAM_MEMBERS: {
     image: string | null;
     accent: string;
     title: string;
+    /** Extra classes for `object-position` / crop when `object-cover` clips the face */
+    imageClassName?: string;
 }[] = [
     {
         name: "Smaran Aramballi Sandarsh",
@@ -47,6 +50,13 @@ const TEAM_MEMBERS: {
         image: "/arnav.webp",
         accent: "from-pink-400 to-rose-500",
         title: "VP",
+    },
+    {
+        name: "Amogh Bhatta",
+        image: "/amogh-bhatta.webp",
+        accent: "from-violet-400 to-purple-500",
+        title: "VP",
+        imageClassName: "object-[50%_35%]",
     },
     {
         name: "Sai Sanjit Reddy Vallapureddy",
@@ -83,7 +93,19 @@ const VOLUNTEER_HEADSHOTS: Record<string, VolunteerHeadshot> = {
     "pranav c": { src: "/pranav-chintalapati.webp" },
     "pranav": { src: "/pranav-chintalapati.webp" },
     // Matches `Michael` or `Michael …` via volunteerHeadshot() prefix fallback.
-    "michael": { src: "/michael-cutsail.webp" },
+    "michael": { src: "/michael-portrait.webp" },
+    "amogh bhatta": {
+        src: "/amogh-bhatta.webp",
+        imageClassName: "object-cover object-[50%_35%]",
+    },
+    "amogh": {
+        src: "/amogh-bhatta.webp",
+        imageClassName: "object-cover object-[50%_35%]",
+    },
+    "arham": {
+        src: "/arham.webp",
+        imageClassName: "object-cover object-[50%_38%]",
+    },
 };
 
 function normalizeVolunteerNameKey(name: string): string {
@@ -97,6 +119,8 @@ function volunteerHeadshot(name: string): VolunteerHeadshot | undefined {
         VOLUNTEER_HEADSHOTS[raw] ??
         VOLUNTEER_HEADSHOTS[withoutPeriod] ??
         (raw.startsWith("michael ") ? VOLUNTEER_HEADSHOTS["michael"] : undefined) ??
+        (raw.startsWith("amogh ") ? VOLUNTEER_HEADSHOTS["amogh bhatta"] : undefined) ??
+        (raw.startsWith("arham ") ? VOLUNTEER_HEADSHOTS["arham"] : undefined) ??
         (raw.startsWith("pranav ") ? VOLUNTEER_HEADSHOTS["pranav chintalapati"] : undefined) ??
         (raw.startsWith("yussef") || raw.startsWith("youssef")
             ? VOLUNTEER_HEADSHOTS["yussef el guerrab"]
@@ -110,17 +134,11 @@ const CORE_TEAM_NAMES = new Set(
 );
 
 /** Completed volunteers who should not appear on the public team section */
-const HIDDEN_VOLUNTEER_NAMES = new Set([
-    "amogh bhatta",
-]);
+const HIDDEN_VOLUNTEER_NAMES = new Set<string>();
 
 function hideFromPublicTeam(name: string): boolean {
     const n = normalizeVolunteerNameKey(name);
     if (HIDDEN_VOLUNTEER_NAMES.has(n)) return true;
-    if (n.startsWith("arham ")) return true;
-    if (n === "arham") return true;
-    if (n.startsWith("arhamn ")) return true;
-    if (n === "arhamn") return true;
     return false;
 }
 
@@ -176,7 +194,7 @@ export function FoundersSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto xl:max-w-none">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8 max-w-6xl mx-auto xl:max-w-7xl 2xl:max-w-none">
                     {TEAM_MEMBERS.map((member, i) => (
                         <motion.div
                             key={member.name}
@@ -192,7 +210,7 @@ export function FoundersSection() {
                                         src={member.image}
                                         alt={member.name}
                                         fill
-                                        className="object-cover"
+                                        className={cn("object-cover", member.imageClassName)}
                                     />
                                 ) : (
                                     <div className="absolute inset-0 flex items-center justify-center">
