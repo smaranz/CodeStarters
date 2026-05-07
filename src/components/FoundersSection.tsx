@@ -52,6 +52,13 @@ const TEAM_MEMBERS: {
         title: "VP",
     },
     {
+        name: "Robin Zhou",
+        image: "/robin.webp",
+        accent: "from-cyan-400 to-blue-500",
+        title: "Head of Marketing",
+        imageClassName: "object-cover object-[center_22%]",
+    },
+    {
         name: "Amogh Bhatta",
         image: "/amogh-bhatta.webp",
         accent: "from-violet-400 to-purple-500",
@@ -62,7 +69,7 @@ const TEAM_MEMBERS: {
         name: "Sai Sanjit Reddy Vallapureddy",
         image: "/sai-sanjit.webp",
         accent: "from-amber-400 to-orange-500",
-        title: "Head of Marketing",
+        title: "Head of Education",
     },
 ];
 
@@ -194,7 +201,7 @@ export function FoundersSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8 max-w-6xl mx-auto xl:max-w-7xl 2xl:max-w-none">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 lg:gap-6 xl:gap-5 w-full max-w-6xl mx-auto xl:max-w-[min(100%,90rem)] 2xl:max-w-[min(100%,100rem)]">
                     {TEAM_MEMBERS.map((member, i) => (
                         <motion.div
                             key={member.name}
