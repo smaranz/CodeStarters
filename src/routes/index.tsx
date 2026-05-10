@@ -404,7 +404,7 @@ function HomePage() {
           </div>
           <motion.div {...fadeUp(0.65)} className="mt-12 flex justify-center">
             <a
-              href="http://localhost:3000/firehacks"
+              href="https://codestarters.xyz/firehacks"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3 font-medium text-background"
@@ -649,7 +649,7 @@ function HomePage() {
         <p className="text-sm text-muted-foreground">© 2026 CodeStarters. All rights reserved.</p>
         <div className="flex items-center gap-6">
           <a
-            href="http://localhost:3000/firehacks"
+            href="https://codestarters.xyz/firehacks"
             target="_blank"
             rel="noreferrer"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"

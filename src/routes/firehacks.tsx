@@ -7,7 +7,7 @@ export const Route = createFileRoute("/firehacks")({
 
 function FireHacksRedirect() {
   useEffect(() => {
-    window.location.replace("http://localhost:3000/firehacks");
+    window.location.replace("https://codestarters.xyz/firehacks");
   }, []);
 
   return null;
