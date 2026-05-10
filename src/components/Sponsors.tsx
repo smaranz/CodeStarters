@@ -45,7 +45,7 @@ export function Sponsors() {
                   src={s.img}
                   alt={s.name}
                   loading="lazy"
-                  className="max-h-10 max-w-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                  className={`max-h-10 max-w-full object-contain opacity-80 transition-opacity group-hover:opacity-100 ${s.imageClassName ?? ""}`}
                 />
               ) : (
                 <span className="text-xl font-black tracking-tight text-red-950">{s.name}</span>
