@@ -11,12 +11,12 @@
   --color-secondary-foreground: hsl(0, 0%, 85%);
   --color-muted: hsl(0, 0%, 15%);
   --color-muted-foreground: hsl(0, 0%, 65%);
-  --color-accent: hsl(170, 15%, 45%);
+  --color-accent: hsl(0, 0%, 50%);
   --color-accent-foreground: hsl(0, 0%, 100%);
   --color-border: hsl(0, 0%, 20%);
   --color-input: hsl(0, 0%, 18%);
   --color-ring: hsl(0, 0%, 40%);
-  --color-hero-subtitle: hsl(210, 17%, 95%);
+  --color-hero-subtitle: hsl(0, 0%, 95%);
   --font-sans: "Inter", system-ui, sans-serif;
   --font-serif: "Instrument Serif", Georgia, serif;
   --radius-sm: calc(var(--radius) - 4px);

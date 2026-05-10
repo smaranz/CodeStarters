@@ -1,9 +1,14 @@
 import { motion } from "framer-motion";
 import { Instagram, Linkedin, Twitter } from "lucide-react";
+import { useLocation } from "@tanstack/react-router";
+import { FireHacksLogo, CodeStartersLogo } from "@/assets/logo";
 
 const navLinks = ["Home", "How It Works", "Philosophy", "Use Cases"];
 
 export function Navbar() {
+  const location = useLocation();
+  const isFireHacks = location.pathname.startsWith("/firehacks");
+
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
@@ -13,10 +18,9 @@ export function Navbar() {
     >
       <div className="flex items-center gap-3">
         <div className="relative w-7 h-7">
-          <div className="absolute inset-0 w-7 h-7 rounded-full border-2 border-foreground/60" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full border border-foreground/60" />
+          {isFireHacks ? <FireHacksLogo className="w-7 h-7" /> : <CodeStartersLogo className="w-7 h-7" />}
         </div>
-        <span className="font-bold text-lg">Mindloop</span>
+        <span className="font-bold text-lg">{isFireHacks ? "Fire Hacks" : "Mindloop"}</span>
       </div>
 
       <div className="hidden md:flex items-center gap-1 text-sm">
