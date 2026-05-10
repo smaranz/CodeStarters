@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: hsl(0, 0%, 0%);
+  --color-foreground: hsl(0, 0%, 100%);
+  --color-card: hsl(0, 0%, 5%);
+  --color-card-foreground: hsl(0, 0%, 100%);
+  --color-primary: hsl(0, 0%, 100%);
+  --color-primary-foreground: hsl(0, 0%, 0%);
+  --color-secondary: hsl(0, 0%, 12%);
+  --color-secondary-foreground: hsl(0, 0%, 85%);
+  --color-muted: hsl(0, 0%, 15%);
+  --color-muted-foreground: hsl(0, 0%, 65%);
+  --color-accent: hsl(0, 0%, 50%);
+  --color-accent-foreground: hsl(0, 0%, 100%);
+  --color-border: hsl(0, 0%, 20%);
+  --color-input: hsl(0, 0%, 18%);
+  --color-ring: hsl(0, 0%, 40%);
+  --color-hero-subtitle: hsl(0, 0%, 95%);
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: hsl(0, 0%, 20%);
+  }
+  body {
+    background-color: hsl(0, 0%, 0%);
+    color: hsl(0, 0%, 100%);
+    font-family: var(--font-sans);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-hero-subtitle {
+    color: hsl(var(--hero-subtitle));
+  }
+}
+
+/* Liquid Glass Effect */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.15) 80%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Font imports */
+@font-face {
+  font-family: "Inter";
+  src: url("https://fonts.gstatic.com/s/inter/v18/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2")
+    format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("https://fonts.gstatic.com/s/instrument-serif/v4/pxiKyp0ihIEF2isRFJXUdVsNF.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("https://fonts.gstatic.com/s/instrument-serif/v4/pximKyp0ihIEF2isQFHUnEw.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(0, 0%, 0%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(0, 0%, 20%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(0, 0%, 40%);
+}
+
+/* Selection */
+::selection {
+  background: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 0%);
+}
