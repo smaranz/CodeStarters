@@ -14,6 +14,7 @@ import {
     QrCode,
     Ticket,
     Users,
+    Clock,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
@@ -27,6 +28,7 @@ const MENU_ITEMS = [
     { name: "Website Requests", href: "/admin/requests", icon: Globe },
     { name: "Applications", href: "/admin/applications", icon: ClipboardList },
     { name: "Team", href: "/admin/team", icon: UserCheck },
+    { name: "Volunteer Hours", href: "/admin/volunteer-hours", icon: Clock },
 ];
 
 export function AdminSidebar() {
