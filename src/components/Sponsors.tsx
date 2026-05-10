@@ -10,7 +10,7 @@ const sponsors = [
   { name: "n8n", url: "https://n8n.io/", img: "/sponsors/n8n.png" },
   { name: "Publick", url: "https://publick.xyz/", img: "/sponsors/publick.png" },
   { name: "Guild.ai", url: "https://www.guild.ai/" },
-  { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg" },
+  { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg", imageClassName: "brightness-0" },
 ];
 
 export function Sponsors() {
@@ -45,7 +45,7 @@ export function Sponsors() {
                   src={s.img}
                   alt={s.name}
                   loading="lazy"
-                  className="max-h-10 max-w-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                  className={`max-h-10 max-w-full object-contain opacity-80 transition-opacity group-hover:opacity-100 ${s.imageClassName ?? ""}`}
                 />
               ) : (
                 <span className="text-xl font-black tracking-tight text-red-950">{s.name}</span>
