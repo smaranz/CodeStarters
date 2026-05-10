@@ -69,7 +69,6 @@ const programs = [
 
 const team = [
   { name: "Smaran Aramballi Sandarsh", role: "President", img: "/smaran.png" },
-  { name: "Aidan Kwan", role: "VP", img: "/aidan.webp" },
   { name: "Arnav Ghildiyal", role: "VP", img: "/arnav.webp" },
   { name: "Amogh Bhatta", role: "VP", img: "/amogh.webp" },
   { name: "Sai Sanjit Reddy Vallapureddy", role: "Head of Education", img: "/sai.webp" },
