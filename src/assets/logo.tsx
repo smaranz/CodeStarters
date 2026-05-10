@@ -13,9 +13,15 @@ export function FireHacksLogo({ size = 32 }: { size?: number }) {
   );
 }
 
-export function CodeStartersLogo({ size = 32 }: { size?: number }) {
+export function CodeStartersLogo({ size = 32, white = false }: { size?: number; white?: boolean }) {
   return (
-    <img src="/cs-logo.png" alt="CodeStarters" width={size} height={size} className="rounded-sm" />
+    <img
+      src="/cs-logo.png"
+      alt="CodeStarters"
+      width={size}
+      height={size}
+      className={`rounded-sm ${white ? "brightness-0 invert" : ""}`}
+    />
   );
 }
 
