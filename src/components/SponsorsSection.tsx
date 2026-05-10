@@ -61,6 +61,16 @@ const SPONSORS = [
         logoHeight: 1254,
     },
     {
+        name: "Guild.ai",
+        href: "https://www.guild.ai/",
+        logoSrc: "/sponsors/guild-ai.jpeg",
+        logoAlt: "Guild.ai",
+        logoWidth: 200,
+        logoHeight: 200,
+        logoClassName:
+            "max-h-28 sm:max-h-32 md:max-h-40 lg:max-h-44 w-auto max-w-[min(100%,16rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100",
+    },
+    {
         name: "Zo Computer",
         href: "https://zo.computer/",
         logoSrc: "/sponsors/zo-computer.svg",

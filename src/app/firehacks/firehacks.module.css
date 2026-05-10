@@ -718,6 +718,19 @@
 .sponsorPill img.sponsorLogoPublick {
   max-height: 120px;
 }
+.sponsorPill img.sponsorLogoGuild {
+  max-height: 100px;
+}
+@media (min-width: 640px) {
+  .sponsorPill img.sponsorLogoGuild {
+    max-height: 128px;
+  }
+}
+@media (min-width: 1024px) {
+  .sponsorPill img.sponsorLogoGuild {
+    max-height: 150px;
+  }
+}
 .sponsorPill img.sponsorLogoN8n {
   max-height: 68px;
 }

@@ -4,6 +4,28 @@ import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { emailNotConfiguredMessage, isEmailConfigured, sendPlainEmail } from "@/lib/server-email";
 import crypto from "crypto";
 
+async function verifyAdmin() {
+    const sessionClient = await getSupabaseServerClient();
+    const { data: { user }, error } = await sessionClient.auth.getUser();
+    if (error || !user) return null;
+    const { data: adminRow } = await sessionClient.from("admin_users").select("id").eq("id", user.id).maybeSingle();
+    return adminRow ? user : null;
+}
+
+export async function GET() {
+    if (!(await verifyAdmin())) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const admin = getSupabaseAdminClient();
+    const { data, error } = await admin
+        .from("firehacks_participants")
+        .select("id, email, full_name, auth_user_id, waiver_uploaded_at")
+        .eq("event_id", "fh2026")
+        .order("email");
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(data);
+}
+
 function deriveFullName(email: string): string {
     const local = email.split("@")[0];
     return local

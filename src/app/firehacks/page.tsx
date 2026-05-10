@@ -398,6 +398,16 @@ export default function FireHacksPage() {
               <img className={s.sponsorLogoPublick} src="/sponsors/publick.png" alt="Publick" />
             </a>
             <a
+              href="https://www.guild.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={s.sponsorPill}
+              style={{ background: 'var(--accent)' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className={s.sponsorLogoGuild} src="/sponsors/guild-ai.jpeg" alt="Guild.ai" />
+            </a>
+            <a
               href="https://zo.computer/"
               target="_blank"
               rel="noopener noreferrer"
