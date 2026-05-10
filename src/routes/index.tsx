@@ -13,11 +13,9 @@ import {
   GraduationCap,
   HeartHandshake,
   Instagram,
-  Linkedin,
   Mail,
   Menu,
   Send,
-  Twitter,
   Users,
   X,
 } from "lucide-react";
