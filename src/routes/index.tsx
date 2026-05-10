@@ -78,6 +78,16 @@ const team = [
   { name: "Sai Sanjit Reddy Vallapureddy", role: "Head of Education", img: "/sai.webp" },
 ];
 
+const extendedTeam = [
+  { name: "Reyansh Nankani", role: "UI/UX Designer", img: "/team/reyansh-nankani.png" },
+  { name: "Arham Desai", role: "CS & AI Instructor", img: "/team/arham-desai.png" },
+  { name: "Shaurya Gakhar", role: "CS & AI Instructor", img: "/team/shaurya-gakhar.png" },
+  { name: "Robin Zhou", role: "Social Media Manager", img: "/team/robin-zhou.png" },
+  { name: "Pranav C", role: "Vibe Coding", img: "/team/pranav-c.png" },
+  { name: "Shreesh Basu", role: "Social Media Manager", img: "/team/shreesh-basu.png" },
+  { name: "Michael Cutsail", role: "CS & AI Instructor", img: "/team/michael-cutsail.png" },
+];
+
 const sponsors = [
   { name: "CodeCrafters", url: "https://codecrafters.io", img: "/sponsors/codecrafters.svg" },
   { name: "Gen.xyz", url: "https://gen.xyz", img: "/sponsors/genxyz.png" },
