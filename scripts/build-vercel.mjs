@@ -57,15 +57,16 @@ await build({
   target: "node20",
   format: "esm",
   outfile: join(out, "functions/index.func/index.js"),
-  // Keep dynamic imports as-is (they resolve to bundled chunks)
   splitting: false,
-  // Don't externalize anything — bundle everything into one file
   packages: "bundle",
-  // Allow any npm package including Node built-ins
   external: [],
   minify: false,
-  // Suppress warnings about node: protocol
   logLevel: "warning",
+  // CJS packages bundled into ESM call require() for Node built-ins (e.g. react-dom/server).
+  // Inject a createRequire shim at the top so those calls resolve correctly.
+  banner: {
+    js: `import { createRequire } from "module";\nconst require = createRequire(import.meta.url);`,
+  },
 });
 
 // Clean up temp file
