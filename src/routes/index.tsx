@@ -559,6 +559,36 @@ function HomePage() {
               </motion.article>
             ))}
           </div>
+
+          <div className="mx-auto mt-24 max-w-6xl">
+            <motion.div {...fadeUp(0)} className="mb-12 text-center">
+              <p className="mb-4 text-xs uppercase tracking-[3px] text-muted-foreground">
+                EXTENDED TEAM
+              </p>
+              <h3 className="text-3xl md:text-4xl">
+                More people making it <span className="font-serif italic">happen</span>
+              </h3>
+            </motion.div>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-3 lg:grid-cols-5">
+              {extendedTeam.map((member, index) => (
+                <motion.article
+                  key={member.name}
+                  {...fadeUp(0.05 + index * 0.05)}
+                  whileHover={{ y: -6 }}
+                  className="text-center"
+                >
+                  <img
+                    src={member.img}
+                    alt={member.name}
+                    loading="lazy"
+                    className="aspect-square w-full rounded-[22px] object-cover grayscale"
+                  />
+                  <h4 className="mt-6 text-base font-bold leading-tight">{member.name}</h4>
+                  <p className="mt-2 text-sm text-muted-foreground">{member.role}</p>
+                </motion.article>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section id="sponsors" className="border-t border-border/30 px-6 py-32">
