@@ -37,3 +37,4 @@ dist/
 .env.*
 *.log
 package-lock.json
+.vercel

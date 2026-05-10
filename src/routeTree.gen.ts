@@ -9,12 +9,46 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TeamRouteImport } from './routes/team'
 import { Route as FirehacksRouteImport } from './routes/firehacks'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as FirehacksPortalRouteImport } from './routes/firehacks.portal'
+import { Route as FirehacksMemberRouteImport } from './routes/firehacks.member'
+import { Route as ApiTeamRouteImport } from './routes/api/team'
+import { Route as AdminTeamRouteImport } from './routes/admin/team'
+import { Route as AdminSetupRouteImport } from './routes/admin/setup'
+import { Route as AdminScannerRouteImport } from './routes/admin/scanner'
+import { Route as AdminRequestsRouteImport } from './routes/admin/requests'
+import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminFirehacksPortalRouteImport } from './routes/admin/firehacks-portal'
+import { Route as AdminFirehacksMembersRouteImport } from './routes/admin/firehacks-members'
+import { Route as AdminApplicationsRouteImport } from './routes/admin/applications'
+import { Route as FirehacksPortalLoginRouteImport } from './routes/firehacks.portal.login'
+import { Route as FirehacksMemberLoginRouteImport } from './routes/firehacks.member.login'
+import { Route as ApiFirehacksWaiverRouteImport } from './routes/api/firehacks/waiver'
+import { Route as ApiAdminWebsiteRequestsRouteImport } from './routes/api/admin/website-requests'
+import { Route as ApiAdminVolunteersRouteImport } from './routes/api/admin/volunteers'
+import { Route as ApiAdminDashboardStatsRouteImport } from './routes/api/admin/dashboard-stats'
+import { Route as ApiFirehacksMemberRedeemRouteImport } from './routes/api/firehacks/member/redeem'
+import { Route as ApiFirehacksMemberLookupRouteImport } from './routes/api/firehacks/member/lookup'
+import { Route as ApiAdminFirehacksProvisionPortalRouteImport } from './routes/api/admin/firehacks/provision-portal'
+import { Route as ApiAdminFirehacksProvisionMemberRouteImport } from './routes/api/admin/firehacks/provision-member'
 
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FirehacksRoute = FirehacksRouteImport.update({
   id: '/firehacks',
   path: '/firehacks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +56,328 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const FirehacksPortalRoute = FirehacksPortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
+  getParentRoute: () => FirehacksRoute,
+} as any)
+const FirehacksMemberRoute = FirehacksMemberRouteImport.update({
+  id: '/member',
+  path: '/member',
+  getParentRoute: () => FirehacksRoute,
+} as any)
+const ApiTeamRoute = ApiTeamRouteImport.update({
+  id: '/api/team',
+  path: '/api/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminSetupRoute = AdminSetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminScannerRoute = AdminScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminRequestsRoute = AdminRequestsRouteImport.update({
+  id: '/requests',
+  path: '/requests',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminFirehacksPortalRoute = AdminFirehacksPortalRouteImport.update({
+  id: '/firehacks-portal',
+  path: '/firehacks-portal',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminFirehacksMembersRoute = AdminFirehacksMembersRouteImport.update({
+  id: '/firehacks-members',
+  path: '/firehacks-members',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
+  id: '/applications',
+  path: '/applications',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const FirehacksPortalLoginRoute = FirehacksPortalLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => FirehacksPortalRoute,
+} as any)
+const FirehacksMemberLoginRoute = FirehacksMemberLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => FirehacksMemberRoute,
+} as any)
+const ApiFirehacksWaiverRoute = ApiFirehacksWaiverRouteImport.update({
+  id: '/api/firehacks/waiver',
+  path: '/api/firehacks/waiver',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminWebsiteRequestsRoute = ApiAdminWebsiteRequestsRouteImport.update({
+  id: '/api/admin/website-requests',
+  path: '/api/admin/website-requests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminVolunteersRoute = ApiAdminVolunteersRouteImport.update({
+  id: '/api/admin/volunteers',
+  path: '/api/admin/volunteers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminDashboardStatsRoute = ApiAdminDashboardStatsRouteImport.update({
+  id: '/api/admin/dashboard-stats',
+  path: '/api/admin/dashboard-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiFirehacksMemberRedeemRoute =
+  ApiFirehacksMemberRedeemRouteImport.update({
+    id: '/api/firehacks/member/redeem',
+    path: '/api/firehacks/member/redeem',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiFirehacksMemberLookupRoute =
+  ApiFirehacksMemberLookupRouteImport.update({
+    id: '/api/firehacks/member/lookup',
+    path: '/api/firehacks/member/lookup',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminFirehacksProvisionPortalRoute =
+  ApiAdminFirehacksProvisionPortalRouteImport.update({
+    id: '/api/admin/firehacks/provision-portal',
+    path: '/api/admin/firehacks/provision-portal',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminFirehacksProvisionMemberRoute =
+  ApiAdminFirehacksProvisionMemberRouteImport.update({
+    id: '/api/admin/firehacks/provision-member',
+    path: '/api/admin/firehacks/provision-member',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/firehacks': typeof FirehacksRoute
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/firehacks': typeof FirehacksRouteWithChildren
+  '/team': typeof TeamRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/firehacks-members': typeof AdminFirehacksMembersRoute
+  '/admin/firehacks-portal': typeof AdminFirehacksPortalRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/requests': typeof AdminRequestsRoute
+  '/admin/scanner': typeof AdminScannerRoute
+  '/admin/setup': typeof AdminSetupRoute
+  '/admin/team': typeof AdminTeamRoute
+  '/api/team': typeof ApiTeamRoute
+  '/firehacks/member': typeof FirehacksMemberRouteWithChildren
+  '/firehacks/portal': typeof FirehacksPortalRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
+  '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
+  '/api/admin/volunteers': typeof ApiAdminVolunteersRoute
+  '/api/admin/website-requests': typeof ApiAdminWebsiteRequestsRoute
+  '/api/firehacks/waiver': typeof ApiFirehacksWaiverRoute
+  '/firehacks/member/login': typeof FirehacksMemberLoginRoute
+  '/firehacks/portal/login': typeof FirehacksPortalLoginRoute
+  '/api/admin/firehacks/provision-member': typeof ApiAdminFirehacksProvisionMemberRoute
+  '/api/admin/firehacks/provision-portal': typeof ApiAdminFirehacksProvisionPortalRoute
+  '/api/firehacks/member/lookup': typeof ApiFirehacksMemberLookupRoute
+  '/api/firehacks/member/redeem': typeof ApiFirehacksMemberRedeemRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/firehacks': typeof FirehacksRoute
+  '/firehacks': typeof FirehacksRouteWithChildren
+  '/team': typeof TeamRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/firehacks-members': typeof AdminFirehacksMembersRoute
+  '/admin/firehacks-portal': typeof AdminFirehacksPortalRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/requests': typeof AdminRequestsRoute
+  '/admin/scanner': typeof AdminScannerRoute
+  '/admin/setup': typeof AdminSetupRoute
+  '/admin/team': typeof AdminTeamRoute
+  '/api/team': typeof ApiTeamRoute
+  '/firehacks/member': typeof FirehacksMemberRouteWithChildren
+  '/firehacks/portal': typeof FirehacksPortalRouteWithChildren
+  '/admin': typeof AdminIndexRoute
+  '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
+  '/api/admin/volunteers': typeof ApiAdminVolunteersRoute
+  '/api/admin/website-requests': typeof ApiAdminWebsiteRequestsRoute
+  '/api/firehacks/waiver': typeof ApiFirehacksWaiverRoute
+  '/firehacks/member/login': typeof FirehacksMemberLoginRoute
+  '/firehacks/portal/login': typeof FirehacksPortalLoginRoute
+  '/api/admin/firehacks/provision-member': typeof ApiAdminFirehacksProvisionMemberRoute
+  '/api/admin/firehacks/provision-portal': typeof ApiAdminFirehacksProvisionPortalRoute
+  '/api/firehacks/member/lookup': typeof ApiFirehacksMemberLookupRoute
+  '/api/firehacks/member/redeem': typeof ApiFirehacksMemberRedeemRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/firehacks': typeof FirehacksRoute
+  '/admin': typeof AdminRouteRouteWithChildren
+  '/firehacks': typeof FirehacksRouteWithChildren
+  '/team': typeof TeamRoute
+  '/admin/applications': typeof AdminApplicationsRoute
+  '/admin/firehacks-members': typeof AdminFirehacksMembersRoute
+  '/admin/firehacks-portal': typeof AdminFirehacksPortalRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/requests': typeof AdminRequestsRoute
+  '/admin/scanner': typeof AdminScannerRoute
+  '/admin/setup': typeof AdminSetupRoute
+  '/admin/team': typeof AdminTeamRoute
+  '/api/team': typeof ApiTeamRoute
+  '/firehacks/member': typeof FirehacksMemberRouteWithChildren
+  '/firehacks/portal': typeof FirehacksPortalRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
+  '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
+  '/api/admin/volunteers': typeof ApiAdminVolunteersRoute
+  '/api/admin/website-requests': typeof ApiAdminWebsiteRequestsRoute
+  '/api/firehacks/waiver': typeof ApiFirehacksWaiverRoute
+  '/firehacks/member/login': typeof FirehacksMemberLoginRoute
+  '/firehacks/portal/login': typeof FirehacksPortalLoginRoute
+  '/api/admin/firehacks/provision-member': typeof ApiAdminFirehacksProvisionMemberRoute
+  '/api/admin/firehacks/provision-portal': typeof ApiAdminFirehacksProvisionPortalRoute
+  '/api/firehacks/member/lookup': typeof ApiFirehacksMemberLookupRoute
+  '/api/firehacks/member/redeem': typeof ApiFirehacksMemberRedeemRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/firehacks'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/firehacks'
+    | '/team'
+    | '/admin/applications'
+    | '/admin/firehacks-members'
+    | '/admin/firehacks-portal'
+    | '/admin/login'
+    | '/admin/requests'
+    | '/admin/scanner'
+    | '/admin/setup'
+    | '/admin/team'
+    | '/api/team'
+    | '/firehacks/member'
+    | '/firehacks/portal'
+    | '/admin/'
+    | '/api/admin/dashboard-stats'
+    | '/api/admin/volunteers'
+    | '/api/admin/website-requests'
+    | '/api/firehacks/waiver'
+    | '/firehacks/member/login'
+    | '/firehacks/portal/login'
+    | '/api/admin/firehacks/provision-member'
+    | '/api/admin/firehacks/provision-portal'
+    | '/api/firehacks/member/lookup'
+    | '/api/firehacks/member/redeem'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/firehacks'
-  id: '__root__' | '/' | '/firehacks'
+  to:
+    | '/'
+    | '/firehacks'
+    | '/team'
+    | '/admin/applications'
+    | '/admin/firehacks-members'
+    | '/admin/firehacks-portal'
+    | '/admin/login'
+    | '/admin/requests'
+    | '/admin/scanner'
+    | '/admin/setup'
+    | '/admin/team'
+    | '/api/team'
+    | '/firehacks/member'
+    | '/firehacks/portal'
+    | '/admin'
+    | '/api/admin/dashboard-stats'
+    | '/api/admin/volunteers'
+    | '/api/admin/website-requests'
+    | '/api/firehacks/waiver'
+    | '/firehacks/member/login'
+    | '/firehacks/portal/login'
+    | '/api/admin/firehacks/provision-member'
+    | '/api/admin/firehacks/provision-portal'
+    | '/api/firehacks/member/lookup'
+    | '/api/firehacks/member/redeem'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/firehacks'
+    | '/team'
+    | '/admin/applications'
+    | '/admin/firehacks-members'
+    | '/admin/firehacks-portal'
+    | '/admin/login'
+    | '/admin/requests'
+    | '/admin/scanner'
+    | '/admin/setup'
+    | '/admin/team'
+    | '/api/team'
+    | '/firehacks/member'
+    | '/firehacks/portal'
+    | '/admin/'
+    | '/api/admin/dashboard-stats'
+    | '/api/admin/volunteers'
+    | '/api/admin/website-requests'
+    | '/api/firehacks/waiver'
+    | '/firehacks/member/login'
+    | '/firehacks/portal/login'
+    | '/api/admin/firehacks/provision-member'
+    | '/api/admin/firehacks/provision-portal'
+    | '/api/firehacks/member/lookup'
+    | '/api/firehacks/member/redeem'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FirehacksRoute: typeof FirehacksRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  FirehacksRoute: typeof FirehacksRouteWithChildren
+  TeamRoute: typeof TeamRoute
+  ApiTeamRoute: typeof ApiTeamRoute
+  ApiAdminDashboardStatsRoute: typeof ApiAdminDashboardStatsRoute
+  ApiAdminVolunteersRoute: typeof ApiAdminVolunteersRoute
+  ApiAdminWebsiteRequestsRoute: typeof ApiAdminWebsiteRequestsRoute
+  ApiFirehacksWaiverRoute: typeof ApiFirehacksWaiverRoute
+  ApiAdminFirehacksProvisionMemberRoute: typeof ApiAdminFirehacksProvisionMemberRoute
+  ApiAdminFirehacksProvisionPortalRoute: typeof ApiAdminFirehacksProvisionPortalRoute
+  ApiFirehacksMemberLookupRoute: typeof ApiFirehacksMemberLookupRoute
+  ApiFirehacksMemberRedeemRoute: typeof ApiFirehacksMemberRedeemRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/firehacks': {
       id: '/firehacks'
       path: '/firehacks'
       fullPath: '/firehacks'
       preLoaderRoute: typeof FirehacksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,13 +387,254 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/firehacks/portal': {
+      id: '/firehacks/portal'
+      path: '/portal'
+      fullPath: '/firehacks/portal'
+      preLoaderRoute: typeof FirehacksPortalRouteImport
+      parentRoute: typeof FirehacksRoute
+    }
+    '/firehacks/member': {
+      id: '/firehacks/member'
+      path: '/member'
+      fullPath: '/firehacks/member'
+      preLoaderRoute: typeof FirehacksMemberRouteImport
+      parentRoute: typeof FirehacksRoute
+    }
+    '/api/team': {
+      id: '/api/team'
+      path: '/api/team'
+      fullPath: '/api/team'
+      preLoaderRoute: typeof ApiTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/setup': {
+      id: '/admin/setup'
+      path: '/setup'
+      fullPath: '/admin/setup'
+      preLoaderRoute: typeof AdminSetupRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/scanner': {
+      id: '/admin/scanner'
+      path: '/scanner'
+      fullPath: '/admin/scanner'
+      preLoaderRoute: typeof AdminScannerRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/requests': {
+      id: '/admin/requests'
+      path: '/requests'
+      fullPath: '/admin/requests'
+      preLoaderRoute: typeof AdminRequestsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/firehacks-portal': {
+      id: '/admin/firehacks-portal'
+      path: '/firehacks-portal'
+      fullPath: '/admin/firehacks-portal'
+      preLoaderRoute: typeof AdminFirehacksPortalRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/firehacks-members': {
+      id: '/admin/firehacks-members'
+      path: '/firehacks-members'
+      fullPath: '/admin/firehacks-members'
+      preLoaderRoute: typeof AdminFirehacksMembersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/applications': {
+      id: '/admin/applications'
+      path: '/applications'
+      fullPath: '/admin/applications'
+      preLoaderRoute: typeof AdminApplicationsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/firehacks/portal/login': {
+      id: '/firehacks/portal/login'
+      path: '/login'
+      fullPath: '/firehacks/portal/login'
+      preLoaderRoute: typeof FirehacksPortalLoginRouteImport
+      parentRoute: typeof FirehacksPortalRoute
+    }
+    '/firehacks/member/login': {
+      id: '/firehacks/member/login'
+      path: '/login'
+      fullPath: '/firehacks/member/login'
+      preLoaderRoute: typeof FirehacksMemberLoginRouteImport
+      parentRoute: typeof FirehacksMemberRoute
+    }
+    '/api/firehacks/waiver': {
+      id: '/api/firehacks/waiver'
+      path: '/api/firehacks/waiver'
+      fullPath: '/api/firehacks/waiver'
+      preLoaderRoute: typeof ApiFirehacksWaiverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/website-requests': {
+      id: '/api/admin/website-requests'
+      path: '/api/admin/website-requests'
+      fullPath: '/api/admin/website-requests'
+      preLoaderRoute: typeof ApiAdminWebsiteRequestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/volunteers': {
+      id: '/api/admin/volunteers'
+      path: '/api/admin/volunteers'
+      fullPath: '/api/admin/volunteers'
+      preLoaderRoute: typeof ApiAdminVolunteersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/dashboard-stats': {
+      id: '/api/admin/dashboard-stats'
+      path: '/api/admin/dashboard-stats'
+      fullPath: '/api/admin/dashboard-stats'
+      preLoaderRoute: typeof ApiAdminDashboardStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/firehacks/member/redeem': {
+      id: '/api/firehacks/member/redeem'
+      path: '/api/firehacks/member/redeem'
+      fullPath: '/api/firehacks/member/redeem'
+      preLoaderRoute: typeof ApiFirehacksMemberRedeemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/firehacks/member/lookup': {
+      id: '/api/firehacks/member/lookup'
+      path: '/api/firehacks/member/lookup'
+      fullPath: '/api/firehacks/member/lookup'
+      preLoaderRoute: typeof ApiFirehacksMemberLookupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/firehacks/provision-portal': {
+      id: '/api/admin/firehacks/provision-portal'
+      path: '/api/admin/firehacks/provision-portal'
+      fullPath: '/api/admin/firehacks/provision-portal'
+      preLoaderRoute: typeof ApiAdminFirehacksProvisionPortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/firehacks/provision-member': {
+      id: '/api/admin/firehacks/provision-member'
+      path: '/api/admin/firehacks/provision-member'
+      fullPath: '/api/admin/firehacks/provision-member'
+      preLoaderRoute: typeof ApiAdminFirehacksProvisionMemberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminApplicationsRoute: typeof AdminApplicationsRoute
+  AdminFirehacksMembersRoute: typeof AdminFirehacksMembersRoute
+  AdminFirehacksPortalRoute: typeof AdminFirehacksPortalRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminRequestsRoute: typeof AdminRequestsRoute
+  AdminScannerRoute: typeof AdminScannerRoute
+  AdminSetupRoute: typeof AdminSetupRoute
+  AdminTeamRoute: typeof AdminTeamRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminApplicationsRoute: AdminApplicationsRoute,
+  AdminFirehacksMembersRoute: AdminFirehacksMembersRoute,
+  AdminFirehacksPortalRoute: AdminFirehacksPortalRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminRequestsRoute: AdminRequestsRoute,
+  AdminScannerRoute: AdminScannerRoute,
+  AdminSetupRoute: AdminSetupRoute,
+  AdminTeamRoute: AdminTeamRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
+interface FirehacksMemberRouteChildren {
+  FirehacksMemberLoginRoute: typeof FirehacksMemberLoginRoute
+}
+
+const FirehacksMemberRouteChildren: FirehacksMemberRouteChildren = {
+  FirehacksMemberLoginRoute: FirehacksMemberLoginRoute,
+}
+
+const FirehacksMemberRouteWithChildren = FirehacksMemberRoute._addFileChildren(
+  FirehacksMemberRouteChildren,
+)
+
+interface FirehacksPortalRouteChildren {
+  FirehacksPortalLoginRoute: typeof FirehacksPortalLoginRoute
+}
+
+const FirehacksPortalRouteChildren: FirehacksPortalRouteChildren = {
+  FirehacksPortalLoginRoute: FirehacksPortalLoginRoute,
+}
+
+const FirehacksPortalRouteWithChildren = FirehacksPortalRoute._addFileChildren(
+  FirehacksPortalRouteChildren,
+)
+
+interface FirehacksRouteChildren {
+  FirehacksMemberRoute: typeof FirehacksMemberRouteWithChildren
+  FirehacksPortalRoute: typeof FirehacksPortalRouteWithChildren
+}
+
+const FirehacksRouteChildren: FirehacksRouteChildren = {
+  FirehacksMemberRoute: FirehacksMemberRouteWithChildren,
+  FirehacksPortalRoute: FirehacksPortalRouteWithChildren,
+}
+
+const FirehacksRouteWithChildren = FirehacksRoute._addFileChildren(
+  FirehacksRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FirehacksRoute: FirehacksRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
+  FirehacksRoute: FirehacksRouteWithChildren,
+  TeamRoute: TeamRoute,
+  ApiTeamRoute: ApiTeamRoute,
+  ApiAdminDashboardStatsRoute: ApiAdminDashboardStatsRoute,
+  ApiAdminVolunteersRoute: ApiAdminVolunteersRoute,
+  ApiAdminWebsiteRequestsRoute: ApiAdminWebsiteRequestsRoute,
+  ApiFirehacksWaiverRoute: ApiFirehacksWaiverRoute,
+  ApiAdminFirehacksProvisionMemberRoute: ApiAdminFirehacksProvisionMemberRoute,
+  ApiAdminFirehacksProvisionPortalRoute: ApiAdminFirehacksProvisionPortalRoute,
+  ApiFirehacksMemberLookupRoute: ApiFirehacksMemberLookupRoute,
+  ApiFirehacksMemberRedeemRoute: ApiFirehacksMemberRedeemRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

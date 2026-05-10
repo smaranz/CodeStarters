@@ -1,7 +1,6 @@
-import { motion } from "framer-motion";
 import { ExternalLink, Instagram } from "lucide-react";
 import { useLocation } from "@tanstack/react-router";
-import { FireHacksLogo, CodeStartersLogo } from "@/assets/logo";
+import { CodeStartersLogo } from "@/assets/logo";
 
 const fireHacksLinks = [
   ["About", "#about"],
@@ -16,15 +15,12 @@ export function Navbar() {
   const isFireHacks = location.pathname.startsWith("/firehacks");
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed left-1/2 top-4 z-50 flex w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 items-center justify-between rounded-2xl border border-white/10 bg-[#0A0A0A]/72 px-4 py-3 shadow-2xl backdrop-blur-xl md:px-6"
-    >
+    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b border-white/[0.06] bg-[#0A0A0A]/80 px-6 py-3 backdrop-blur-xl md:px-10">
       <a href={isFireHacks ? "/firehacks" : "/"} className="flex items-center gap-3">
-        {isFireHacks ? <FireHacksLogo size={30} /> : <CodeStartersLogo size={30} />}
-        <span className="font-bold text-lg">{isFireHacks ? "Fire Hacks" : "CodeStarters"}</span>
+        <CodeStartersLogo size={28} white />
+        <span className="font-bold text-base text-white">
+          {isFireHacks ? "Fire Hacks" : "CodeStarters"}
+        </span>
       </a>
 
       <div className="hidden md:flex items-center gap-1 text-sm">
@@ -70,6 +66,6 @@ export function Navbar() {
           Register
         </a>
       </div>
-    </motion.nav>
+    </nav>
   );
 }
