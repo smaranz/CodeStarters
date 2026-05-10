@@ -1,21 +1,20 @@
 import { CodeStartersLogo } from "@/assets/logo";
+import { VolunteerForm } from "@/components/VolunteerForm";
 import { createFileRoute } from "@tanstack/react-router";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, MotionValue, useMotionValue, useTransform } from "framer-motion";
 import Hls from "hls.js";
 import {
   ArrowRight,
-  Bot,
-  Building2,
   Check,
   Code2,
-  ExternalLink,
-  Flame,
   GraduationCap,
+  Handshake,
   HeartHandshake,
   Instagram,
-  Mail,
+  Megaphone,
   Menu,
-  Send,
+  Palette,
+  Sparkles,
   Users,
   X,
 } from "lucide-react";
@@ -39,7 +38,7 @@ const navLinks = [
 
 const programs = [
   {
-    icon: GraduationCap,
+    img: "/cs-education.png",
     name: "CS & AI Education",
     desc: "Our volunteers teach foundational and advanced topics to equip younger students with the skills they need for the future.",
     bullets: [
@@ -50,13 +49,13 @@ const programs = [
     ],
   },
   {
-    icon: Building2,
+    img: "/free-websites.png",
     name: "Free Websites for Local Businesses",
     desc: "We empower Cupertino's local economy by building professional websites at no cost, managed entirely by student developers gaining real-world experience.",
     bullets: ["Restaurants & cafes", "Retail shops", "Service businesses", "Local nonprofits"],
   },
   {
-    icon: Bot,
+    img: "/ai-literacy.png",
     name: "AI Literacy & Responsible Use",
     desc: "We guide the next generation in navigating the AI era with confidence, focusing on ethical implementation, critical thinking, and practical tools.",
     bullets: [
@@ -76,16 +75,6 @@ const team = [
   { name: "Sai Sanjit Reddy Vallapureddy", role: "Head of Education", img: "/sai.webp" },
 ];
 
-const extendedTeam = [
-  { name: "Reyansh Nankani", role: "UI/UX Designer", img: "/team/reyansh-nankani.png" },
-  { name: "Arham Desai", role: "CS & AI Instructor", img: "/team/arham-desai.png" },
-  { name: "Shaurya Gakhar", role: "CS & AI Instructor", img: "/team/shaurya-gakhar.png" },
-  { name: "Robin Zhou", role: "Social Media Manager", img: "/team/robin-zhou.png" },
-  { name: "Pranav C", role: "AI Lead & Vibe Coder", img: "/team/pranav-c.png" },
-  { name: "Shreesh Basu", role: "Social Media Manager", img: "/team/shreesh-basu.png" },
-  { name: "Michael Cutsail", role: "CS & AI Instructor", img: "/team/michael-cutsail.png" },
-];
-
 const sponsors = [
   { name: "CodeCrafters", url: "https://codecrafters.io", img: "/sponsors/codecrafters.svg" },
   { name: "Gen.xyz", url: "https://gen.xyz", img: "/sponsors/genxyz.png" },
@@ -94,17 +83,17 @@ const sponsors = [
   { name: "Featherless AI", url: "https://featherless.ai", img: "/sponsors/featherless.png" },
   { name: "n8n", url: "https://n8n.io", img: "/sponsors/n8n.png" },
   { name: "Publick", url: "https://publick.xyz", img: "/sponsors/publick.png" },
-  { name: "Guild.ai", url: "https://www.guild.ai/" },
+  { name: "Guild.ai", url: "https://www.guild.ai/", img: "/sponsors/guild-ai.png", large: true },
   { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg" },
 ];
 
 const volunteerRoles = [
-  "Web Developers",
-  "UI/UX Designers",
-  "CS & AI Instructors",
-  "Outreach & Partnerships",
-  "Marketing & Social Media",
-  "Vibe Coding",
+  { name: "Web Developers", Icon: Code2 },
+  { name: "UI/UX Designers", Icon: Palette },
+  { name: "CS & AI Instructors", Icon: GraduationCap },
+  { name: "Outreach & Partnerships", Icon: Handshake },
+  { name: "Marketing & Social Media", Icon: Megaphone },
+  { name: "Vibe Coding", Icon: Sparkles },
 ];
 
 const missionWords =
@@ -129,12 +118,13 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formSent, setFormSent] = useState(false);
+  const [showVolunteerForm, setShowVolunteerForm] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [donationAmount, setDonationAmount] = useState<number | null>(25);
+  const [customAmount, setCustomAmount] = useState("");
   const ctaVideoRef = useRef<HTMLVideoElement>(null);
   const missionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: missionProgress } = useScroll({
-    target: missionRef,
-    offset: ["start 75%", "end 45%"],
-  });
+  const missionProgress = useMotionValue(0);
 
   const mailto = useMemo(() => {
     const subject = encodeURIComponent("CodeStarters volunteer interest");
@@ -154,6 +144,27 @@ function HomePage() {
     if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = src;
     }
+  }, []);
+
+  useEffect(() => {
+    const section = missionRef.current;
+    if (!section) return;
+    const update = () => {
+      const rect = section.getBoundingClientRect();
+      const scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+      missionProgress.set(progress);
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => window.removeEventListener("scroll", update);
+  }, [missionProgress]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   function submitBusinessRequest(event: FormEvent<HTMLFormElement>) {
@@ -176,7 +187,7 @@ function HomePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-8 py-4 md:px-28">
+      <nav className={`fixed z-50 flex items-center justify-between nav-glass transition-all duration-300 ${scrolled ? "left-6 right-6 top-2 rounded-xl px-5 py-2" : "left-6 right-6 top-6 rounded-2xl px-6 py-4 md:left-10 md:right-10"}`}>
         <a href="#home" className="flex items-center gap-3" aria-label="CodeStarters home">
           <CodeStartersLogo size={28} white />
           <span className="text-lg font-bold">CodeStarters</span>
@@ -198,7 +209,7 @@ function HomePage() {
 
         <div className="flex items-center gap-3">
           <a
-            href="https://www.instagram.com/cupertino_codestarters/"
+            href="https://www.instagram.com/codestarters_cupertino/"
             target="_blank"
             rel="noreferrer"
             className="liquid-glass flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-105"
@@ -207,15 +218,12 @@ function HomePage() {
             <Instagram className="h-4 w-4" />
           </a>
           <a
-            href="https://discord.gg/utUNdDz3"
+            href="https://hcb.hackclub.com/donations/start/codestarters"
             target="_blank"
             rel="noreferrer"
-            className="liquid-glass hidden h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-105 sm:flex"
-            aria-label="Discord"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-80"
           >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-              <path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.62 12.62 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.027 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.105 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.128 12.299 12.299 0 0 1-1.873.891.077.077 0 0 0-.041.106c.36.698.772 1.362 1.226 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.974 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-            </svg>
+            Donate
           </a>
           <button
             onClick={() => setMenuOpen((value) => !value)}
@@ -266,44 +274,38 @@ function HomePage() {
           </div>
           <div className="absolute bottom-0 left-0 right-0 z-[1] h-64 bg-gradient-to-t from-background to-transparent" />
 
-          <div className="relative z-10 mx-auto max-w-5xl px-6 pt-28 text-center md:pt-32">
-            <motion.div {...fadeUp(0)} className="mb-8 flex items-center justify-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                Student-led builders teaching the next generation
-              </span>
-            </motion.div>
-
+          <div className="relative z-10 mx-auto max-w-5xl px-6 pt-16 text-center md:pt-20">
             <motion.h1
-              {...fadeUp(0.1)}
-              className="mb-6 text-5xl font-medium tracking-[-2px] md:text-7xl lg:text-8xl"
+              {...fadeUp(0)}
+              className="mb-5 text-5xl font-medium tracking-[-2px] md:text-7xl lg:text-8xl"
             >
               Teaching <span className="font-serif font-normal italic">AI</span> and CS
             </motion.h1>
             <motion.p
-              {...fadeUp(0.2)}
+              {...fadeUp(0.1)}
               className="text-hero-subtitle mx-auto mb-12 max-w-2xl text-lg"
             >
               Student-led initiative teaching CS and AI to younger students while helping small
               businesses grow.
             </motion.p>
             <motion.div
-              {...fadeUp(0.3)}
-              className="liquid-glass mx-auto flex max-w-xl flex-col items-center gap-2 rounded-3xl p-2 sm:flex-row sm:rounded-full"
+              {...fadeUp(0.2)}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <a
                 href="#programs"
-                className="flex-1 px-6 py-3 text-center font-medium text-foreground"
+                className="font-medium text-white/70 hover:text-white transition-colors border-b border-white/30 hover:border-white/70 pb-0.5"
               >
-                See our programs
+                See our programs →
               </a>
-              <motion.a
-                href={mailto}
+              <motion.button
+                onClick={() => setShowVolunteerForm(true)}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="rounded-full bg-foreground px-8 py-3 font-medium text-background"
+                className="rounded-full bg-white px-8 py-3 font-medium text-black"
               >
                 JOIN US
-              </motion.a>
+              </motion.button>
             </motion.div>
           </div>
         </section>
@@ -328,8 +330,8 @@ function HomePage() {
                 whileHover={{ y: -8 }}
                 className="text-center"
               >
-                <div className="mx-auto mb-6 flex h-[200px] w-[200px] items-center justify-center rounded-2xl bg-secondary">
-                  <program.icon className="h-16 w-16 text-foreground/80" />
+                <div className="mx-auto mb-6 h-[200px] w-[200px] overflow-hidden rounded-2xl">
+                  <img src={program.img} alt={program.name} className="h-full w-full object-cover grayscale" />
                 </div>
                 <h3 className="mb-2 text-base font-semibold">{program.name}</h3>
                 <p className="text-sm leading-6 text-muted-foreground">{program.desc}</p>
@@ -345,40 +347,25 @@ function HomePage() {
           </div>
         </section>
 
-        <section id="mission" ref={missionRef} className="relative px-6 pb-32 pt-0 md:pb-44">
-          <motion.div {...fadeUp(0)} className="mb-16 flex justify-center">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="h-[min(800px,82vw)] w-[min(800px,82vw)] rounded-2xl object-cover grayscale"
-              src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260325_132944_a0d124bb-eaa1-4082-aa30-2310efb42b4b.mp4"
-            />
-          </motion.div>
-          <div className="mx-auto max-w-5xl text-center">
-            <p className="text-2xl font-medium leading-relaxed tracking-[-1px] md:text-4xl lg:text-5xl">
-              {missionWords.map((word, index) => (
-                <RevealWord
-                  key={`${word}-${index}`}
-                  index={index}
-                  total={missionWords.length}
-                  progress={missionProgress}
-                  highlight={["computer", "science", "AI", "Cupertino"].includes(
-                    word.replace(/[,.]/g, ""),
-                  )}
-                >
-                  {word}
-                </RevealWord>
-              ))}
-            </p>
-            <motion.p
-              {...fadeUp(0.2)}
-              className="mx-auto mt-10 max-w-3xl text-xl text-muted-foreground md:text-2xl lg:text-3xl"
-            >
-              Workshops, school partnerships, community events, free local websites, and Fire Hacks
-              all connect back to one goal: helping students build useful things with clarity.
-            </motion.p>
+        <section id="mission" ref={missionRef} className="h-[500vh] relative">
+          <div className="sticky top-0 h-screen bg-black flex items-center justify-center overflow-hidden">
+            <div className="mx-auto max-w-5xl px-6 text-center">
+              <p className="text-2xl font-medium leading-relaxed tracking-[-1px] md:text-4xl lg:text-5xl text-white">
+                {missionWords.map((word, index) => (
+                  <RevealWord
+                    key={`${word}-${index}`}
+                    index={index}
+                    total={missionWords.length}
+                    progress={missionProgress}
+                    highlight={["computer", "science", "AI", "Cupertino"].includes(
+                      word.replace(/[,.]/g, ""),
+                    )}
+                  >
+                    {word}
+                  </RevealWord>
+                ))}
+              </p>
+            </div>
           </div>
         </section>
 
@@ -417,7 +404,9 @@ function HomePage() {
           </div>
           <motion.div {...fadeUp(0.65)} className="mt-12 flex justify-center">
             <a
-              href="/firehacks"
+              href="http://localhost:3000/firehacks"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3 font-medium text-background"
             >
               Visit Fire Hacks <ArrowRight className="h-4 w-4" />
@@ -437,17 +426,28 @@ function HomePage() {
             resume, and make a tangible impact.
           </motion.p>
           <div className="mx-auto mt-14 grid max-w-5xl grid-cols-2 gap-4 sm:grid-cols-3">
-            {volunteerRoles.map((role, index) => (
+            {volunteerRoles.map(({ name, Icon }, index) => (
               <motion.div
-                key={role}
+                key={name}
                 {...fadeUp(0.2 + index * 0.05)}
                 whileHover={{ y: -4 }}
-                className="liquid-glass rounded-2xl p-5 text-center text-sm font-medium"
+                className="liquid-glass flex items-center gap-3 rounded-2xl p-5 text-sm font-medium"
               >
-                {role}
+                <Icon className="h-5 w-5 shrink-0 text-white/70" />
+                {name}
               </motion.div>
             ))}
           </div>
+          <motion.div {...fadeUp(0.55)} className="mt-10 flex justify-center">
+            <motion.button
+              onClick={() => setShowVolunteerForm(true)}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="rounded-full bg-foreground px-10 py-3.5 font-medium text-background"
+            >
+              Join Us
+            </motion.button>
+          </motion.div>
         </section>
 
         <section id="business" className="border-t border-border/30 px-6 py-32 md:py-44">
@@ -558,34 +558,14 @@ function HomePage() {
             ))}
           </div>
 
-          <div className="mx-auto mt-24 max-w-6xl">
-            <motion.div {...fadeUp(0)} className="mb-12 text-center">
-              <p className="mb-4 text-xs uppercase tracking-[3px] text-muted-foreground">
-                EXTENDED TEAM
-              </p>
-              <h3 className="text-3xl md:text-4xl">
-                More people making it <span className="font-serif italic">happen</span>
-              </h3>
-            </motion.div>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-3 lg:grid-cols-5">
-              {extendedTeam.map((member, index) => (
-                <motion.article
-                  key={member.name}
-                  {...fadeUp(0.05 + index * 0.05)}
-                  whileHover={{ y: -6 }}
-                  className="text-center"
-                >
-                  <img
-                    src={member.img}
-                    alt={member.name}
-                    loading="lazy"
-                    className="aspect-square w-full rounded-[22px] object-cover grayscale"
-                  />
-                  <h4 className="mt-6 text-base font-bold leading-tight">{member.name}</h4>
-                  <p className="mt-2 text-sm text-muted-foreground">{member.role}</p>
-                </motion.article>
-              ))}
-            </div>
+          <div className="mt-12 flex justify-center">
+            <a
+              href="/team"
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3 font-medium text-background hover:opacity-80 transition-opacity"
+            >
+              <Users className="h-4 w-4 opacity-90" />
+              Meet the full team →
+            </a>
           </div>
         </section>
 
@@ -609,14 +589,14 @@ function HomePage() {
                 rel="noreferrer"
                 {...fadeUp(0.1 + index * 0.04)}
                 whileHover={{ scale: 1.04 }}
-                className="liquid-glass flex h-24 items-center justify-center rounded-2xl p-5"
+                className="liquid-glass flex h-32 items-center justify-center rounded-2xl p-6"
               >
                 {sponsor.img ? (
                   <img
                     src={sponsor.img}
                     alt={sponsor.name}
                     loading="lazy"
-                    className="max-h-9 max-w-full object-contain brightness-0 invert"
+                    className={`object-contain brightness-0 invert ${(sponsor as { large?: boolean }).large ? "h-14 max-w-[80%]" : "h-10 max-w-[80%]"}`}
                   />
                 ) : (
                   <span className="text-lg font-bold">{sponsor.name}</span>
@@ -636,45 +616,42 @@ function HomePage() {
             loop
             muted
             playsInline
-            className="absolute inset-0 z-0 h-full w-full object-cover opacity-60 grayscale"
+            className="absolute inset-0 z-0 h-full w-full object-cover opacity-40 grayscale"
           />
-          <div className="absolute inset-0 z-[1] bg-background/45" />
-          <div className="relative z-10 mx-auto max-w-3xl text-center">
-            <motion.div {...fadeUp(0)} className="relative mx-auto mb-8 h-10 w-10">
-              <div className="absolute inset-0 h-10 w-10 rounded-full border-2 border-foreground/60" />
-              <div className="absolute left-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/60" />
-            </motion.div>
-            <motion.h2 {...fadeUp(0.1)} className="mb-6 font-serif text-4xl italic md:text-6xl">
-              Start Your Journey
-            </motion.h2>
-            <motion.p {...fadeUp(0.2)} className="mb-12 text-muted-foreground">
-              Help us teach CS & AI, host Fire Hacks, and build free websites for local businesses.
-            </motion.p>
-            <motion.div
-              {...fadeUp(0.3)}
-              className="flex flex-col items-center justify-center gap-4 sm:flex-row"
-            >
-              <a
-                href="https://hcb.hackclub.com/donations/start/codestarters"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-lg bg-foreground px-8 py-3.5 font-medium text-background transition-colors hover:bg-foreground/90"
-              >
-                Donate Now
-              </a>
-              <a href={mailto} className="liquid-glass rounded-lg px-8 py-3.5 font-medium">
-                Apply to Volunteer
-              </a>
+          <div className="absolute inset-0 z-[1] bg-background/60" />
+          <div className="relative z-10 mx-auto max-w-2xl">
+            <div className="mb-8 text-center">
+              <motion.div {...fadeUp(0)} className="mb-6 flex justify-center">
+                <CodeStartersLogo size={36} white />
+              </motion.div>
+              <motion.h2 {...fadeUp(0.1)} className="mb-3 font-serif text-4xl italic md:text-5xl">
+                Support CodeStarters
+              </motion.h2>
+              <motion.p {...fadeUp(0.15)} className="text-muted-foreground">
+                Every dollar helps us teach CS & AI, host Fire Hacks, and build free websites for local businesses.
+              </motion.p>
+            </div>
+            <motion.div {...fadeUp(0.2)} className="overflow-hidden rounded-2xl bg-white shadow-2xl">
+              <iframe
+                src="https://hcb.hackclub.com/donations/start/codestarters"
+                className="w-full border-0"
+                height={580}
+                title="Donate to CodeStarters"
+              />
             </motion.div>
           </div>
         </section>
       </main>
 
+      <VolunteerForm isOpen={showVolunteerForm} onClose={() => setShowVolunteerForm(false)} />
+
       <footer className="flex flex-col items-center justify-between gap-4 px-8 py-12 md:flex-row md:px-28">
         <p className="text-sm text-muted-foreground">© 2026 CodeStarters. All rights reserved.</p>
         <div className="flex items-center gap-6">
           <a
-            href="/firehacks"
+            href="http://localhost:3000/firehacks"
+            target="_blank"
+            rel="noreferrer"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             Fire Hacks
@@ -686,7 +663,7 @@ function HomePage() {
             Contact
           </a>
           <a
-            href="https://www.instagram.com/cupertino_codestarters/"
+            href="https://www.instagram.com/codestarters_cupertino/"
             target="_blank"
             rel="noreferrer"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -709,17 +686,17 @@ function RevealWord({
   children: string;
   index: number;
   total: number;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  progress: MotionValue<number>;
   highlight?: boolean;
 }) {
-  const start = index / total;
-  const end = Math.min(1, start + 0.18);
+  const start = 0.05 + (index / total) * 0.8;
+  const end = Math.min(0.95, start + 0.12);
   const opacity = useTransform(progress, [start, end], [0.15, 1]);
 
   return (
     <motion.span
       style={{ opacity }}
-      className={highlight ? "text-foreground" : "text-hero-subtitle"}
+      className="text-white"
     >
       {children}{" "}
     </motion.span>

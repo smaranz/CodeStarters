@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+.fh-shell {
+  --font-fh-body: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-fh-heading: "Space Mono", ui-monospace, monospace;
+}
+
+@theme {
+  /* CodeStarters brand palette (admin panel) */
+  --color-brand-50: #f0fdf4;
+  --color-brand-100: #dcfce7;
+  --color-brand-200: #bbf7d0;
+  --color-brand-300: #86efac;
+  --color-brand-400: #4ade80;
+  --color-brand-500: #22c55e;
+  --color-brand-600: #16a34a;
+  --color-brand-700: #15803d;
+  --color-brand-800: #166534;
+  --color-brand-900: #14532d;
+  --color-brand-950: #052e16;
+}
+
 @theme inline {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -98,6 +118,14 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
+}
+
+/* Navbar dark glass — no overflow:hidden so dropdowns aren't clipped */
+.nav-glass {
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
 }
 
 /* Font imports */
