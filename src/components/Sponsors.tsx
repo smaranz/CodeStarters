@@ -10,7 +10,7 @@ const sponsors = [
   { name: "n8n", url: "https://n8n.io/", img: "/sponsors/n8n.png" },
   { name: "Publick", url: "https://publick.xyz/", img: "/sponsors/publick.png" },
   { name: "Guild.ai", url: "https://www.guild.ai/" },
-  { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg" },
+  { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg", imageClassName: "brightness-0" },
 ];
 
 export function Sponsors() {
