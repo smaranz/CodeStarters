@@ -13,7 +13,7 @@ const extendedTeam = [
   { name: "Arham Desai", role: "CS & AI Instructor", img: "/team/arham-desai.png" },
   { name: "Shaurya Gakhar", role: "CS & AI Instructor", img: "/team/shaurya-gakhar.png" },
   { name: "Robin Zhou", role: "Social Media Manager", img: "/team/robin-zhou.png" },
-  { name: "Pranav C", role: "Vibe Coding", img: "/team/pranav-c.png" },
+  { name: "Pranav C", role: "AI Lead & Vibe Coder", img: "/team/pranav-c.png" },
   { name: "Shreesh Basu", role: "Social Media Manager", img: "/team/shreesh-basu.png" },
   { name: "Michael Cutsail", role: "CS & AI Instructor", img: "/team/michael-cutsail.png" },
 ];
