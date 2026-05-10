@@ -260,16 +260,6 @@ function HomePage() {
 
           <div className="relative z-10 mx-auto max-w-5xl px-6 pt-28 text-center md:pt-32">
             <motion.div {...fadeUp(0)} className="mb-8 flex items-center justify-center gap-2">
-              <div className="flex -space-x-2">
-                {[1, 2, 3].map((i) => (
-                  <img
-                    key={i}
-                    src={`/assets/avatar-${i}.png`}
-                    alt=""
-                    className="h-8 w-8 rounded-full border-2 border-background"
-                  />
-                ))}
-              </div>
               <span className="text-sm text-muted-foreground">
                 Student-led builders teaching the next generation
               </span>
