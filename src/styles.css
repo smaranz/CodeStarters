@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: hsl(0, 0%, 0%);
-  --color-foreground: hsl(0, 0%, 100%);
-  --color-card: hsl(0, 0%, 5%);
-  --color-card-foreground: hsl(0, 0%, 100%);
-  --color-primary: hsl(0, 0%, 100%);
-  --color-primary-foreground: hsl(0, 0%, 0%);
-  --color-secondary: hsl(0, 0%, 12%);
-  --color-secondary-foreground: hsl(0, 0%, 85%);
-  --color-muted: hsl(0, 0%, 15%);
-  --color-muted-foreground: hsl(0, 0%, 65%);
-  --color-accent: hsl(0, 0%, 50%);
-  --color-accent-foreground: hsl(0, 0%, 100%);
-  --color-border: hsl(0, 0%, 20%);
-  --color-input: hsl(0, 0%, 18%);
-  --color-ring: hsl(0, 0%, 40%);
-  --color-hero-subtitle: hsl(0, 0%, 95%);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-hero-subtitle: hsl(var(--hero-subtitle));
   --font-sans: "Inter", system-ui, sans-serif;
   --font-serif: "Instrument Serif", Georgia, serif;
   --radius-sm: calc(var(--radius) - 4px);
@@ -27,15 +27,31 @@
 
 :root {
   --radius: 0.75rem;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 85%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --accent: 170 15% 45%;
+  --accent-foreground: 0 0% 100%;
+  --border: 0 0% 20%;
+  --input: 0 0% 18%;
+  --ring: 0 0% 40%;
+  --hero-subtitle: 210 17% 95%;
 }
 
 @layer base {
   * {
-    border-color: hsl(0, 0%, 20%);
+    border-color: hsl(var(--border));
   }
   body {
-    background-color: hsl(0, 0%, 0%);
-    color: hsl(0, 0%, 100%);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-family: var(--font-sans);
   }
   html {

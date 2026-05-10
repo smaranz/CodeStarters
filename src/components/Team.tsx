@@ -8,6 +8,16 @@ const coreTeam = [
   { name: "Sai Sanjit Reddy Vallapureddy", role: "Head of Marketing", img: "/sai.webp" },
 ];
 
+const extendedTeam = [
+  { name: "Reyansh Nankani", role: "UI/UX Designer", img: "/team/reyansh-nankani.png" },
+  { name: "Arham Desai", role: "CS & AI Instructor", img: "/team/arham-desai.png" },
+  { name: "Shaurya Gakhar", role: "CS & AI Instructor", img: "/team/shaurya-gakhar.png" },
+  { name: "Robin Zhou", role: "Social Media Manager", img: "/team/robin-zhou.png" },
+  { name: "Pranav C", role: "Vibe Coding", img: "/team/pranav-c.png" },
+  { name: "Shreesh Basu", role: "Social Media Manager", img: "/team/shreesh-basu.png" },
+  { name: "Michael Cutsail", role: "CS & AI Instructor", img: "/team/michael-cutsail.png" },
+];
+
 export function Team() {
   return (
     <section id="team" className="relative py-32 px-6 bg-[#0A0A0A]">
@@ -49,6 +59,42 @@ export function Team() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-24">
+          <div className="mb-12 text-center">
+            <span className="text-red-500 text-sm font-medium tracking-widest uppercase">
+              Extended Team
+            </span>
+            <h3 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight">
+              More people making Fire Hacks happen
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-12">
+            {extendedTeam.map((m, i) => (
+              <motion.div
+                key={m.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                whileHover={{ y: -6 }}
+                className="text-center"
+              >
+                <img
+                  src={m.img}
+                  alt={m.name}
+                  loading="lazy"
+                  className="aspect-square w-full rounded-[22px] object-cover"
+                />
+                <div className="mt-5 text-base sm:text-lg font-bold text-white leading-tight">
+                  {m.name}
+                </div>
+                <div className="mt-1 text-sm text-gray-400">{m.role}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

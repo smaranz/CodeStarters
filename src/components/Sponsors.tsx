@@ -15,7 +15,8 @@ const sponsors = [
 
 export function Sponsors() {
   return (
-    <section id="sponsors" className="relative py-32 px-6 bg-[#0A0A0A]">
+    <section id="sponsors" className="relative py-32 px-6 bg-red-950 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(239,68,68,0.38),transparent_52%)]" />
       <div className="max-w-6xl mx-auto text-center">
         <span className="text-red-500 text-sm font-medium tracking-widest uppercase">
           Our Sponsors
@@ -37,19 +38,17 @@ export function Sponsors() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
               whileHover={{ scale: 1.05 }}
-              className="group relative flex items-center justify-center w-36 sm:w-44 h-20 sm:h-24 rounded-xl bg-[#141414] border border-[#1F1F1F] hover:border-red-500/30 transition-all overflow-hidden p-4"
+              className="group relative flex items-center justify-center w-36 sm:w-44 h-20 sm:h-24 rounded-xl bg-white/95 border border-white/30 hover:border-white transition-all overflow-hidden p-4 shadow-2xl shadow-red-950/25"
             >
               {s.img ? (
                 <img
                   src={s.img}
                   alt={s.name}
                   loading="lazy"
-                  className="max-h-10 max-w-full object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+                  className="max-h-10 max-w-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
                 />
               ) : (
-                <span className="text-xl font-black tracking-tight text-white/80 group-hover:text-white">
-                  {s.name}
-                </span>
+                <span className="text-xl font-black tracking-tight text-red-950">{s.name}</span>
               )}
             </motion.a>
           ))}
@@ -60,7 +59,7 @@ export function Sponsors() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 p-8 sm:p-12 rounded-2xl bg-[#141414] border border-[#1F1F1F]"
+          className="relative mt-20 p-8 sm:p-12 rounded-2xl bg-[#0A0A0A]/72 border border-white/15 backdrop-blur"
         >
           <h3 className="text-2xl sm:text-3xl font-bold text-white">
             Become a <span className="text-red-500">Sponsor</span>
