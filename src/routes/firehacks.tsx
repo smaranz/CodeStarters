@@ -1,14 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/firehacks")({
-  component: FireHacksRedirect,
+  beforeLoad: () => {
+    throw redirect({ to: "/firehacks/member" });
+  },
+  component: () => null,
 });
-
-function FireHacksRedirect() {
-  useEffect(() => {
-    window.location.replace("https://codestarters.xyz/firehacks");
-  }, []);
-
-  return null;
-}
