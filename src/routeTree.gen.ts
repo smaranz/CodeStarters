@@ -26,6 +26,7 @@ import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminFirehacksPortalRouteImport } from './routes/admin/firehacks-portal'
 import { Route as AdminFirehacksMembersRouteImport } from './routes/admin/firehacks-members'
 import { Route as AdminApplicationsRouteImport } from './routes/admin/applications'
+import { Route as FirehacksPortalIndexRouteImport } from './routes/firehacks.portal.index'
 import { Route as FirehacksPortalLoginRouteImport } from './routes/firehacks.portal.login'
 import { Route as FirehacksMemberLoginRouteImport } from './routes/firehacks.member.login'
 import { Route as ApiFirehacksWaiverRouteImport } from './routes/api/firehacks/waiver'
@@ -122,6 +123,11 @@ const AdminApplicationsRoute = AdminApplicationsRouteImport.update({
   path: '/applications',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const FirehacksPortalIndexRoute = FirehacksPortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FirehacksPortalRoute,
+} as any)
 const FirehacksPortalLoginRoute = FirehacksPortalLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -201,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/api/firehacks/waiver': typeof ApiFirehacksWaiverRoute
   '/firehacks/member/login': typeof FirehacksMemberLoginRoute
   '/firehacks/portal/login': typeof FirehacksPortalLoginRoute
+  '/firehacks/portal/': typeof FirehacksPortalIndexRoute
   '/api/admin/firehacks/provision-member': typeof ApiAdminFirehacksProvisionMemberRoute
   '/api/admin/firehacks/provision-portal': typeof ApiAdminFirehacksProvisionPortalRoute
   '/api/firehacks/member/lookup': typeof ApiFirehacksMemberLookupRoute
@@ -219,7 +226,6 @@ export interface FileRoutesByTo {
   '/admin/team': typeof AdminTeamRoute
   '/api/team': typeof ApiTeamRoute
   '/firehacks/member': typeof FirehacksMemberRouteWithChildren
-  '/firehacks/portal': typeof FirehacksPortalRouteWithChildren
   '/admin': typeof AdminIndexRoute
   '/firehacks': typeof FirehacksIndexRoute
   '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
@@ -228,6 +234,7 @@ export interface FileRoutesByTo {
   '/api/firehacks/waiver': typeof ApiFirehacksWaiverRoute
   '/firehacks/member/login': typeof FirehacksMemberLoginRoute
   '/firehacks/portal/login': typeof FirehacksPortalLoginRoute
+  '/firehacks/portal': typeof FirehacksPortalIndexRoute
   '/api/admin/firehacks/provision-member': typeof ApiAdminFirehacksProvisionMemberRoute
   '/api/admin/firehacks/provision-portal': typeof ApiAdminFirehacksProvisionPortalRoute
   '/api/firehacks/member/lookup': typeof ApiFirehacksMemberLookupRoute
@@ -258,6 +265,7 @@ export interface FileRoutesById {
   '/api/firehacks/waiver': typeof ApiFirehacksWaiverRoute
   '/firehacks/member/login': typeof FirehacksMemberLoginRoute
   '/firehacks/portal/login': typeof FirehacksPortalLoginRoute
+  '/firehacks/portal/': typeof FirehacksPortalIndexRoute
   '/api/admin/firehacks/provision-member': typeof ApiAdminFirehacksProvisionMemberRoute
   '/api/admin/firehacks/provision-portal': typeof ApiAdminFirehacksProvisionPortalRoute
   '/api/firehacks/member/lookup': typeof ApiFirehacksMemberLookupRoute
@@ -289,6 +297,7 @@ export interface FileRouteTypes {
     | '/api/firehacks/waiver'
     | '/firehacks/member/login'
     | '/firehacks/portal/login'
+    | '/firehacks/portal/'
     | '/api/admin/firehacks/provision-member'
     | '/api/admin/firehacks/provision-portal'
     | '/api/firehacks/member/lookup'
@@ -307,7 +316,6 @@ export interface FileRouteTypes {
     | '/admin/team'
     | '/api/team'
     | '/firehacks/member'
-    | '/firehacks/portal'
     | '/admin'
     | '/firehacks'
     | '/api/admin/dashboard-stats'
@@ -316,6 +324,7 @@ export interface FileRouteTypes {
     | '/api/firehacks/waiver'
     | '/firehacks/member/login'
     | '/firehacks/portal/login'
+    | '/firehacks/portal'
     | '/api/admin/firehacks/provision-member'
     | '/api/admin/firehacks/provision-portal'
     | '/api/firehacks/member/lookup'
@@ -345,6 +354,7 @@ export interface FileRouteTypes {
     | '/api/firehacks/waiver'
     | '/firehacks/member/login'
     | '/firehacks/portal/login'
+    | '/firehacks/portal/'
     | '/api/admin/firehacks/provision-member'
     | '/api/admin/firehacks/provision-portal'
     | '/api/firehacks/member/lookup'
@@ -488,6 +498,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminApplicationsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/firehacks/portal/': {
+      id: '/firehacks/portal/'
+      path: '/'
+      fullPath: '/firehacks/portal/'
+      preLoaderRoute: typeof FirehacksPortalIndexRouteImport
+      parentRoute: typeof FirehacksPortalRoute
+    }
     '/firehacks/portal/login': {
       id: '/firehacks/portal/login'
       path: '/login'
@@ -603,10 +620,12 @@ const FirehacksMemberRouteWithChildren = FirehacksMemberRoute._addFileChildren(
 
 interface FirehacksPortalRouteChildren {
   FirehacksPortalLoginRoute: typeof FirehacksPortalLoginRoute
+  FirehacksPortalIndexRoute: typeof FirehacksPortalIndexRoute
 }
 
 const FirehacksPortalRouteChildren: FirehacksPortalRouteChildren = {
   FirehacksPortalLoginRoute: FirehacksPortalLoginRoute,
+  FirehacksPortalIndexRoute: FirehacksPortalIndexRoute,
 }
 
 const FirehacksPortalRouteWithChildren = FirehacksPortalRoute._addFileChildren(
