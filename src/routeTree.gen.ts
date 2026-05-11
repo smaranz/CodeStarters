@@ -13,6 +13,7 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as FirehacksRouteImport } from './routes/firehacks'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FirehacksIndexRouteImport } from './routes/firehacks.index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as FirehacksPortalRouteImport } from './routes/firehacks.portal'
 import { Route as FirehacksMemberRouteImport } from './routes/firehacks.member'
@@ -55,6 +56,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const FirehacksIndexRoute = FirehacksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FirehacksRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/firehacks/member': typeof FirehacksMemberRouteWithChildren
   '/firehacks/portal': typeof FirehacksPortalRouteWithChildren
   '/admin/': typeof AdminIndexRoute
+  '/firehacks/': typeof FirehacksIndexRoute
   '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
   '/api/admin/volunteers': typeof ApiAdminVolunteersRoute
   '/api/admin/website-requests': typeof ApiAdminWebsiteRequestsRoute
@@ -201,7 +208,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/firehacks': typeof FirehacksRouteWithChildren
   '/team': typeof TeamRoute
   '/admin/applications': typeof AdminApplicationsRoute
   '/admin/firehacks-members': typeof AdminFirehacksMembersRoute
@@ -215,6 +221,7 @@ export interface FileRoutesByTo {
   '/firehacks/member': typeof FirehacksMemberRouteWithChildren
   '/firehacks/portal': typeof FirehacksPortalRouteWithChildren
   '/admin': typeof AdminIndexRoute
+  '/firehacks': typeof FirehacksIndexRoute
   '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
   '/api/admin/volunteers': typeof ApiAdminVolunteersRoute
   '/api/admin/website-requests': typeof ApiAdminWebsiteRequestsRoute
@@ -244,6 +251,7 @@ export interface FileRoutesById {
   '/firehacks/member': typeof FirehacksMemberRouteWithChildren
   '/firehacks/portal': typeof FirehacksPortalRouteWithChildren
   '/admin/': typeof AdminIndexRoute
+  '/firehacks/': typeof FirehacksIndexRoute
   '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
   '/api/admin/volunteers': typeof ApiAdminVolunteersRoute
   '/api/admin/website-requests': typeof ApiAdminWebsiteRequestsRoute
@@ -274,6 +282,7 @@ export interface FileRouteTypes {
     | '/firehacks/member'
     | '/firehacks/portal'
     | '/admin/'
+    | '/firehacks/'
     | '/api/admin/dashboard-stats'
     | '/api/admin/volunteers'
     | '/api/admin/website-requests'
@@ -287,7 +296,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/firehacks'
     | '/team'
     | '/admin/applications'
     | '/admin/firehacks-members'
@@ -301,6 +309,7 @@ export interface FileRouteTypes {
     | '/firehacks/member'
     | '/firehacks/portal'
     | '/admin'
+    | '/firehacks'
     | '/api/admin/dashboard-stats'
     | '/api/admin/volunteers'
     | '/api/admin/website-requests'
@@ -329,6 +338,7 @@ export interface FileRouteTypes {
     | '/firehacks/member'
     | '/firehacks/portal'
     | '/admin/'
+    | '/firehacks/'
     | '/api/admin/dashboard-stats'
     | '/api/admin/volunteers'
     | '/api/admin/website-requests'
@@ -386,6 +396,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/firehacks/': {
+      id: '/firehacks/'
+      path: '/'
+      fullPath: '/firehacks/'
+      preLoaderRoute: typeof FirehacksIndexRouteImport
+      parentRoute: typeof FirehacksRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -599,11 +616,13 @@ const FirehacksPortalRouteWithChildren = FirehacksPortalRoute._addFileChildren(
 interface FirehacksRouteChildren {
   FirehacksMemberRoute: typeof FirehacksMemberRouteWithChildren
   FirehacksPortalRoute: typeof FirehacksPortalRouteWithChildren
+  FirehacksIndexRoute: typeof FirehacksIndexRoute
 }
 
 const FirehacksRouteChildren: FirehacksRouteChildren = {
   FirehacksMemberRoute: FirehacksMemberRouteWithChildren,
   FirehacksPortalRoute: FirehacksPortalRouteWithChildren,
+  FirehacksIndexRoute: FirehacksIndexRoute,
 }
 
 const FirehacksRouteWithChildren = FirehacksRoute._addFileChildren(
