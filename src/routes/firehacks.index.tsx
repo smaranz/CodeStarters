@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 const LUMA_EVENT_HREF = "https://luma.com/event/evt-teYwe8vJ6Eqne8d";
 const LUMA_EVENT_ID = "evt-teYwe8vJ6Eqne8d";
-const DISCORD_HREF = "https://discord.gg/utUNdDz3";
+const DISCORD_HREF = "https://discord.gg/kqZCFgX3";
 const PROSPECTUS_PATH = "/firehacks-sponsorship-prospectus.pdf";
 
 export const Route = createFileRoute("/firehacks/")({
