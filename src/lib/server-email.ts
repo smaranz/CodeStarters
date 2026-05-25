@@ -1,9 +1,18 @@
 import nodemailer from "nodemailer";
 
+type EmailAttachment = {
+    filename: string;
+    content: Buffer | string;
+    contentType?: string;
+    cid?: string;
+};
+
 type SendPlainArgs = {
     to: string;
     subject: string;
     text: string;
+    html?: string;
+    attachments?: EmailAttachment[];
     /** Display name for Gmail SMTP "from". Address is always GMAIL_USER. */
     gmailFrom?: string;
 };
@@ -13,6 +22,8 @@ export async function sendPlainEmail({
     to,
     subject,
     text,
+    html,
+    attachments,
     gmailFrom = "Fire Hacks 2026",
 }: SendPlainArgs): Promise<void> {
     const user = process.env.GMAIL_USER;
@@ -31,6 +42,8 @@ export async function sendPlainEmail({
         to,
         subject,
         text,
+        html,
+        attachments,
     });
 }
 

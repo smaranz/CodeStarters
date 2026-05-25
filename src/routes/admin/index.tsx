@@ -10,6 +10,7 @@ import {
     ClipboardList,
     X,
     QrCode,
+    ScanLine,
 } from "lucide-react";
 import { Button } from "@/components/codestarters/Button";
 
@@ -164,6 +165,15 @@ function QuickActions() {
                         <div>
                             <p className="font-bold text-slate-900">QR Scanner</p>
                             <p className="text-xs text-slate-500">Scan event passes</p>
+                        </div>
+                    </Link>
+                    <Link to="/admin/summer-scanner" className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-emerald-50 transition-colors border border-transparent hover:border-emerald-100 group">
+                        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm text-slate-400 group-hover:text-emerald-600">
+                            <ScanLine className="w-6 h-6" />
+                        </div>
+                        <div>
+                            <p className="font-bold text-slate-900">Summer Scanner</p>
+                            <p className="text-xs text-slate-500">Check in bootcamp students</p>
                         </div>
                     </Link>
                     <Link to="/admin/requests" className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100 group">

@@ -3,6 +3,7 @@ import {
     LayoutDashboard,
     Globe,
     ClipboardList,
+    ScanLine,
     UserCheck,
     LogOut,
     Menu,
@@ -18,6 +19,7 @@ import { supabase } from "@/lib/supabase/browser";
 const MENU_ITEMS = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
     { name: "Scanner", href: "/admin/scanner", icon: QrCode },
+    { name: "Summer Scanner", href: "/admin/summer-scanner", icon: ScanLine },
     { name: "Fire Hacks Portal", href: "/admin/firehacks-portal", icon: Ticket },
     { name: "Fire Hacks Members", href: "/admin/firehacks-members", icon: Users },
     { name: "Website Requests", href: "/admin/requests", icon: Globe },

@@ -41,10 +41,10 @@ const navLinks = [
 ];
 
 const summerBootcamps = [
-  ["Advanced CS", "Algorithms, data structures, and project-based problem solving."],
-  ["Basic CS", "Beginner-friendly computing, logic, and coding fundamentals."],
-  ["AI Development", "Build practical AI tools with modern APIs and responsible workflows."],
-  ["Python", "Hands-on Python foundations through small apps and exercises."],
+  { name: "Advanced CS", eligibility: "5th grade+", desc: "Algorithms, data structures, and project-based problem solving." },
+  { name: "Basic CS", eligibility: "All grades", desc: "Beginner-friendly computing, logic, and coding fundamentals." },
+  { name: "AI Development", eligibility: "Open to anyone", desc: "Build practical AI tools with modern APIs and responsible workflows." },
+  { name: "Python", eligibility: "All grades", desc: "Hands-on Python foundations through small apps and exercises." },
 ];
 
 const programs = [
@@ -385,17 +385,18 @@ function HomePage() {
           </motion.div>
 
           <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-4">
-            {summerBootcamps.map(([name, desc], index) => (
+            {summerBootcamps.map((bootcamp, index) => (
               <motion.article
-                key={name}
+                key={bootcamp.name}
                 {...fadeUp(0.15 + index * 0.06)}
                 whileHover={{ y: -5 }}
                 className="liquid-glass rounded-2xl p-6"
               >
                 <CalendarDays className="mb-8 h-6 w-6 text-white/70" />
-                <h3 className="mb-3 text-lg font-semibold">{name}</h3>
-                <p className="text-sm leading-6 text-muted-foreground">{desc}</p>
+                <h3 className="mb-3 text-lg font-semibold">{bootcamp.name}</h3>
+                <p className="text-sm leading-6 text-muted-foreground">{bootcamp.desc}</p>
                 <p className="mt-6 text-xs uppercase tracking-[2px] text-white/50">1 week · Date TBD</p>
+                <p className="mt-2 text-xs uppercase tracking-[2px] text-white/50">{bootcamp.eligibility}</p>
               </motion.article>
             ))}
           </div>

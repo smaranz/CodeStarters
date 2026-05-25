@@ -1,14 +1,18 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Loader2, X } from "lucide-react";
-import { supabase } from "@/lib/supabase/browser";
 
 interface SummerSignupFormProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const SUMMER_BOOTCAMPS = ["Advanced CS", "Basic CS", "AI Development", "Python"];
+const SUMMER_BOOTCAMPS = [
+  { name: "Advanced CS", eligibility: "5th grade+" },
+  { name: "Basic CS", eligibility: "All grades" },
+  { name: "AI Development", eligibility: "Open to anyone" },
+  { name: "Python", eligibility: "All grades" },
+];
 
 const GRADES = [
   "5th Grade",
@@ -36,25 +40,22 @@ export function SummerSignupForm({ isOpen, onClose }: SummerSignupFormProps) {
     setError(null);
 
     const formData = new FormData(event.currentTarget);
-    const bootcamp = formData.get("bootcamp") as string;
-    const notes = (formData.get("notes") as string) || "Summer program signup";
-
-    const data = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
-      school: formData.get("school") as string,
-      grade_level: formData.get("grade") as string,
-      interest: `Summer Program: ${bootcamp}`,
-      availability: "1-week bootcamp — dates TBD",
-      social_links: "",
-      reason_for_joining: notes,
-      previous_experience: `Summer program signup. Track: ${bootcamp}. Format: 1-week bootcamp. Dates: TBD.`,
-    };
-
     try {
-      const { error: submitError } = await supabase.from("volunteers").insert([data]);
-      if (submitError) throw submitError;
+      const res = await fetch("/api/summer-signups", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          school: formData.get("school"),
+          grade: formData.get("grade"),
+          bootcamp: formData.get("bootcamp"),
+          notes: formData.get("notes"),
+        }),
+      });
+      const response = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(response?.error || "Failed to submit signup. Please try again.");
       setIsSubmitted(true);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to submit signup. Please try again.");
@@ -90,9 +91,9 @@ export function SummerSignupForm({ isOpen, onClose }: SummerSignupFormProps) {
                   <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-white/10">
                     <CheckCircle2 className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-white">Signup received!</h3>
+                  <h3 className="mb-3 text-2xl font-bold text-white">Signup received — email sent!</h3>
                   <p className="mx-auto mb-8 max-w-sm text-muted-foreground">
-                    We&apos;ll email you once dates and final schedules are confirmed.
+                    We sent your confirmation email with a QR code for entry. Check your inbox, and if you don&apos;t see it, check spam or promotions.
                   </p>
                   <button onClick={onClose} className="rounded-full bg-foreground px-8 py-3 font-medium text-background">
                     Close
@@ -118,8 +119,18 @@ export function SummerSignupForm({ isOpen, onClose }: SummerSignupFormProps) {
                       </select>
                       <select required name="bootcamp" className={inputCls} defaultValue="">
                         <option value="">Select bootcamp *</option>
-                        {SUMMER_BOOTCAMPS.map((bootcamp) => <option key={bootcamp}>{bootcamp}</option>)}
+                        {SUMMER_BOOTCAMPS.map((bootcamp) => (
+                          <option key={bootcamp.name} value={bootcamp.name}>{bootcamp.name} — {bootcamp.eligibility}</option>
+                        ))}
                       </select>
+                    </div>
+                    <div className="grid gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-muted-foreground sm:grid-cols-2">
+                      {SUMMER_BOOTCAMPS.map((bootcamp) => (
+                        <div key={bootcamp.name} className="flex items-center justify-between gap-3 rounded-xl bg-black/20 px-3 py-2">
+                          <span className="font-medium text-white/80">{bootcamp.name}</span>
+                          <span>{bootcamp.eligibility}</span>
+                        </div>
+                      ))}
                     </div>
                     <textarea name="notes" rows={3} className={inputCls} placeholder="Anything we should know? Prior experience, schedule constraints, etc." />
                     <label className="flex items-start gap-3 text-sm text-muted-foreground">
