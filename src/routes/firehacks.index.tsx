@@ -226,7 +226,7 @@ function FireHacksPage() {
                 <h3>Become a <span className="fh-accent-text">Sponsor</span></h3>
                 <p>Help us put on the Bay Area&apos;s best high school hackathon. Your sponsorship is tax-deductible through our 501(c)(3) fiscal sponsor and directly funds prizes, meals, and resources for 200+ student builders.</p>
                 <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center", alignItems: "center" }}>
-                  <a href="mailto:codestarters26@gmail.com?subject=Fire%20Hacks%20Sponsorship" className="fh-btn fh-btn-primary">
+                  <a href="mailto:outreach@codestarters.xyz?subject=Fire%20Hacks%20Sponsorship" className="fh-btn fh-btn-primary">
                     Get in Touch
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                   </a>
@@ -255,7 +255,7 @@ function FireHacksPage() {
                   <summary>{q}<span className="fh-faq-icon">+</span></summary>
                   <div className="fh-faq-answer">
                     {q === "How do I become a sponsor?" ? (
-                      <>We&apos;d love to hear from you! Email us at <a href="mailto:codestarters26@gmail.com" style={{ color: "var(--fh-accent)" }}>codestarters26@gmail.com</a>, or view our <a href={PROSPECTUS_PATH} style={{ color: "var(--fh-accent)" }}>sponsorship prospectus</a>. All sponsorships are tax-deductible through our 501(c)(3) fiscal sponsor.</>
+                      <>We&apos;d love to hear from you! Email us at <a href="mailto:outreach@codestarters.xyz" style={{ color: "var(--fh-accent)" }}>outreach@codestarters.xyz</a>, or view our <a href={PROSPECTUS_PATH} style={{ color: "var(--fh-accent)" }}>sponsorship prospectus</a>. All sponsorships are tax-deductible through our 501(c)(3) fiscal sponsor.</>
                     ) : a}
                   </div>
                 </details>
@@ -276,7 +276,7 @@ function FireHacksPage() {
               <div className="fh-footer-links">
                 <a href="https://codestarters.xyz" target="_blank" rel="noopener noreferrer">codestarters.xyz</a>
                 <a href={DISCORD_HREF} target="_blank" rel="noopener noreferrer">Discord</a>
-                <a href="mailto:codestarters26@gmail.com">codestarters26@gmail.com</a>
+                <a href="mailto:outreach@codestarters.xyz">outreach@codestarters.xyz</a>
                 <span className="fh-footer-text">&copy; 2026</span>
               </div>
             </div>
