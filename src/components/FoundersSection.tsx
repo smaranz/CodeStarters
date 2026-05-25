@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { ChevronDown, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type TeamMember = {
@@ -58,6 +56,8 @@ const REST_OF_TEAM: TeamMember[] = [
     },
 ];
 
+const TEAM_MEMBERS = [...FEATURED_TEAM, ...REST_OF_TEAM];
+
 function TeamCard({ member, delay = 0 }: { member: TeamMember; delay?: number }) {
     return (
         <motion.div
@@ -95,8 +95,6 @@ function TeamCard({ member, delay = 0 }: { member: TeamMember; delay?: number })
 }
 
 export function FoundersSection() {
-    const [showRestOfTeam, setShowRestOfTeam] = useState(false);
-
     return (
         <section id="team" className="py-20 lg:py-28 bg-white text-slate-900 overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -114,50 +112,11 @@ export function FoundersSection() {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-6 w-full max-w-3xl mx-auto">
-                    {FEATURED_TEAM.map((member, i) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 lg:gap-6 w-full mx-auto">
+                    {TEAM_MEMBERS.map((member, i) => (
                         <TeamCard key={member.name} member={member} delay={i * 0.06} />
                     ))}
                 </div>
-
-                <div className="mt-12 flex justify-center">
-                    <motion.button
-                        type="button"
-                        onClick={() => setShowRestOfTeam((current) => !current)}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        aria-expanded={showRestOfTeam}
-                        className="inline-flex items-center gap-2 rounded-full font-barlow font-medium h-12 px-7 text-base bg-slate-900 text-white hover:bg-slate-800 shadow-sm transition-colors"
-                    >
-                        <Users className="w-4 h-4 opacity-90" aria-hidden />
-                        {showRestOfTeam ? "Hide rest of team" : "See rest of team"}
-                        <ChevronDown
-                            className={cn(
-                                "w-4 h-4 opacity-90 transition-transform duration-200",
-                                showRestOfTeam && "rotate-180",
-                            )}
-                            aria-hidden
-                        />
-                    </motion.button>
-                </div>
-
-                <AnimatePresence initial={false}>
-                    {showRestOfTeam && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                            animate={{ opacity: 1, height: "auto", marginTop: 48 }}
-                            exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                            className="overflow-hidden"
-                        >
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6 w-full max-w-6xl mx-auto">
-                                {REST_OF_TEAM.map((member, i) => (
-                                    <TeamCard key={member.name} member={member} delay={i * 0.06} />
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </div>
         </section>
     );
