@@ -66,16 +66,9 @@ function FireHacksPage() {
     return () => { toggle.removeEventListener("click", handleToggle); anchors.forEach((a) => a.removeEventListener("click", close)); };
   }, []);
 
-  useEffect(() => {
-    if (document.querySelector('script[src*="lu.ma/checkout-button"]')) return;
-    const s = document.createElement("script");
-    s.src = "https://embed.lu.ma/checkout-button.js";
-    s.async = true;
-    document.body.appendChild(s);
-  }, []);
-
   return (
     <>
+      <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
       <style dangerouslySetInnerHTML={{ __html: FH_CSS }} />
       <div ref={pageRef} className="fh-page">
         {/* NAV */}
