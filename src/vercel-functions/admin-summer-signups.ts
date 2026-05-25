@@ -32,31 +32,36 @@ function extractToken(raw: unknown): string {
 }
 
 async function verifyAdmin(req: IncomingMessage, url: string, anonKey: string) {
-  const cookies = parse(req.headers.cookie ?? "");
-  const supabase = createServerClient(url, anonKey, {
-    cookies: {
-      get(name: string) { return cookies[name]; },
-      set() {},
-      remove() {},
-    },
-  });
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return false;
-  const { data: adminRow } = await supabase.from("admin_users").select("id").eq("id", user.id).maybeSingle();
-  return Boolean(adminRow);
+  try {
+    const cookies = parse(req.headers.cookie ?? "");
+    const supabase = createServerClient(url, anonKey, {
+      cookies: {
+        get(name: string) { return cookies[name]; },
+        set() {},
+        remove() {},
+      },
+    });
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return false;
+    const { data: adminRow } = await supabase.from("admin_users").select("id").eq("id", user.id).maybeSingle();
+    return Boolean(adminRow);
+  } catch (error) {
+    console.error("Admin verification failed:", error);
+    return false;
+  }
 }
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   if (req.method !== "POST") return json(res, 405, { error: "Method not allowed" });
   try {
-    const env = getEnv();
-    const isAdmin = await verifyAdmin(req, env.url, env.anonKey);
-    if (!isAdmin) return json(res, 401, { error: "Unauthorized" });
-
     const body = await readJson(req).catch(() => ({}));
     const token = extractToken(body.token);
     const checkIn = body.action === "check-in";
     if (!token) return json(res, 400, { error: "QR token is required." });
+
+    const env = getEnv();
+    const isAdmin = await verifyAdmin(req, env.url, env.anonKey);
+    if (!isAdmin) return json(res, 401, { error: "Unauthorized" });
 
     const admin = createClient(env.url, env.serviceKey, { auth: { autoRefreshToken: false, persistSession: false } });
     const selectCols = "id, name, email, phone, school, grade_level, interest, status, availability, reason_for_joining, created_at";
