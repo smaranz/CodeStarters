@@ -12,6 +12,9 @@ await mkdir(join(out, "functions/index.func"), { recursive: true });
 const standaloneFunctions = [
   { route: "/api/summer-signups", name: "api/summer-signups", entry: "src/vercel-functions/summer-signups.ts" },
   { route: "/api/admin/summer-signups", name: "api/admin/summer-signups", entry: "src/vercel-functions/admin-summer-signups.ts" },
+  { route: "/api/admin/dashboard-stats", name: "api/admin/dashboard-stats", entry: "src/vercel-functions/admin-dashboard-stats.ts" },
+  { route: "/api/admin/volunteers", name: "api/admin/volunteers", entry: "src/vercel-functions/admin-volunteers.ts" },
+  { route: "/api/admin/website-requests", name: "api/admin/website-requests", entry: "src/vercel-functions/admin-website-requests.ts" },
 ];
 
 // Static assets served by Vercel CDN
