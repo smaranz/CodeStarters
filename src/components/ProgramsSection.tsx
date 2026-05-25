@@ -118,8 +118,8 @@ export function ProgramsSection() {
                     </motion.div>
                 </div>
 
-                {/* Program 3: AI Literacy */}
-                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-24 lg:mt-32">
+                {/* Program 3: Featured AI Bootcamp */}
+                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-24 lg:mt-32 rounded-[2rem] border border-violet-100 bg-gradient-to-br from-violet-50 via-white to-brand-50 p-6 sm:p-8 lg:p-10 shadow-sm">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +130,7 @@ export function ProgramsSection() {
                         <div className="aspect-[4/5] relative rounded-2xl overflow-hidden">
                             <Image
                                 src="/ai_literacy.jpg"
-                                alt="AI Literacy & Responsible Use"
+                                alt="AI Agents & Development"
                                 fill
                                 sizes="(max-width: 1024px) 100vw, 40vw"
                                 className="object-cover"
@@ -145,22 +145,32 @@ export function ProgramsSection() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="lg:col-span-7 lg:pt-12"
                     >
-                        <span className="inline-block text-xs font-barlow font-medium tracking-widest uppercase text-violet-700 bg-violet-50 border border-violet-200 px-4 py-1.5 rounded-full mb-6">AI Readiness</span>
-                        <h4 className="font-barlow text-3xl lg:text-4xl font-bold text-slate-900 mb-5">AI Literacy &amp; Responsible Use</h4>
+                        <div className="flex flex-wrap gap-3 mb-6">
+                            <span className="inline-block text-xs font-barlow font-semibold tracking-widest uppercase text-violet-800 bg-white border border-violet-200 px-4 py-1.5 rounded-full">Featured Summer Track</span>
+                            <span className="inline-block text-xs font-barlow font-medium tracking-widest uppercase text-brand-700 bg-brand-50 border border-brand-100 px-4 py-1.5 rounded-full">AI Readiness</span>
+                        </div>
+                        <h4 className="font-barlow text-3xl lg:text-4xl font-bold text-slate-900 mb-5">AI Agents &amp; Development</h4>
                         <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg">
-                            We guide the next generation in navigating the AI era with confidence, focusing on ethical implementation, critical thinking, and practical tools.
+                            An end-to-end class built to make students AI literate, future-ready, and confident with the tools shaping modern software.
                         </p>
+                        <div className="flex flex-wrap gap-2 mb-8">
+                            {['Hermes', 'OpenClaw', 'OpenCode', 'TrueFoundry', 'Featherless AI'].map((item) => (
+                                <span key={item} className="rounded-full border border-violet-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-violet-700 shadow-sm">
+                                    {item}
+                                </span>
+                            ))}
+                        </div>
                         <ul className="space-y-3 mb-8">
-                            {['Ethical AI principles', 'Prompt engineering', 'AI tools for productivity', 'Critical source evaluation'].map((item) => (
+                            {['End-to-end AI agent workflows', 'Hermes, OpenClaw, and OpenCode tooling', 'Prompting, evaluation, and safe AI usage', 'AI literacy for school, careers, and the future'].map((item) => (
                                 <li key={item} className="flex items-center gap-3">
                                     <CheckCircle2 className="w-5 h-5 text-violet-500 shrink-0" />
                                     <span className="text-slate-700">{item}</span>
                                 </li>
                             ))}
                         </ul>
-                        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+                        <div className="bg-white border border-violet-200 rounded-xl p-5 shadow-sm">
                             <p className="text-slate-600 text-sm leading-relaxed">
-                                <span className="font-bold text-slate-900">Core Focus:</span> Preparing students not just to use AI, but to understand its implications and lead with it.
+                                <span className="font-bold text-slate-900">Sponsored by TrueFoundry and Featherless AI:</span> students get exposure to modern agentic AI workflows while building the judgment they need to use these tools responsibly.
                             </p>
                         </div>
                     </motion.div>

@@ -5,7 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Heart } from "lucide-react";
 
-const SPONSORS = [
+type Sponsor = {
+    name: string;
+    href: string;
+    logoSrc?: string;
+    logoAlt?: string;
+    logoWidth?: number;
+    logoHeight?: number;
+    textMark?: string;
+};
+
+const SPONSORS: Sponsor[] = [
     {
         name: "CodeCrafters",
         href: "https://codecrafters.io",
@@ -45,6 +55,11 @@ const SPONSORS = [
         logoHeight: 1280,
     },
     {
+        name: "TrueFoundry",
+        href: "https://www.truefoundry.com",
+        textMark: "TrueFoundry",
+    },
+    {
         name: "n8n",
         href: "https://n8n.io",
         logoSrc: "/sponsors/n8n.png",
@@ -67,8 +82,6 @@ const SPONSORS = [
         logoAlt: "Guild.ai",
         logoWidth: 200,
         logoHeight: 200,
-        logoClassName:
-            "max-h-28 sm:max-h-32 md:max-h-40 lg:max-h-44 w-auto max-w-[min(100%,16rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100",
     },
     {
         name: "Zo Computer",
@@ -77,13 +90,11 @@ const SPONSORS = [
         logoAlt: "Zo Computer",
         logoWidth: 1280,
         logoHeight: 720,
-        logoClassName:
-            "max-h-[6.25rem] sm:max-h-40 md:max-h-44 lg:max-h-48 w-auto max-w-[min(100%,36rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100",
     },
 ];
 
 const logoImgClass =
-    "max-h-[4.5rem] sm:max-h-24 md:max-h-[5.25rem] w-auto max-w-[min(100%,11.5rem)] object-contain object-center opacity-95 transition-opacity group-hover:opacity-100";
+    "max-h-16 sm:max-h-20 w-auto max-w-[min(100%,12rem)] object-contain object-center opacity-90 transition-opacity group-hover:opacity-100";
 
 export function SponsorsSection() {
     return (
@@ -110,7 +121,7 @@ export function SponsorsSection() {
                     </p>
                 </motion.div>
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6 list-none p-0 m-0">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 list-none p-0 m-0">
                     {SPONSORS.map((sponsor) => {
                         const host = new URL(sponsor.href).hostname.replace(/^www\./, "");
                         return (
@@ -123,12 +134,16 @@ export function SponsorsSection() {
                                     className="group flex h-full min-h-[13.5rem] flex-col items-stretch justify-between gap-5 rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-sm transition-all hover:border-violet-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50"
                                 >
                                     <div className="flex min-h-[5.75rem] flex-1 items-center justify-center">
-                                        {sponsor.logoSrc.endsWith(".svg") ? (
+                                        {!sponsor.logoSrc ? (
+                                            <span className="text-center font-barlow text-2xl font-black tracking-tight text-slate-800 transition-colors group-hover:text-violet-700">
+                                                {sponsor.textMark ?? sponsor.name}
+                                            </span>
+                                        ) : sponsor.logoSrc.endsWith(".svg") ? (
                                             // eslint-disable-next-line @next/next/no-img-element
                                             <img
                                                 src={sponsor.logoSrc}
                                                 alt=""
-                                                className={sponsor.logoClassName ?? logoImgClass}
+                                                className={logoImgClass}
                                             />
                                         ) : (
                                             <Image
@@ -136,7 +151,7 @@ export function SponsorsSection() {
                                                 alt=""
                                                 width={sponsor.logoWidth ?? 256}
                                                 height={sponsor.logoHeight ?? 256}
-                                                className={sponsor.logoClassName ?? logoImgClass}
+                                                className={logoImgClass}
                                             />
                                         )}
                                     </div>
