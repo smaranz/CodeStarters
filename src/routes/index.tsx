@@ -1,10 +1,12 @@
 import { CodeStartersLogo } from "@/assets/logo";
+import { SummerSignupForm } from "@/components/SummerSignupForm";
 import { VolunteerForm } from "@/components/VolunteerForm";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion, MotionValue, useMotionValue, useTransform } from "framer-motion";
 import Hls from "hls.js";
 import {
   ArrowRight,
+  CalendarDays,
   Check,
   ChevronDown,
   Code2,
@@ -32,9 +34,17 @@ const navLinks = [
   ["Home", "#home"],
   ["Mission", "#mission"],
   ["Programs", "#programs"],
+  ["Summer", "#summer"],
   ["Events", "#events"],
   ["Team", "#team"],
   ["Donate", "#donate"],
+];
+
+const summerBootcamps = [
+  ["Advanced CS", "Algorithms, data structures, and project-based problem solving."],
+  ["Basic CS", "Beginner-friendly computing, logic, and coding fundamentals."],
+  ["AI Development", "Build practical AI tools with modern APIs and responsible workflows."],
+  ["Python", "Hands-on Python foundations through small apps and exercises."],
 ];
 
 const programs = [
@@ -124,6 +134,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formSent, setFormSent] = useState(false);
+  const [showSummerSignupForm, setShowSummerSignupForm] = useState(false);
   const [showVolunteerForm, setShowVolunteerForm] = useState(false);
   const [showRestOfTeam, setShowRestOfTeam] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -201,7 +212,7 @@ function HomePage() {
         </a>
 
         <div className="hidden items-center gap-1 text-sm md:flex">
-          {navLinks.slice(0, 4).map(([label, href], index) => (
+          {navLinks.slice(0, 5).map(([label, href], index) => (
             <div key={label} className="flex items-center">
               <a
                 href={href}
@@ -209,7 +220,7 @@ function HomePage() {
               >
                 {label}
               </a>
-              {index < 3 && <span className="text-muted-foreground/40">•</span>}
+              {index < 4 && <span className="text-muted-foreground/40">•</span>}
             </div>
           ))}
         </div>
@@ -306,6 +317,14 @@ function HomePage() {
                 See our programs →
               </a>
               <motion.button
+                onClick={() => setShowSummerSignupForm(true)}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className="rounded-full border border-white/20 px-8 py-3 font-medium text-white transition-colors hover:bg-white/10"
+              >
+                Summer Signups
+              </motion.button>
+              <motion.button
                 onClick={() => setShowVolunteerForm(true)}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
@@ -352,6 +371,45 @@ function HomePage() {
               </motion.article>
             ))}
           </div>
+        </section>
+
+        <section id="summer" className="border-t border-border/30 px-6 py-32 md:py-44">
+          <motion.div {...fadeUp(0)} className="mx-auto max-w-5xl text-center">
+            <p className="mb-6 text-xs uppercase tracking-[3px] text-muted-foreground">SUMMER PROGRAM</p>
+            <h2 className="text-4xl md:text-6xl">
+              1-week bootcamp <span className="font-serif italic">signups are open.</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
+              We&apos;re opening interest signups for four main CodeStarters summer classes. Exact dates are TBD.
+            </p>
+          </motion.div>
+
+          <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-4">
+            {summerBootcamps.map(([name, desc], index) => (
+              <motion.article
+                key={name}
+                {...fadeUp(0.15 + index * 0.06)}
+                whileHover={{ y: -5 }}
+                className="liquid-glass rounded-2xl p-6"
+              >
+                <CalendarDays className="mb-8 h-6 w-6 text-white/70" />
+                <h3 className="mb-3 text-lg font-semibold">{name}</h3>
+                <p className="text-sm leading-6 text-muted-foreground">{desc}</p>
+                <p className="mt-6 text-xs uppercase tracking-[2px] text-white/50">1 week · Date TBD</p>
+              </motion.article>
+            ))}
+          </div>
+
+          <motion.div {...fadeUp(0.45)} className="mt-12 flex justify-center">
+            <motion.button
+              onClick={() => setShowSummerSignupForm(true)}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-10 py-3.5 font-medium text-background"
+            >
+              Sign Up for Summer <ArrowRight className="h-4 w-4" />
+            </motion.button>
+          </motion.div>
         </section>
 
         <section id="mission" ref={missionRef} className="h-[500vh] relative">
@@ -689,6 +747,7 @@ function HomePage() {
         </section>
       </main>
 
+      <SummerSignupForm isOpen={showSummerSignupForm} onClose={() => setShowSummerSignupForm(false)} />
       <VolunteerForm isOpen={showVolunteerForm} onClose={() => setShowVolunteerForm(false)} />
 
       <footer className="flex flex-col items-center justify-between gap-4 px-8 py-12 md:flex-row md:px-28">
