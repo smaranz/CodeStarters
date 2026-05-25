@@ -43,7 +43,6 @@ function getRequiredEnv() {
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   if (req.method !== "POST") return json(res, 405, { error: "Method not allowed" });
   try {
-    const env = getRequiredEnv();
     const body = await readJson(req).catch(() => ({}));
     const name = clean(body.name, 120);
     const email = clean(body.email, 180).toLowerCase();
@@ -57,6 +56,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     if (!GRADES.has(grade)) return json(res, 400, { error: "Please select a valid grade." });
     if (bootcamp === "Advanced CS" && !ADVANCED_CS_GRADES.has(grade)) return json(res, 400, { error: "Advanced CS is only open to 5th grade and up." });
 
+    const env = getRequiredEnv();
     const token = `summer_${crypto.randomBytes(18).toString("base64url")}`;
     const siteUrl = process.env.PUBLIC_SITE_URL ?? "https://codestarters.org";
     const checkInUrl = `${siteUrl}/admin/summer-scanner?token=${encodeURIComponent(token)}`;
