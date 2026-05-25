@@ -9,6 +9,11 @@ await rm(out, { recursive: true, force: true });
 await mkdir(join(out, "static"), { recursive: true });
 await mkdir(join(out, "functions/index.func"), { recursive: true });
 
+const standaloneFunctions = [
+  { route: "/api/summer-signups", name: "api/summer-signups", entry: "src/vercel-functions/summer-signups.ts" },
+  { route: "/api/admin/summer-signups", name: "api/admin/summer-signups", entry: "src/vercel-functions/admin-summer-signups.ts" },
+];
+
 // Static assets served by Vercel CDN
 await cp(join(root, "dist/client"), join(out, "static"), { recursive: true });
 
@@ -69,6 +74,31 @@ await build({
   },
 });
 
+for (const fn of standaloneFunctions) {
+  const fnDir = join(out, "functions", `${fn.name}.func`);
+  await mkdir(fnDir, { recursive: true });
+  await build({
+    entryPoints: [join(root, fn.entry)],
+    bundle: true,
+    platform: "node",
+    target: "node20",
+    format: "esm",
+    outfile: join(fnDir, "index.js"),
+    splitting: false,
+    packages: "bundle",
+    external: [],
+    minify: false,
+    logLevel: "warning",
+    banner: {
+      js: `import { createRequire } from "module";\nconst require = createRequire(import.meta.url);`,
+    },
+  });
+  await writeFile(
+    join(fnDir, ".vc-config.json"),
+    JSON.stringify({ runtime: "nodejs20.x", handler: "index.js" }, null, 2)
+  );
+}
+
 // Clean up temp file
 await rm(tmpEntry, { force: true });
 
@@ -86,6 +116,7 @@ await writeFile(
       version: 3,
       routes: [
         { handle: "filesystem" },
+        ...standaloneFunctions.map((fn) => ({ src: fn.route, dest: fn.route })),
         { src: "/(.*)", dest: "/index" },
       ],
     },

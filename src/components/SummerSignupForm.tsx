@@ -15,6 +15,11 @@ const SUMMER_BOOTCAMPS = [
 ];
 
 const GRADES = [
+  "Kindergarten",
+  "1st Grade",
+  "2nd Grade",
+  "3rd Grade",
+  "4th Grade",
   "5th Grade",
   "6th Grade",
   "7th Grade",
@@ -23,7 +28,7 @@ const GRADES = [
   "10th Grade",
   "11th Grade",
   "12th Grade",
-  "Other",
+  "Other / above 12th",
 ];
 
 const inputCls =

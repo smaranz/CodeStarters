@@ -6,7 +6,8 @@ import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 import { emailNotConfiguredMessage, isEmailConfigured, sendPlainEmail } from "@/lib/server-email";
 
 const BOOTCAMPS = new Set(["Advanced CS", "Basic CS", "AI Development", "Python"]);
-const GRADES = new Set(["5th Grade", "6th Grade", "7th Grade", "8th Grade", "9th Grade", "10th Grade", "11th Grade", "12th Grade", "Other"]);
+const GRADES = new Set(["Kindergarten", "1st Grade", "2nd Grade", "3rd Grade", "4th Grade", "5th Grade", "6th Grade", "7th Grade", "8th Grade", "9th Grade", "10th Grade", "11th Grade", "12th Grade", "Other / above 12th"]);
+const ADVANCED_CS_GRADES = new Set(["5th Grade", "6th Grade", "7th Grade", "8th Grade", "9th Grade", "10th Grade", "11th Grade", "12th Grade", "Other / above 12th"]);
 
 function clean(value: unknown, max = 500): string {
     return typeof value === "string" ? value.trim().slice(0, max) : "";
@@ -56,6 +57,9 @@ export const Route = createFileRoute("/api/summer-signups")({
                 }
                 if (!GRADES.has(grade)) {
                     return jsonWithCookies(bundle, { error: "Please select a valid grade." }, { status: 400 });
+                }
+                if (bootcamp === "Advanced CS" && !ADVANCED_CS_GRADES.has(grade)) {
+                    return jsonWithCookies(bundle, { error: "Advanced CS is only open to 5th grade and up." }, { status: 400 });
                 }
 
                 const token = randomToken();
