@@ -409,10 +409,10 @@ const FH_CSS = `
 .fh-sponsor-container{max-width:min(1320px,100%)}
 .fh-sponsors-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;width:100%;margin:32px 0 48px}
 @media(min-width:768px){.fh-sponsors-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}}
-.fh-sponsor-pill{display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-height:200px;padding:20px 18px;background:var(--fh-bg-card);border:1px solid var(--fh-border);border-radius:18px;transition:all var(--fh-ease)}
+.fh-sponsor-pill{display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-height:200px;padding:20px 18px;background:linear-gradient(180deg,rgba(220,38,38,.96) 0%,rgba(153,27,27,.98) 100%);border:1px solid rgba(248,113,113,.42);border-radius:18px;box-shadow:0 18px 40px rgba(127,29,29,.22),inset 0 1px 0 rgba(255,255,255,.14);transition:all var(--fh-ease)}
 @media(min-width:640px){.fh-sponsor-pill{min-height:206px;padding:22px 20px}}
 @media(min-width:1024px){.fh-sponsor-pill{min-height:210px;padding:24px 22px}}
-.fh-sponsor-pill:hover{background:var(--fh-bg-card-hover);border-color:var(--fh-accent);transform:translateY(-2px)}
+.fh-sponsor-pill:hover{background:linear-gradient(180deg,rgba(239,68,68,.98) 0%,rgba(185,28,28,.99) 100%);border-color:rgba(254,202,202,.72);box-shadow:0 22px 48px rgba(127,29,29,.3),inset 0 1px 0 rgba(255,255,255,.18);transform:translateY(-2px)}
 .fh-sponsor-pill img{display:block;height:auto;width:auto;max-height:52px;max-width:100%;object-fit:contain;object-position:center}
 @media(min-width:640px){.fh-sponsor-pill img{max-height:60px}}
 @media(min-width:1024px){.fh-sponsor-pill img{max-height:72px}}
