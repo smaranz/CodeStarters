@@ -81,15 +81,15 @@ const restOfTeam = [
 ];
 
 const sponsors = [
-  { name: "CodeCrafters", url: "https://codecrafters.io", img: "/sponsors/codecrafters.svg" },
-  { name: "Gen.xyz", url: "https://gen.xyz", img: "/sponsors/genxyz.png" },
-  { name: "Relay", url: "https://relay.app", img: "/sponsors/relay.webp" },
-  { name: "Medo", url: "https://medo.com", img: "/sponsors/medo.png" },
-  { name: "Featherless AI", url: "https://featherless.ai", img: "/sponsors/featherless.png" },
-  { name: "n8n", url: "https://n8n.io", img: "/sponsors/n8n.png" },
-  { name: "Publick", url: "https://publick.xyz", img: "/sponsors/publick.png" },
-  { name: "Guild.ai", url: "https://www.guild.ai/", img: "/sponsors/guild-ai.png", large: true },
-  { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg" },
+  { name: "CodeCrafters", url: "https://codecrafters.io", img: "/sponsors/codecrafters.svg", fitClass: "h-16 max-w-[90%]" },
+  { name: "Gen.xyz", url: "https://gen.xyz", img: "/sponsors/genxyz.png", fitClass: "h-14 max-w-[88%]" },
+  { name: "Relay", url: "https://relay.app", img: "/sponsors/relay.webp", fitClass: "h-14 max-w-[88%]" },
+  { name: "Medo", url: "https://medo.com", img: "/sponsors/medo.png", fitClass: "h-14 max-w-[86%]" },
+  { name: "Featherless AI", url: "https://featherless.ai", img: "/sponsors/featherless.png", fitClass: "h-16 max-w-[90%]" },
+  { name: "n8n", url: "https://n8n.io", img: "/sponsors/n8n.png", fitClass: "h-16 max-w-[88%]" },
+  { name: "Publick", url: "https://publick.xyz", img: "/sponsors/publick.png", fitClass: "h-14 max-w-[86%]" },
+  { name: "Guild.ai", url: "https://www.guild.ai/", img: "/sponsors/guild-ai.png", fitClass: "h-16 max-w-[92%]" },
+  { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg", fitClass: "h-16 max-w-[92%]" },
 ];
 
 const volunteerRoles = [
@@ -634,14 +634,14 @@ function HomePage() {
                 rel="noreferrer"
                 {...fadeUp(0.1 + index * 0.04)}
                 whileHover={{ scale: 1.04 }}
-                className="liquid-glass flex h-32 items-center justify-center rounded-2xl p-6"
+                className="liquid-glass flex h-36 items-center justify-center rounded-2xl p-4 sm:p-5"
               >
                 {sponsor.img ? (
                   <img
                     src={sponsor.img}
                     alt={sponsor.name}
                     loading="lazy"
-                    className={`object-contain brightness-0 invert ${(sponsor as { large?: boolean }).large ? "h-14 max-w-[80%]" : "h-10 max-w-[80%]"}`}
+                    className={`object-contain brightness-0 invert ${sponsor.fitClass ?? "h-14 max-w-[88%]"}`}
                   />
                 ) : (
                   <span className="text-lg font-bold">{sponsor.name}</span>
