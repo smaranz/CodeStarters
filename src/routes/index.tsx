@@ -8,7 +8,6 @@ import {
   ArrowRight,
   CalendarDays,
   Check,
-  ChevronDown,
   Code2,
   GraduationCap,
   Handshake,
@@ -18,7 +17,6 @@ import {
   Menu,
   Palette,
   Sparkles,
-  Users,
   X,
 } from "lucide-react";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
@@ -90,6 +88,8 @@ const restOfTeam = [
   { name: "Sai Sanjit Reddy Vallapureddy", role: "Head of Education", img: "/sai.webp" },
 ];
 
+const teamMembers = [...featuredTeam, ...restOfTeam];
+
 const sponsors = [
   { name: "CodeCrafters", url: "https://codecrafters.io", img: "/sponsors/codecrafters.svg", fitClass: "h-16 max-w-[90%]" },
   { name: "Gen.xyz", url: "https://gen.xyz", img: "/sponsors/genxyz.png", fitClass: "h-14 max-w-[88%]" },
@@ -136,7 +136,6 @@ function HomePage() {
   const [formSent, setFormSent] = useState(false);
   const [showSummerSignupForm, setShowSummerSignupForm] = useState(false);
   const [showVolunteerForm, setShowVolunteerForm] = useState(false);
-  const [showRestOfTeam, setShowRestOfTeam] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [donationAmount, setDonationAmount] = useState<number | null>(25);
   const [customAmount, setCustomAmount] = useState("");
@@ -604,8 +603,8 @@ function HomePage() {
               Meet the <span className="font-serif italic">team</span>
             </h2>
           </motion.div>
-          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2">
-            {featuredTeam.map((member, index) => (
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-3 xl:grid-cols-6">
+            {teamMembers.map((member, index) => (
               <motion.article
                 key={member.name}
                 {...fadeUp(0.1 + index * 0.08)}
@@ -623,55 +622,6 @@ function HomePage() {
               </motion.article>
             ))}
           </div>
-
-          <div className="mt-12 flex justify-center">
-            <motion.button
-              type="button"
-              onClick={() => setShowRestOfTeam((value) => !value)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              aria-expanded={showRestOfTeam}
-              className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3 font-medium text-background hover:opacity-80 transition-opacity"
-            >
-              <Users className="h-4 w-4 opacity-90" />
-              {showRestOfTeam ? "Hide rest of team" : "See rest of team"}
-              <ChevronDown
-                className={`h-4 w-4 opacity-90 transition-transform duration-200 ${showRestOfTeam ? "rotate-180" : ""}`}
-              />
-            </motion.button>
-          </div>
-
-          <AnimatePresence initial={false}>
-            {showRestOfTeam && (
-              <motion.div
-                initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                animate={{ opacity: 1, height: "auto", marginTop: 48 }}
-                exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="overflow-hidden"
-              >
-                <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-3 lg:grid-cols-4">
-                  {restOfTeam.map((member, index) => (
-                    <motion.article
-                      key={member.name}
-                      {...fadeUp(0.1 + index * 0.08)}
-                      whileHover={{ y: -6 }}
-                      className="text-center"
-                    >
-                      <img
-                        src={member.img}
-                        alt={member.name}
-                        loading="lazy"
-                        className="aspect-square w-full rounded-[22px] object-cover grayscale"
-                      />
-                      <h3 className="mt-6 text-lg font-bold leading-tight">{member.name}</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">{member.role}</p>
-                    </motion.article>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </section>
 
         <section id="sponsors" className="border-t border-border/30 px-6 py-32">
