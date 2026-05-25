@@ -87,6 +87,7 @@ const sponsors = [
   { name: "Medo", url: "https://medo.com", img: "/sponsors/medo.png", fitClass: "h-14 max-w-[86%]" },
   { name: "Featherless AI", url: "https://featherless.ai", img: "/sponsors/featherless.png", fitClass: "h-16 max-w-[90%]" },
   { name: "n8n", url: "https://n8n.io", img: "/sponsors/n8n.png", fitClass: "h-16 max-w-[88%]" },
+  { name: "InsForge", url: "https://insforge.dev/", img: "/sponsors/insoforge.svg", fitClass: "h-20 max-w-[72%]" },
   { name: "Publick", url: "https://publick.xyz", img: "/sponsors/publick.png", fitClass: "h-14 max-w-[86%]" },
   { name: "Guild.ai", url: "https://www.guild.ai/", img: "/sponsors/guild-ai.png", fitClass: "h-16 max-w-[92%]" },
   { name: "Zo Computer", url: "https://zo.computer/", img: "/sponsors/zo-computer.svg", fitClass: "h-16 max-w-[92%]" },
