@@ -12,9 +12,10 @@ const fadeUp = (delay: number) => ({
 
 const LEADERSHIP = [
   { name: "Smaran Aramballi Sandarsh", title: "President", img: "/smaran.png" },
-  { name: "Arnav Ghildiyal", title: "VP", img: "/arnav.webp" },
-  { name: "Robin Zhou", title: "Head of Marketing", img: "/team/robin-zhou.png" },
   { name: "Amogh Bhatta", title: "VP", img: "/amogh.webp" },
+  { name: "Aidan Kwan", title: "VP", img: "/aidan.webp" },
+  { name: "Arnav Ghildiyal", title: "Basic CS Mentor", img: "/arnav.webp" },
+  { name: "Robin Zhou", title: "Head of Marketing", img: "/team/robin-zhou.png" },
   { name: "Sai Sanjit Reddy Vallapureddy", title: "Head of Education", img: "/sai.webp" },
 ];
 

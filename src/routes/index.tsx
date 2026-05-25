@@ -6,6 +6,7 @@ import Hls from "hls.js";
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   Code2,
   GraduationCap,
   Handshake,
@@ -67,10 +68,15 @@ const programs = [
   },
 ];
 
-const team = [
+const featuredTeam = [
   { name: "Smaran Aramballi Sandarsh", role: "President", img: "/smaran.png" },
-  { name: "Arnav Ghildiyal", role: "VP", img: "/arnav.webp" },
   { name: "Amogh Bhatta", role: "VP", img: "/amogh.webp" },
+];
+
+const restOfTeam = [
+  { name: "Aidan Kwan", role: "VP", img: "/aidan.webp" },
+  { name: "Arnav Ghildiyal", role: "Basic CS Mentor", img: "/arnav.webp" },
+  { name: "Robin Zhou", role: "Head of Marketing", img: "/robin.webp" },
   { name: "Sai Sanjit Reddy Vallapureddy", role: "Head of Education", img: "/sai.webp" },
 ];
 
@@ -118,6 +124,7 @@ function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formSent, setFormSent] = useState(false);
   const [showVolunteerForm, setShowVolunteerForm] = useState(false);
+  const [showRestOfTeam, setShowRestOfTeam] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [donationAmount, setDonationAmount] = useState<number | null>(25);
   const [customAmount, setCustomAmount] = useState("");
@@ -537,8 +544,8 @@ function HomePage() {
               Meet the <span className="font-serif italic">team</span>
             </h2>
           </motion.div>
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-3 lg:grid-cols-5">
-            {team.map((member, index) => (
+          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2">
+            {featuredTeam.map((member, index) => (
               <motion.article
                 key={member.name}
                 {...fadeUp(0.1 + index * 0.08)}
@@ -558,14 +565,53 @@ function HomePage() {
           </div>
 
           <div className="mt-12 flex justify-center">
-            <a
-              href="/team"
+            <motion.button
+              type="button"
+              onClick={() => setShowRestOfTeam((value) => !value)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              aria-expanded={showRestOfTeam}
               className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3 font-medium text-background hover:opacity-80 transition-opacity"
             >
               <Users className="h-4 w-4 opacity-90" />
-              Meet the full team →
-            </a>
+              {showRestOfTeam ? "Hide rest of team" : "See rest of team"}
+              <ChevronDown
+                className={`h-4 w-4 opacity-90 transition-transform duration-200 ${showRestOfTeam ? "rotate-180" : ""}`}
+              />
+            </motion.button>
           </div>
+
+          <AnimatePresence initial={false}>
+            {showRestOfTeam && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: "auto", marginTop: 48 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="overflow-hidden"
+              >
+                <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-8 gap-y-14 sm:grid-cols-3 lg:grid-cols-4">
+                  {restOfTeam.map((member, index) => (
+                    <motion.article
+                      key={member.name}
+                      {...fadeUp(0.1 + index * 0.08)}
+                      whileHover={{ y: -6 }}
+                      className="text-center"
+                    >
+                      <img
+                        src={member.img}
+                        alt={member.name}
+                        loading="lazy"
+                        className="aspect-square w-full rounded-[22px] object-cover grayscale"
+                      />
+                      <h3 className="mt-6 text-lg font-bold leading-tight">{member.name}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground">{member.role}</p>
+                    </motion.article>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </section>
 
         <section id="sponsors" className="border-t border-border/30 px-6 py-32">
