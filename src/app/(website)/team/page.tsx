@@ -23,10 +23,10 @@ const CORE_TEAM: {
     imageClassName?: string;
 }[] = [
     { name: "Smaran Aramballi Sandarsh", image: "/smaran_real.png", accent: "from-emerald-400 to-teal-500", title: "President" },
-    { name: "Aidan Kwan", image: "/aidan-kwan.webp", accent: "from-sky-400 to-blue-600", title: "VP" },
-    { name: "Arnav Ghildiyal", image: "/arnav.webp", accent: "from-pink-400 to-rose-500", title: "VP" },
-    { name: "Robin Zhou", image: "/robin.webp", accent: "from-cyan-400 to-blue-500", title: "Head of Marketing", imageClassName: "object-cover object-[center_22%]" },
     { name: "Amogh Bhatta", image: "/amogh-bhatta.webp", accent: "from-violet-400 to-purple-500", title: "VP", imageClassName: "object-[50%_35%]" },
+    { name: "Aidan Kwan", image: "/aidan-kwan.webp", accent: "from-sky-400 to-blue-600", title: "VP" },
+    { name: "Arnav Ghildiyal", image: "/arnav.webp", accent: "from-pink-400 to-rose-500", title: "Basic CS Mentor" },
+    { name: "Robin Zhou", image: "/robin.webp", accent: "from-cyan-400 to-blue-500", title: "Head of Marketing", imageClassName: "object-cover object-[center_22%]" },
     { name: "Sai Sanjit Reddy Vallapureddy", image: "/sai-sanjit.webp", accent: "from-amber-400 to-orange-500", title: "Head of Education" },
 ];
 
