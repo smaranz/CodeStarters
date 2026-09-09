@@ -143,6 +143,7 @@ const programs = [
 
 const featuredTeam = [
   { name: "Smaran Aramballi Sandarsh", role: "Founder & President", img: "/smaran.png" },
+  { name: "Amogh Bhatta", role: "Founder & Director of Robotics", img: "/amogh.webp" },
   { name: "Reyansh Nankani", role: "Founder & Vice-President", img: "/team/reyansh-nankani.png" },
   { name: "Pranav C", role: "Founder & Head of AI, Finance, and Legal", img: "/team/pranav-c.png" },
 ];
@@ -851,7 +852,7 @@ function CodeStartersHomePage() {
               Meet the <span className="font-serif italic">founders</span>
             </h2>
           </motion.div>
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
             {featuredTeam.map((member, index) => (
               <motion.article
                 key={member.name}

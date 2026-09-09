@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const coreTeam = [
   { name: "Smaran Aramballi Sandarsh", role: "President", img: "/smaran.png" },
-  { name: "Amogh Bhatta", role: "Director of Robotics", img: "/amogh.webp" },
+  { name: "Amogh Bhatta", role: "Founder & Director of Robotics", img: "/amogh.webp" },
   { name: "Sai Sanjit Reddy Vallapureddy", role: "Director of Marketing", img: "/sai.webp" },
 ];
 

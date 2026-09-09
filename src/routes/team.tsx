@@ -27,7 +27,7 @@ const MEMBERS: Record<string, TeamMember> = {
   amogh: {
     id: "amogh",
     name: "Amogh Bhatta",
-    title: "Director of Robotics",
+    title: "Founder & Director of Robotics",
     img: "/amogh.webp",
   },
   reyansh: {
