@@ -7,6 +7,7 @@ const out = join(root, ".vercel/output");
 const nodeRuntime = "nodejs22.x";
 const modulePackageJson = JSON.stringify({ type: "module" }, null, 2);
 const firehacksHost = "firehacks.codestarters.org";
+const icehacksHost = "icehacks.codestarters.org";
 const firehacksHostRoutes = [
   {
     src: "/",
@@ -25,6 +26,14 @@ const firehacksHostRoutes = [
     src: "/portal/(.*)",
     dest: "/firehacks/portal/$1",
     has: [{ type: "host", value: firehacksHost }],
+  },
+];
+const icehacksHostRoutes = [
+  {
+    src: "/icehacks/?",
+    status: 302,
+    headers: { Location: "/" },
+    has: [{ type: "host", value: icehacksHost }],
   },
 ];
 
@@ -74,6 +83,8 @@ export default async function handler(req, res) {
   const host = req.headers["x-forwarded-host"] || req.headers["host"] || "localhost";
   const url = new URL(req.url, \`\${proto}://\${host}\`);
 
+  globalThis.__csHost = url.hostname;
+
   if (url.hostname === ${JSON.stringify(firehacksHost)}) {
     if (url.pathname === "/") {
       res.statusCode = 302;
@@ -85,6 +96,15 @@ export default async function handler(req, res) {
       url.pathname = "/firehacks" + url.pathname;
     } else if (url.pathname === "/portal" || url.pathname.startsWith("/portal/")) {
       url.pathname = "/firehacks" + url.pathname;
+    }
+  }
+
+  if (url.hostname === ${JSON.stringify(icehacksHost)}) {
+    if (url.pathname === "/icehacks" || url.pathname === "/icehacks/") {
+      res.statusCode = 302;
+      res.setHeader("Location", "/");
+      res.end();
+      return;
     }
   }
 
@@ -179,6 +199,7 @@ await writeFile(
       version: 3,
       routes: [
         ...firehacksHostRoutes,
+        ...icehacksHostRoutes,
         { src: "/", dest: "/index" },
         ...standaloneFunctions.map((fn) => ({ src: fn.route, dest: fn.route })),
         { handle: "filesystem" },
