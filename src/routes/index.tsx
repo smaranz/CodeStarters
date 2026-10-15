@@ -1,6 +1,15 @@
 import { CodeStartersLogo } from "@/assets/logo";
+import { isIceHacksHost } from "@/lib/icehacks-host";
 import { OPEN_ROLE_GROUPS, getVolunteerGroupBySlug, type RoleAccent } from "@/lib/open-roles";
+import { IcehacksHome } from "@/components/icehacks/home";
+import { IcehacksShell } from "@/components/icehacks/shell";
 import { VolunteerForm } from "@/components/VolunteerForm";
+import {
+  SPONSOR_TIER_LABELS,
+  SPONSOR_TIER_ORDER,
+  sponsorLogoSrc,
+  sponsorsByTier,
+} from "@/lib/sponsors";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion, MotionValue, useMotionValue, useTransform } from "framer-motion";
 import Hls from "hls.js";
@@ -148,78 +157,6 @@ const featuredTeam = [
   { name: "Pranav C", role: "Founder & Head of AI, Finance, and Legal", img: "/team/pranav-c.png" },
 ];
 
-const sponsors = [
-  {
-    name: "CodeCrafters",
-    url: "https://codecrafters.io",
-    img: "/sponsors/codecrafters.svg",
-    fitClass: "h-16 max-w-[90%]",
-  },
-  {
-    name: "Gen.xyz",
-    url: "https://gen.xyz",
-    img: "/sponsors/genxyz.png",
-    fitClass: "h-14 max-w-[88%]",
-  },
-  {
-    name: "Medo",
-    url: "https://medo.com",
-    img: "/sponsors/medo.png",
-    fitClass: "h-14 max-w-[86%]",
-  },
-  {
-    name: "Featherless AI",
-    url: "https://featherless.ai",
-    img: "/sponsors/featherless.png",
-    fitClass: "h-[4.5rem] max-w-[94%]",
-  },
-  { name: "n8n", url: "https://n8n.io", img: "/sponsors/n8n.png", fitClass: "h-16 max-w-[88%]" },
-  {
-    name: "InsForge",
-    url: "https://insforge.dev/",
-    img: "/sponsors/insoforge.svg",
-    fitClass: "h-20 max-w-[72%]",
-  },
-  {
-    name: "Exea Labs",
-    img: "/sponsors/exea-labs.png",
-    imgClass: "",
-    fitClass: "h-[8rem] max-w-full",
-    cardPadClass: "p-1",
-  },
-  {
-    name: "YRI Fellowship",
-    url: "https://www.yriscience.com/",
-    img: "/sponsors/yri.avif",
-    imgClass: "",
-    fitClass: "h-[4.5rem] max-w-[90%]",
-  },
-  {
-    name: "Publick",
-    url: "https://publick.xyz",
-    img: "/sponsors/publick.png",
-    fitClass: "h-[4.75rem] max-w-[96%]",
-  },
-  {
-    name: "Guild.ai",
-    url: "https://www.guild.ai/",
-    img: "/sponsors/guild-ai.png",
-    fitClass: "h-[6rem] max-w-full",
-  },
-  {
-    name: "Rork",
-    url: "https://rork.com",
-    img: "/sponsors/rork.avif",
-    fitClass: "h-14 max-w-[88%]",
-  },
-  {
-    name: "Render",
-    url: "https://render.com",
-    img: "/sponsors/adrender.avif",
-    fitClass: "h-14 max-w-[88%]",
-  },
-];
-
 const partners = [
   {
     name: "Resera",
@@ -276,20 +213,45 @@ const missionWords =
   );
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "CodeStarters | Empowering the Next Generation" },
-      {
-        name: "description",
-        content:
-          "Student-led initiative teaching CS and AI to younger students, building free websites for businesses, and hosting classes and events.",
-      },
-    ],
-  }),
+  head: () =>
+    isIceHacksHost()
+      ? {
+          meta: [
+            { title: "Ice Hacks 2026" },
+            {
+              name: "description",
+              content:
+                "An online high school hackathon. November 8–15, 2026. Opening ceremony 6:00 PM PST on Nov 8. Free to attend.",
+            },
+          ],
+          links: [
+            {
+              rel: "stylesheet",
+              href: "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Iceland&display=swap",
+            },
+          ],
+        }
+      : {
+          meta: [
+            { title: "CodeStarters | Empowering the Next Generation" },
+            {
+              name: "description",
+              content:
+                "Student-led initiative teaching CS and AI to younger students, building free websites for businesses, and hosting classes and events.",
+            },
+          ],
+        },
   component: HomePage,
 });
 
 function HomePage() {
+  if (isIceHacksHost()) {
+    return (
+      <IcehacksShell>
+        <IcehacksHome />
+      </IcehacksShell>
+    );
+  }
   return <CodeStartersHomePage />;
 }
 
@@ -956,29 +918,65 @@ function CodeStartersHomePage() {
               students and businesses.
             </p>
           </motion.div>
-          <div className="mx-auto mt-16 grid max-w-5xl grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {sponsors.map((sponsor, index) => (
-              <motion.a
-                key={sponsor.name}
-                href={sponsor.url ?? undefined}
-                target={sponsor.url ? "_blank" : undefined}
-                rel={sponsor.url ? "noreferrer" : undefined}
-                {...fadeUp(0.1 + index * 0.04)}
-                whileHover={{ scale: 1.04 }}
-                className={`liquid-glass flex items-center justify-center rounded-2xl ${sponsor.cardClass ?? "h-36"} ${sponsor.cardPadClass ?? "p-4 sm:p-5"}`}
-              >
-                {sponsor.img ? (
-                  <img
-                    src={sponsor.img}
-                    alt={sponsor.name}
-                    loading="lazy"
-                    className={`object-contain ${sponsor.imgClass ?? "brightness-0 invert"} ${sponsor.fitClass ?? "h-14 max-w-[88%]"}`}
-                  />
-                ) : (
-                  <span className="text-lg font-bold">{sponsor.name}</span>
-                )}
-              </motion.a>
-            ))}
+          <div className="mx-auto mt-16 flex max-w-5xl flex-col gap-14">
+            {SPONSOR_TIER_ORDER.map((tier) => {
+              const list = sponsorsByTier(tier);
+              if (!list.length) return null;
+              const cols =
+                tier === "platinum"
+                  ? "grid-cols-1"
+                  : tier === "gold"
+                    ? "grid-cols-1 sm:grid-cols-2"
+                    : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4";
+              return (
+                <div key={tier}>
+                  <p className="mb-5 text-center text-xs uppercase tracking-[3px] text-muted-foreground">
+                    {SPONSOR_TIER_LABELS[tier]}
+                  </p>
+                  <div className={`grid gap-4 ${cols}`}>
+                    {list.map((sponsor, index) => {
+                      const src = sponsorLogoSrc(sponsor, false);
+                      const card = (
+                        <>
+                          {src ? (
+                            <img
+                              src={src}
+                              alt={sponsor.name}
+                              loading="lazy"
+                              className={`object-contain ${sponsor.invertOnDark ? "brightness-0 invert" : ""} ${sponsor.fitClass ?? "h-14 max-w-[88%]"}`}
+                            />
+                          ) : (
+                            <span className="text-lg font-bold">{sponsor.name}</span>
+                          )}
+                        </>
+                      );
+                      const cardClass = `liquid-glass flex items-center justify-center rounded-2xl ${sponsor.cardClass ?? "h-36"} ${sponsor.cardPadClass ?? "p-4 sm:p-5"}`;
+                      return sponsor.url ? (
+                        <motion.a
+                          key={sponsor.name}
+                          href={sponsor.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          {...fadeUp(0.08 + index * 0.04)}
+                          whileHover={{ scale: 1.04 }}
+                          className={cardClass}
+                        >
+                          {card}
+                        </motion.a>
+                      ) : (
+                        <motion.div
+                          key={sponsor.name}
+                          {...fadeUp(0.08 + index * 0.04)}
+                          className={cardClass}
+                        >
+                          {card}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 

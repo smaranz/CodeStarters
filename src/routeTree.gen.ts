@@ -14,12 +14,14 @@ import { Route as SummerSignupRouteImport } from './routes/summer-signup'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as MemberRouteImport } from './routes/member'
 import { Route as JoinRouteImport } from './routes/join'
+import { Route as IcehacksRouteImport } from './routes/icehacks'
 import { Route as FirehacksRouteImport } from './routes/firehacks'
 import { Route as EventsRouteImport } from './routes/events'
 import { Route as BrandingRouteImport } from './routes/branding'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MemberIndexRouteImport } from './routes/member.index'
+import { Route as IcehacksIndexRouteImport } from './routes/icehacks.index'
 import { Route as FirehacksIndexRouteImport } from './routes/firehacks.index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as SummerSignupSlugRouteImport } from './routes/summer-signup.$slug'
@@ -79,6 +81,11 @@ const JoinRoute = JoinRouteImport.update({
   path: '/join',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IcehacksRoute = IcehacksRouteImport.update({
+  id: '/icehacks',
+  path: '/icehacks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FirehacksRoute = FirehacksRouteImport.update({
   id: '/firehacks',
   path: '/firehacks',
@@ -108,6 +115,11 @@ const MemberIndexRoute = MemberIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => MemberRoute,
+} as any)
+const IcehacksIndexRoute = IcehacksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => IcehacksRoute,
 } as any)
 const FirehacksIndexRoute = FirehacksIndexRouteImport.update({
   id: '/',
@@ -288,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/branding': typeof BrandingRoute
   '/events': typeof EventsRoute
   '/firehacks': typeof FirehacksRouteWithChildren
+  '/icehacks': typeof IcehacksRouteWithChildren
   '/join': typeof JoinRoute
   '/member': typeof MemberRouteWithChildren
   '/portal': typeof PortalRouteWithChildren
@@ -308,6 +321,7 @@ export interface FileRoutesByFullPath {
   '/summer-signup/$slug': typeof SummerSignupSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/firehacks/': typeof FirehacksIndexRoute
+  '/icehacks/': typeof IcehacksIndexRoute
   '/member/': typeof MemberIndexRoute
   '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
   '/api/admin/session': typeof ApiAdminSessionRoute
@@ -350,6 +364,7 @@ export interface FileRoutesByTo {
   '/summer-signup/$slug': typeof SummerSignupSlugRoute
   '/admin': typeof AdminIndexRoute
   '/firehacks': typeof FirehacksIndexRoute
+  '/icehacks': typeof IcehacksIndexRoute
   '/member': typeof MemberIndexRoute
   '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
   '/api/admin/session': typeof ApiAdminSessionRoute
@@ -377,6 +392,7 @@ export interface FileRoutesById {
   '/branding': typeof BrandingRoute
   '/events': typeof EventsRoute
   '/firehacks': typeof FirehacksRouteWithChildren
+  '/icehacks': typeof IcehacksRouteWithChildren
   '/join': typeof JoinRoute
   '/member': typeof MemberRouteWithChildren
   '/portal': typeof PortalRouteWithChildren
@@ -397,6 +413,7 @@ export interface FileRoutesById {
   '/summer-signup/$slug': typeof SummerSignupSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/firehacks/': typeof FirehacksIndexRoute
+  '/icehacks/': typeof IcehacksIndexRoute
   '/member/': typeof MemberIndexRoute
   '/api/admin/dashboard-stats': typeof ApiAdminDashboardStatsRoute
   '/api/admin/session': typeof ApiAdminSessionRoute
@@ -425,6 +442,7 @@ export interface FileRouteTypes {
     | '/branding'
     | '/events'
     | '/firehacks'
+    | '/icehacks'
     | '/join'
     | '/member'
     | '/portal'
@@ -445,6 +463,7 @@ export interface FileRouteTypes {
     | '/summer-signup/$slug'
     | '/admin/'
     | '/firehacks/'
+    | '/icehacks/'
     | '/member/'
     | '/api/admin/dashboard-stats'
     | '/api/admin/session'
@@ -487,6 +506,7 @@ export interface FileRouteTypes {
     | '/summer-signup/$slug'
     | '/admin'
     | '/firehacks'
+    | '/icehacks'
     | '/member'
     | '/api/admin/dashboard-stats'
     | '/api/admin/session'
@@ -513,6 +533,7 @@ export interface FileRouteTypes {
     | '/branding'
     | '/events'
     | '/firehacks'
+    | '/icehacks'
     | '/join'
     | '/member'
     | '/portal'
@@ -533,6 +554,7 @@ export interface FileRouteTypes {
     | '/summer-signup/$slug'
     | '/admin/'
     | '/firehacks/'
+    | '/icehacks/'
     | '/member/'
     | '/api/admin/dashboard-stats'
     | '/api/admin/session'
@@ -560,6 +582,7 @@ export interface RootRouteChildren {
   BrandingRoute: typeof BrandingRoute
   EventsRoute: typeof EventsRoute
   FirehacksRoute: typeof FirehacksRouteWithChildren
+  IcehacksRoute: typeof IcehacksRouteWithChildren
   JoinRoute: typeof JoinRoute
   MemberRoute: typeof MemberRouteWithChildren
   PortalRoute: typeof PortalRouteWithChildren
@@ -620,6 +643,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/icehacks': {
+      id: '/icehacks'
+      path: '/icehacks'
+      fullPath: '/icehacks'
+      preLoaderRoute: typeof IcehacksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/firehacks': {
       id: '/firehacks'
       path: '/firehacks'
@@ -661,6 +691,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/member/'
       preLoaderRoute: typeof MemberIndexRouteImport
       parentRoute: typeof MemberRoute
+    }
+    '/icehacks/': {
+      id: '/icehacks/'
+      path: '/'
+      fullPath: '/icehacks/'
+      preLoaderRoute: typeof IcehacksIndexRouteImport
+      parentRoute: typeof IcehacksRoute
     }
     '/firehacks/': {
       id: '/firehacks/'
@@ -958,6 +995,18 @@ const FirehacksRouteWithChildren = FirehacksRoute._addFileChildren(
   FirehacksRouteChildren,
 )
 
+interface IcehacksRouteChildren {
+  IcehacksIndexRoute: typeof IcehacksIndexRoute
+}
+
+const IcehacksRouteChildren: IcehacksRouteChildren = {
+  IcehacksIndexRoute: IcehacksIndexRoute,
+}
+
+const IcehacksRouteWithChildren = IcehacksRoute._addFileChildren(
+  IcehacksRouteChildren,
+)
+
 interface MemberRouteChildren {
   MemberLoginRoute: typeof MemberLoginRoute
   MemberTasksRoute: typeof MemberTasksRoute
@@ -1015,6 +1064,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrandingRoute: BrandingRoute,
   EventsRoute: EventsRoute,
   FirehacksRoute: FirehacksRouteWithChildren,
+  IcehacksRoute: IcehacksRouteWithChildren,
   JoinRoute: JoinRoute,
   MemberRoute: MemberRouteWithChildren,
   PortalRoute: PortalRouteWithChildren,
